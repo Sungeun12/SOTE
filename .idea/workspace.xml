@@ -25,7 +25,33 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="" />
+    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/AppLayout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/RootRouter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Footer/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/Button.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/MenuList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/MenuToggle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/IconMenu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/Logo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/TextMenu/Dropdown.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/TextMenu/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/TextMenu/textMenuData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/UserProfile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/dummyUser.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/Header/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/util/color.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/util/media.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Main.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +74,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../elecat/purplecode-team3-client" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ReactStudy" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -64,6 +90,15 @@
     <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\SOTE\client\src\components\common\Header" />
+      <recent name="C:\SOTE\client\src\components\common\Header\TextMenu" />
+      <recent name="C:\SOTE\client\src\components\common\Header\RightMenu" />
+      <recent name="C:\SOTE\client\src\components" />
+      <recent name="C:\SOTE\client\src\util\font" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -73,6 +108,10 @@
       <option name="presentableId" value="Default" />
       <updated>1618331659011</updated>
       <workItem from="1618331662350" duration="5763000" />
+      <workItem from="1618338027976" duration="706000" />
+      <workItem from="1618378544662" duration="16296000" />
+      <workItem from="1618473048631" duration="34931000" />
+      <workItem from="1618515787962" duration="3940000" />
     </task>
     <servers />
   </component>
@@ -89,19 +128,32 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="619" y="271" key="#ESLint" timestamp="1618416295415">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="619" y="271" key="#ESLint/0.0.1280.680@0.0.1280.680" timestamp="1618416295415" />
     <state x="412" y="170" key="#Notifications" timestamp="1618337619049">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="412" y="170" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1618337619049" />
-    <state x="412" y="99" key="FileChooserDialogImpl" timestamp="1618336756268">
+    <state x="228" y="135" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1618505466642">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="412" y="99" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1618336756268" />
+    <state x="228" y="135" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1618505466642" />
+    <state x="412" y="99" key="FileChooserDialogImpl" timestamp="1618516823901">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="412" y="99" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1618516823901" />
     <state x="194" y="0" key="SettingsEditor" timestamp="1618335392552">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="194" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1618335392552" />
+    <state x="227" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1618410208568">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="227" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1618410208568" />
   </component>
 </project>
