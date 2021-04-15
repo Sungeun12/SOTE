@@ -38,5 +38,7 @@ module.exports = {
     "no-param-reassign": 0,
     "no-return-assign": 0,
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
   },
 };
