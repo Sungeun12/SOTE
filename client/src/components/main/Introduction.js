@@ -2,18 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import votePic from '../../img/picture.png';
 import media from '../../util/media';
+import JoinButton from './JoinButton';
 
 function Introduction() {
+  const loginUser = true;
+
   return (
-    <div
+    <IntroductionContainer
       style={{
         backgroundImage: `url("${votePic}")`,
-        backgroundRepeat: 'noRepeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        height: '95vh',
-        width: '97vw',
-        margin: '10px',
       }}
     >
       <TextContainer>
@@ -24,10 +21,22 @@ function Introduction() {
           and use and no specific training or IT literacy is needed.
         </DescText>
       </TextContainer>
-    </div>
+      {loginUser ? '' : <JoinButton />}
+    </IntroductionContainer>
   );
 }
 
+const IntroductionContainer = styled.div`
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 95vh;
+  width: 97vw;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 const TextContainer = styled.div`
   padding: 8vh 4.5vw;
 `;
@@ -50,5 +59,4 @@ const DescText = styled.div`
     font-size: 1.6rem;
   }
 `;
-
 export default Introduction;
