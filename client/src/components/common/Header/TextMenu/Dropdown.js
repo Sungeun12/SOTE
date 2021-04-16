@@ -28,6 +28,7 @@ const DropdownContainer = styled.ul`
   top: 60px;
   left: 170px;
   background-color: white;
+  z-index: 99;
   box-shadow: 0px 1px 1px rgba(15, 15, 15, 0.2);
   @media (max-width: ${media.tablet}px) {
     position: absolute;
