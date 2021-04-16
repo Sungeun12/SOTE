@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FaUserCircle } from 'react-icons/fa';
 import dummy from './dummyUser.json';
 
 function UserProfile() {
@@ -9,7 +10,11 @@ function UserProfile() {
         dummy.user.map(({ id, name, profilePath }) => (
           <UserItem key={id.toString(10)}>
             <UserName>{name}</UserName>
-            <UserImg src={profilePath} alt={id.toString(10)} />
+            {profilePath ? (
+              <UserImg src={profilePath} alt={id.toString(10)} />
+            ) : (
+              <FaUserCircle size="25" color="#484646" />
+            )}
           </UserItem>
         ))}
     </UserContainer>

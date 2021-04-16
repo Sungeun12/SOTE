@@ -34,9 +34,14 @@ function Header() {
         </LeftMenuContainer>
       </MenuItem>
       <MenuItem>
-        <UserContainer>
-          <UserProfile />
-        </UserContainer>
+        {loginUser ? (
+          <UserContainer>
+            <UserProfile />
+          </UserContainer>
+        ) : (
+          ''
+        )}
+
         <IconMenu />
         <ButtonContainer>
           {loginUser ? (

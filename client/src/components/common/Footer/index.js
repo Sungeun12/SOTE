@@ -18,7 +18,7 @@ function Footer() {
       </Wrapper>
       <ul>
         {footerData.map(({ text }) => (
-          <FooterItem>{text}</FooterItem>
+          <FooterItem key={text}>{text}</FooterItem>
         ))}
       </ul>
 

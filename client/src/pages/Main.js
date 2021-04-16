@@ -10,8 +10,6 @@ function Main() {
   );
 }
 
-const MainContainer = styled.div`
-  height: 100vh;
-`;
+const MainContainer = styled.div``;
 
 export default Main;
