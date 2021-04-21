@@ -50,6 +50,7 @@ const FooterItem = styled.li`
   cursor: pointer;
   margin: 1.5vh 0;
   font-weight: 500;
+  font-family: 'Nanum Gothic', sans-serif;
 `;
 const SnsIcon = styled.div``;
 const CopyRight = styled.div`
@@ -58,5 +59,6 @@ const CopyRight = styled.div`
   @media (max-width: ${media.tablet}px) {
     font-size: 15px;
   }
+  font-family: 'Nanum Gothic', sans-serif;
 `;
 export default Footer;

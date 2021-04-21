@@ -32,7 +32,7 @@ const IntroductionContainer = styled.div`
   background-size: cover;
   height: 95vh;
   width: 97vw;
-  margin: 10px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,6 +50,7 @@ const MainText = styled.div`
   }
 `;
 const DescText = styled.div`
+  line-height: 35px;
   margin-top: 7vh;
   font-family: 'PT Sans', sans-serif;
   font-size: 1.6rem;
