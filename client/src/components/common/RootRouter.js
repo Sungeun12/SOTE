@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import AppLayout from './AppLayout';
-import Main from '../pages/Main';
-import Login from '../pages/Login';
-import SignUp from '../pages/SignUp';
-import CreateVote from '../pages/CreateVote';
+import Main from '../../pages/Main';
+import Login from '../../pages/Login';
+import SignUp from '../../pages/SignUp';
+import CreateVote from '../../pages/CreateVote';
 
 function LoginRoutes() {
   return (
