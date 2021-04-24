@@ -33,8 +33,9 @@ const HeaderButton = styled.div`
   font-size: 13px;
   color: ${props => props.fontcolor || 'white'};
   cursor: pointer;
+  opacity: 0.97;
   :hover {
-    opacity: 0.8;
+    opacity: 1;
   }
 `;
 export default Button;

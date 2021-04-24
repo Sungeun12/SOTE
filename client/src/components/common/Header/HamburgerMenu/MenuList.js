@@ -5,7 +5,7 @@ import Button from '../Button';
 import UserProfile from '../UserProfile';
 
 function MenuList() {
-  const loginUser = true;
+  const loginUser = false;
   return (
     <MenuListContainer>
       {loginUser ? (
@@ -14,15 +14,15 @@ function MenuList() {
         </div>
       ) : (
         <ButtonContainer>
-          <Button link="/login" text="로그인" border="#1838A8" fontcolor="#1838A8" />
-          <Button link="/signup" text="회원가입" background="#1838A8" />
+          <Button link="/login" text="로그인" border="#213E70" fontcolor="#213E70" />
+          <Button link="/signup" text="회원가입" background="#213E70" />
         </ButtonContainer>
       )}
 
       <Line />
       <TextMenu />
       <BottomContainer>
-        {loginUser ? <Button text="로그아웃" border="#1838A8" fontcolor="#1838A8" /> : ''}
+        {loginUser ? <Button text="로그아웃" border="#213E70" fontcolor="#213E70" /> : ''}
       </BottomContainer>
     </MenuListContainer>
   );

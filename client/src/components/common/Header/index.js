@@ -10,7 +10,7 @@ import IconMenu from './IconMenu';
 import UserProfile from './UserProfile';
 
 function Header() {
-  const loginUser = true;
+  const loginUser = false;
   const [isOpen, setOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -45,9 +45,9 @@ function Header() {
         <IconMenu />
         <ButtonContainer>
           {loginUser ? (
-            <Button text="로그아웃" background="#1838A8" />
+            <Button text="로그아웃" background="#213E70" />
           ) : (
-            <Button link="/login" text="로그인" background="#1838A8" />
+            <Button link="/login" text="로그인" background="#213E70" />
           )}
         </ButtonContainer>
 
