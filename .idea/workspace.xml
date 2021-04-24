@@ -15,24 +15,20 @@
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:feat" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
     </expand>
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="add: footer,Introduction, fix:Dropdown style">
-      <change afterPath="$PROJECT_DIR$/client/src/components/main/JoinButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/common/Footer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Footer/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/UserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/UserProfile.js" afterDir="false" />
+    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="fix: 메인페이지 style 수정">
+      <change afterPath="$PROJECT_DIR$/client/src/components/createVote/CreateVote.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/createVote/style.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/img/multiSelection.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/img/singleSelection.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/util/selectOption.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/Button.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/Button.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/MenuList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/MenuList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/main/Introduction.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/main/Introduction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateVote.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateVote.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +135,8 @@
     <MESSAGE value="add: header" />
     <MESSAGE value="add: RootRouter, AppLayout chore: eslint 수정" />
     <MESSAGE value="add: footer,Introduction, fix:Dropdown style" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: footer,Introduction, fix:Dropdown style" />
+    <MESSAGE value="fix: 메인페이지 style 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 메인페이지 style 수정" />
   </component>
   <component name="WindowStateProjectService">
     <state x="619" y="271" key="#ESLint" timestamp="1618416295415">
