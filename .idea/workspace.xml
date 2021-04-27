@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="fix: footer font, introduction">
+      <change afterPath="$PROJECT_DIR$/client/src/components/common/AuthLayout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/createVote/CreateVote.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/createVote/style.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/login/LoginForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/signUp/SignUpForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/signUp/style.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/img/multiSelection.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/img/singleSelection.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/util/fetcher.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/util/selectOption.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AppLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/AppLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RootRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/RootRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/Button.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/Button.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/MenuList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/HamburgerMenu/MenuList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/common/Header/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateVote.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateVote.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/util/color.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/util/color.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/mainPage" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectId" id="1r7efKKu6ei5SNGvqT4Zq2WufYf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../miniproject" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\김지원\AppData\Roaming\npm\node_modules\prettier" />
+    <property name="run.prettier.on.save" value="true" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\SOTE\client\src\components\common" />
+      <recent name="C:\SOTE\client\src\img" />
+      <recent name="C:\SOTE\client\src" />
+      <recent name="C:\SOTE\client\public\img" />
+      <recent name="C:\SOTE\client\public" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="" />
+      <created>1618331659011</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1618331659011</updated>
+      <workItem from="1618331662350" duration="5763000" />
+      <workItem from="1618338027976" duration="706000" />
+      <workItem from="1618378544662" duration="16296000" />
+      <workItem from="1618473048631" duration="34931000" />
+      <workItem from="1618515787962" duration="6168000" />
+      <workItem from="1618550562688" duration="45534000" />
+      <workItem from="1618848053204" duration="20000" />
+      <workItem from="1619001164814" duration="57015000" />
+    </task>
+    <task id="LOCAL-00001" summary="add: header">
+      <created>1618520057073</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1618520057073</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add: RootRouter, AppLayout chore: eslint 수정">
+      <created>1618520242075</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618520242075</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add: footer,Introduction, fix:Dropdown style">
+      <created>1618560164375</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1618560164375</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add: JoinButton">
+      <created>1618563471819</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1618563471819</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix: mainPage">
+      <created>1618563505867</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1618563505867</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix: footer font, introduction">
+      <created>1619008932447</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619008932447</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add: header" />
+    <MESSAGE value="add: RootRouter, AppLayout chore: eslint 수정" />
+    <MESSAGE value="add: footer,Introduction, fix:Dropdown style" />
+    <MESSAGE value="add: JoinButton" />
+    <MESSAGE value="fix: mainPage" />
+    <MESSAGE value="fix: footer font, introduction" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: footer font, introduction" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="619" y="271" key="#ESLint" timestamp="1618416295415">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="619" y="271" key="#ESLint/0.0.1280.680@0.0.1280.680" timestamp="1618416295415" />
+    <state x="412" y="170" key="#Notifications" timestamp="1618768835219">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="412" y="170" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1618768835219" />
+    <state x="228" y="135" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1619006562709">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="228" y="135" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1619006562709" />
+    <state x="575" y="105" key="FileChooserDialogImpl" timestamp="1619024541244">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="575" y="105" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1619024541244" />
+    <state x="194" y="0" key="SettingsEditor" timestamp="1618335392552">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="194" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1618335392552" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1619008968727">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1619008968727" />
+    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618519805692">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1618519805692" />
+    <state x="305" y="154" key="run.anything.popup" timestamp="1618552478418">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="305" y="154" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1618552478418" />
+    <state x="227" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1618583350028">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="227" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1618583350028" />
+  </component>
+</project>

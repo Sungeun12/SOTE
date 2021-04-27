@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
   line-height: 1;
+  overflow-x: hidden;
 }
 ol, ul {
   list-style: none;
@@ -50,4 +51,7 @@ button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+.nav .active{
+  color: #1838A8;
 }

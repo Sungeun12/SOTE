@@ -1,9 +1,15 @@
 import React from 'react';
+import RootRouter from './components/common/RootRouter';
+import './App.css';
 
 function App() {
-    return (
-        <div>App</div>
-    );
+  const loginUser = true;
+
+  return (
+    <div className="App">
+      <RootRouter isLogin={loginUser} />
+    </div>
+  );
 }
 
 export default App;
