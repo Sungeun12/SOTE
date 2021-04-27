@@ -1,5 +1,5 @@
 import React from 'react';
-import RootRouter from './components/RootRouter';
+import RootRouter from './components/common/RootRouter';
 import './App.css';
 
 function App() {
