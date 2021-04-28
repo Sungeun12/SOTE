@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import * as S from './style';
-import { majorOptions } from '../../util/selectOption';
-import color from '../../util/color';
+import { majorOptions } from '../../util/selectOption/selectOption';
+import color from '../../util/style/color';
 import { customStyles } from './style';
 
 const SignUpForm = ({ history }) => {
