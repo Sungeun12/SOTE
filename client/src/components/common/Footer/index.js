@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { AiOutlineGithub, AiOutlineInstagram } from 'react-icons/ai';
 import { FaFacebook } from 'react-icons/fa';
 import { footerData } from './footerData';
-import media from '../../../util/media';
+import media from '../../../util/style/media';
 
 function Footer() {
   return (

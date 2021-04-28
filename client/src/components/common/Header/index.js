@@ -4,7 +4,7 @@ import { useLocation } from 'react-router';
 import Logo from './Logo';
 import HamburgerMenu from './HamburgerMenu';
 import TextMenu from './TextMenu';
-import media from '../../../util/media';
+import media from '../../../util/style/media';
 import Button from './Button';
 import IconMenu from './IconMenu';
 import UserProfile from './UserProfile';

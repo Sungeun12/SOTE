@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { dropDownMenuData } from './textMenuData';
-import media from '../../../../util/media';
+import media from '../../../../util/style/media';
 
 function Dropdown() {
   return (
