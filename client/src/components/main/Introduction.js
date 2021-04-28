@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import votePic from '../../img/picture.png';
-import media from '../../util/media';
+import media from '../../util/style/media';
 import JoinButton from './JoinButton';
 
 function Introduction() {

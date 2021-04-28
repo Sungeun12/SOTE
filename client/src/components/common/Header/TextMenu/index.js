@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { BiChevronDown } from 'react-icons/bi';
 import Dropdown from './Dropdown';
 import { textMenuData } from './textMenuData';
-import media from '../../../../util/media';
+import media from '../../../../util/style/media';
 
 function TextMenu() {
   const [isDrop, setIsDrop] = useState(false);
