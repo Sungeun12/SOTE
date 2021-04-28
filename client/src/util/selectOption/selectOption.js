@@ -69,3 +69,18 @@ export const majorOptions = [
   { value: 67, label: '환경디자인과' },
   { value: 68, label: '회화과' },
 ];
+
+export const voteTypes = [
+  { value: 0, label: '공식 행사 투표' },
+  { value: 1, label: '자유 투표' },
+  { value: 2, label: '단체' },
+];
+
+export const FreeVoteCategory = [
+  { value: 0, label: '일상' },
+  { value: 1, label: '공부' },
+  { value: 2, label: '취업' },
+  { value: 3, label: '연예' },
+  { value: 4, label: '정치' },
+  { value: 5, label: '기타' },
+];
