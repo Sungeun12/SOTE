@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import fetcher from '../../util/fetcher';
 import * as S from '../signUp/style';
-import color from '../../util/color';
+import color from '../../util/style/color';
 
 function LoginForm() {
   const { data: userData, error: swrError, revalidate } = useSWR(

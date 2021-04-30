@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import color from '../../util/color';
+import color from '../../util/style/color';
 
 function AuthLayout({ title, description, children }) {
   return (

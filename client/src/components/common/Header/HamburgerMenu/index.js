@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import MenuToggle from './MenuToggle';
 import MenuList from './MenuList';
-import media from '../../../../util/media';
+import media from '../../../../util/style/media';
 
 const menuVariants = {
   open: {
