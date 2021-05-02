@@ -13,6 +13,7 @@ app.use(
   morgan('dev'),
   express.json(),
   express.urlencoded({ extended: false }),
+  express.static('uploads')
 );
 
 mongoose.connect(MONGO_URI, {
