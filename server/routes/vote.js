@@ -7,13 +7,13 @@ const router = express.Router();
 // MULTER CONFIG
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, 'uploads/option');
   },
   filename: (req, file, cb) => {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
-const upload = multer({ storage }).array('option');
+const upload = multer({ storage }).single('img');
 
 // 전체 투표 조건별 조회
 router.get('/', (req, res) => {
@@ -91,13 +91,12 @@ router.get('/major', async (req, res) => {
 })
 
 // 후보 이미지 업로드
-router.post('/image', async (req, res) => {
+router.post('/upload', async (req, res) => {
   upload(req, res, err => {
     if(err) {
       return res.status(400).json({ success: false, err });
     }
-    const filepaths = res.req.files.map(file => file.path);
-    return res.status(200).json({ success: true, filepaths });
+    return res.status(201).json({ success: true, filepath: req.file.path });
   })
 })
 
