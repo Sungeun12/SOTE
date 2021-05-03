@@ -4,22 +4,6 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const voteRouter = require('./routes/vote');
 
-const port = 3500
-const config =require('./config/key')
-
-const userRouter=require('./routes/user')
-const bodyParser = require('body-parser')
-const cookieParser =require('cookie-parser')
-
-
-//application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: true}))
-//application/json
-app.use(bodyParser.json())
-app.use(cookieParser())
-
-
-
 dotenv.config();
 const app = express();
 const { PORT, MONGO_URI } = process.env;
@@ -39,7 +23,6 @@ mongoose.connect(MONGO_URI, {
   });
 
 app.use('/vote', voteRouter);
-app.use('/user',userRouter)
 
 app.listen(app.get('port'), () => {
   console.log(`server running on port ${app.get('port')}...`);
