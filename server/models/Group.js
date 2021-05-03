@@ -34,6 +34,10 @@ const groupSchema = new Schema({
   notices: {
     type: [ObjectId],
     ref: 'Notice'
+  },
+  memberCount: {
+    type: Number,
+    default: 0
   }
 }, { timestamps: true });
 
