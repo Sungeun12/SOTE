@@ -8,8 +8,6 @@ import color from '../../util/style/color';
 import { customStyles } from './style';
 
 const SignUpForm = ({ history }) => {
-  const [sendAuth, setSendAuth] = useState(false);
-  const [auth, setAuth] = useState(false);
   const [signUpError, setSignUpError] = useState('');
 
   const {
@@ -21,8 +19,6 @@ const SignUpForm = ({ history }) => {
     formState: { errors },
   } = useForm();
 
-  const email = watch('email');
-  const authNumber = watch('authNumber');
   const password = useRef();
   password.current = watch('password');
   const checkAll = watch('checkAll');
@@ -42,49 +38,23 @@ const SignUpForm = ({ history }) => {
   const onSubmit = data => {
     setSignUpError('');
     axios
-      .post('/api/user/signup', {
+      .post('http://localhost:5000/user/signup', {
         email: `${data.email}@sookmyung.ac.kr`,
         password: data.password,
-        sid: data.sid,
+        id: data.id,
         name: data.name,
         major: data.major.label,
         isAdmin: false,
       })
       .then(response => {
+        alert('회원가입이 완료되었습니다. 인증을 완료해주세요.');
         console.log(response);
-        history.push('/login');
+        history.push('/auth');
       })
       .catch(error => {
         console.log(error.response);
-        setSignUpError(error.response.data);
+        setSignUpError(error.response);
       });
-  };
-
-  const sendAuthNumber = () => {
-    axios
-      .post('/api/user/sendemail', {
-        email: `${email}@sookmyung.ac.kr`,
-      })
-      .then(() => {
-        setSendAuth(true);
-      })
-      .catch(error => {
-        console.log(error);
-        setSignUpError(error.response.data);
-      });
-    console.log('전송');
-  };
-
-  const authNumberConfirm = () => {
-    axios
-      .post('/api/user/authconfirm', { authNumber })
-      .then(() => {
-        setAuth(true);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    console.log('확인');
   };
 
   return (
@@ -115,43 +85,13 @@ const SignUpForm = ({ history }) => {
         <S.Email>@ sookymyung.ac.kr</S.Email>
       </S.EmailWrapper>
       <S.ButtonWrapper>
-        {errors.email && errors.email.type === 'required' ? (
+        {errors.email && errors.email.type === 'required' && (
           <S.ErrorMessage>이메일을 입력해주세요.</S.ErrorMessage>
-        ) : (
-          <div />
         )}
-        {errors.email && errors.email.type === 'pattern' ? (
+        {errors.email && errors.email.type === 'pattern' && (
           <S.ErrorMessage>
             6자~30자 글자(a-z),숫자(0-9) 및 마침표(.)만 입력할 수 있습니다.
           </S.ErrorMessage>
-        ) : (
-          <div />
-        )}
-        {sendAuth ? (
-          <S.AgainRequestButton type="button" onClick={sendAuthNumber}>
-            요청 다시 보내기
-          </S.AgainRequestButton>
-        ) : (
-          <S.AuthButton type="button" onClick={sendAuthNumber}>
-            인증번호 요청
-          </S.AuthButton>
-        )}
-      </S.ButtonWrapper>
-      <S.Label>인증번호</S.Label>
-      <S.Input
-        placeholder="인증번호"
-        {...register('authNumber', { required: true })}
-        disabled={auth}
-        style={{ marginBottom: '0px' }}
-      />
-      <S.ButtonWrapper>
-        {errors.authNumber ? <S.ErrorMessage>인증번호를 입력해주세요.</S.ErrorMessage> : <div />}
-        {auth ? (
-          <S.Confirm>확인</S.Confirm>
-        ) : (
-          <S.AuthButton type="button" onClick={authNumberConfirm}>
-            확인하기
-          </S.AuthButton>
         )}
       </S.ButtonWrapper>
       <S.Label>학과</S.Label>
@@ -175,15 +115,15 @@ const SignUpForm = ({ history }) => {
       <S.Input
         type="number"
         placeholder="학번"
-        {...register('sid', { required: true, minLength: 7, maxLength: 7 })}
+        {...register('id', { required: true, minLength: 7, maxLength: 7 })}
       />
-      {errors.sid && errors.sid.type === 'required' && (
+      {errors.id && errors.id.type === 'required' && (
         <S.ErrorMessage>학번을 입력해주세요.</S.ErrorMessage>
       )}
-      {errors.sid && errors.sid.type === 'minLength' && (
+      {errors.id && errors.id.type === 'minLength' && (
         <S.ErrorMessage>학번 7자리를 입력해주세요.</S.ErrorMessage>
       )}
-      {errors.sid && errors.sid.type === 'maxLength' && (
+      {errors.id && errors.id.type === 'maxLength' && (
         <S.ErrorMessage>학번 7자리를 입력해주세요.</S.ErrorMessage>
       )}
 
