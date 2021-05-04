@@ -96,13 +96,13 @@ router.post('/upload', async (req, res) => {
     if(err) {
       return res.status(400).json({ success: false, err });
     }
-    return res.status(201).json({ success: true, filepath: req.file.path });
+    return res.status(201).json({ success: true, filepath: '/option/' + req.file.filename });
   })
 })
 
 // 개별 투표 조회
 router.get('/:id', (req, res) => {
-  Vote.find({ _id: req.params.id })
+  Vote.findOne({ _id: req.params.id })
     .populate('organizer', 'name')
     .populate('group', 'name')
     .then(vote => res.status(200).json({ success: true, data: vote }))
