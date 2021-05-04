@@ -5,6 +5,7 @@ import Main from '../../pages/Main';
 import Login from '../../pages/Login';
 import SignUp from '../../pages/SignUp';
 import CreateVote from '../../pages/CreateVote';
+import AuthNumberConfirm from '../AuthNumberConfirm';
 
 function LoginRoutes() {
   return (
@@ -13,6 +14,7 @@ function LoginRoutes() {
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/createvote" component={CreateVote} />
+      <Route exact path="/auth" component={AuthNumberConfirm} />
     </Switch>
   );
 }
@@ -23,6 +25,7 @@ function HomeRoutes() {
       <Route exact path="/" component={Main} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/auth" component={AuthNumberConfirm} />
       <Redirect from="*" to="/login" />
     </Switch>
   );
