@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import styled from 'styled-components';
 import { Link, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import fetcher from '../../util/fetcher';
-import * as S from '../signUp/style';
+import * as S from '../SignUpForm/style';
 import color from '../../util/style/color';
 
-function LoginForm() {
-  const { data: userData, error: swrError, revalidate } = useSWR(
-    'http://localhost:{서버포트}/api/user/',
-    fetcher,
-  );
+function LoginForm({ history }) {
+  const { data: userData, error: swrError, revalidate } = useSWR('/api/user/auth', fetcher);
 
   const [logInError, setLogInError] = useState('');
   const {
@@ -25,7 +23,7 @@ function LoginForm() {
     setLogInError(false);
     axios
       .post(
-        'api/user/login',
+        '/api/user/signin',
         {
           email: `${data.email}@sookmyung.ac.kr`,
           password: data.password,
@@ -36,9 +34,10 @@ function LoginForm() {
       )
       .then(() => {
         revalidate();
+        history.push('/');
       })
       .catch(error => {
-        setLogInError(error.response.data);
+        setLogInError(error.response);
       });
   };
 
@@ -83,9 +82,13 @@ function LoginForm() {
         <S.ErrorMessage>8~20자 영문, 숫자로 입력해주세요.</S.ErrorMessage>
       )}
       <BottomContainer>
-        <li>비밀번호 찾기</li>
-        <li>
-          <ToSignUp to="/signup">회원가입</ToSignUp>
+        <li style={{ width: '70%' }}>비밀번호 찾기</li>
+
+        <li style={{ width: '15%' }}>
+          <StyledLink to="/auth">인증하기</StyledLink>
+        </li>
+        <li style={{ width: '15%' }}>
+          <StyledLink to="/signup">회원가입</StyledLink>
         </li>
       </BottomContainer>
       <S.SubmitButton type="submit">로그인</S.SubmitButton>
@@ -111,9 +114,9 @@ const BottomContainer = styled.ul`
   font-size: 1rem;
 `;
 
-const ToSignUp = styled(Link)`
+const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${color.darkGray};
 `;
 
-export default LoginForm;
+export default withRouter(LoginForm);
