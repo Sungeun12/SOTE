@@ -93,6 +93,7 @@ userSchema.pre('save', function (next){
 
 userSchema.methods.comparePassword =function(plainPassword, cb){
     //암호화된 비밀 번호와 그냥 비밀번호가 같은지 확인
+    var user = this
     bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
         if(err) return cb(err)
         cb(null, isMatch)
@@ -114,12 +115,6 @@ userSchema.methods.compareCode =function(plainCode, cb){
     else{
         return cb(err)
     }
-
-    /*bcrypt.compare(plainCode, this.code, function(err, isMatch) {
-        if(err) return cb(err)
-        cb(null, isMatch)
-    })*/
-
 }
 
 userSchema.methods.generateToken =function(cb){

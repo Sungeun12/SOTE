@@ -104,10 +104,6 @@ router.post('/authConfirm',(req,res)=>{
                 "message":"인증번호가 다릅니다."
             })
         }
-        /*user.compareCode(req.body.cauthNumber, (err, isMatch)=>{
-            if(!isMatch)
-            return res.json({ ConfirmSucess: false, message:"인증코드가 틀렸습니다."})
-        })*/
     })
 })
 
@@ -122,20 +118,29 @@ router.post('/signin',(req, res)=>{
         }
         //요청된 이메일이 데이터 베이스에 있다면 비밀번호가 맞는지 확인
         user.comparePassword(req.body.password, (err, isMatch)=>{
-            if(!isMatch)
-            return res.json({ loginSucess: false, message:"비밀번호가 틀렸습니다."})
-        })
-            //비밀번호까지 맞다면 토큰을 생성하기
-            user.generateToken((err, user)=>{
-            if(err) return res.status(400).send(err)
-
-            //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지
-            res.cookie("x_auth",user.token)
-            .status(200)
-            .json({loginSucess: true, userId: user._id})
-            })
+            if(!isMatch){
+                return res.json({ loginSucess: false, message:"비밀번호가 틀렸습니다."})
+            }
+            else{
+                //codetoken값이 있는지 확인
+                if(user.codetoken==null){
+                    return res.json({loginSucess: false, message:"인증이 되지 않은 계정입니다."})
+                }
+                else{
+                    //codetoken이 있다면 토큰을 생성하기
+                    user.generateToken((err, user)=>{
+                        if(err) return res.status(400).send(err)
+    
+                        //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지
+                        res.cookie("x_auth",user.token)
+                        .status(200)
+                        .json({loginSucess: true, userId: user._id})
+                    })
+                }
+            }
         })
     })
+})
 
     router.get('/',auth,(req,res)=>{
     //여기까지 middleware를 통과해 왔다는 얘기는
@@ -151,9 +156,6 @@ router.post('/signin',(req, res)=>{
     })
 })
 
-//router.get('',auth,(req,res)=>{
-    
-//})
 
 router.get('/signout',auth,(req,res)=>{
     User.findOneAndUpdate({_id:req.user._id},
