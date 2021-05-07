@@ -3,9 +3,8 @@ const { Schema } = mongoose;
 const { Types: { ObjectId } } = Schema;
 
 const membershipSchema = new Schema({
-  member: {
-    type: ObjectId,
-    ref: 'User',
+  memberEmail: {
+    type: String,
     required: true
   },
   group: {
