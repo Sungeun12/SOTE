@@ -69,65 +69,37 @@ router.post("/sendmail", async function (req, res) {
 router.post("/authConfirm", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
-      var key = "code key";
-      var data = req.body.cauthNumber;
-      var cipher = crypto.createCipher("aes-256-cbc", key);
-      var result3 = cipher.update(data, "utf8", "base64");
-      result3 += cipher.final("base64");
-      console.log(result3);
-      console.log(user);
-      if (result3 === user.code) {
-        //코드까지 맞다면 토큰을 생성하기
-        user.generateCodeToken((err, user) => {
-          if (err) return res.status(400).send(err);
-
-          //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지
-          //res.cookie("x_auth",user.codetoken)
-          //.status(200)
-          //.json({ConfirmSucess: true})
-        });
-        return res.json({
-          success: true,
-          message: "인증이 완료되었습니다.",
-        });
-      } else {
-        return res.json({
-          success: false,
-          message: "인증번호가 다릅니다.",
-        });
-      }
-    } else {
-      var key = "code key";
-      var data = req.body.cauthNumber;
-      var cipher = crypto.createCipher("aes-256-cbc", key);
-      var result3 = cipher.update(data, "utf8", "base64");
-      result3 += cipher.final("base64");
-      console.log(result3);
-      if (result3 === user.code) {
-        //코드까지 맞다면 토큰을 생성하기
-        user.generateCodeToken((err, user) => {
-          if (err) return res.status(400).send(err);
-
-          //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지
-          //res.cookie("x_auth",user.codetoken)
-          //.status(200)
-          //.json({ConfirmSucess: true})
-        });
-        return res.json({
-          success: true,
-          message: "인증이 완료되었습니다.",
-        });
-      } else {
-        return res.json({
-          success: false,
-          message: "인증번호가 다릅니다.",
-        });
-      }
+      return res.json({
+        loginSuccess: false,
+        message: "제공된 이메일에 해당하는 유저가 없습니다.",
+      });
     }
-    /*user.compareCode(req.body.cauthNumber, (err, isMatch)=>{
-            if(!isMatch)
-            return res.json({ ConfirmSucess: false, message:"인증코드가 틀렸습니다."})
-        })*/
+    var key = "code key";
+    var data = req.body.cauthNumber;
+    var cipher = crypto.createCipher("aes-256-cbc", key);
+    var result3 = cipher.update(data, "utf8", "base64");
+    result3 += cipher.final("base64");
+    console.log(result3);
+    if (result3 === user.code) {
+      //코드까지 맞다면 토큰을 생성하기
+      user.generateCodeToken((err, user) => {
+        if (err) return res.status(400).send(err);
+
+        //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지
+        //res.cookie("x_auth",user.codetoken)
+        //.status(200)
+        //.json({ConfirmSuccess: true})
+      });
+      return res.json({
+        success: true,
+        message: "인증이 완료되었습니다.",
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: "인증번호가 다릅니다.",
+      });
+    }
   });
 });
 
@@ -136,7 +108,7 @@ router.post("/signin", (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({
-        loginSucess: false,
+        loginSuccess: false,
         message: "제공된 이메일에 해당하는 유저가 없습니다.",
       });
     }
@@ -144,7 +116,7 @@ router.post("/signin", (req, res) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
         return res.json({
-          loginSucess: false,
+          loginSuccess: false,
           message: "비밀번호가 틀렸습니다.",
         });
     });
@@ -173,10 +145,6 @@ router.get("/auth", auth, (req, res) => {
     major: req.user.major,
   });
 });
-
-//router.get('',auth,(req,res)=>{
-
-//})
 
 router.get("/signout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, User) => {
