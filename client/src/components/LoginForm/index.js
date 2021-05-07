@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
+// import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-import useSWR from 'swr';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import fetcher from '../../util/fetcher';
+import axios from 'axios';
 import * as S from '../SignUpForm/style';
 import color from '../../util/style/color';
 
-function LoginForm({ history }) {
-  const { data: userData, error: swrError, revalidate } = useSWR('/api/user/auth', fetcher);
+function LoginForm() {
+  //  const dispatch = useDispatch();
 
   const [logInError, setLogInError] = useState('');
   const {
@@ -21,6 +20,8 @@ function LoginForm({ history }) {
 
   const onSubmit = data => {
     setLogInError(false);
+    // const response = api.signIn(userEmail, userPwd);
+
     axios
       .post(
         '/api/user/signin',
@@ -32,18 +33,13 @@ function LoginForm({ history }) {
           withCredentials: true,
         },
       )
-      .then(() => {
-        revalidate();
-        history.push('/');
+      .then(response => {
+        console.log(response);
       })
       .catch(error => {
-        setLogInError(error.response);
+        console.log(error);
       });
   };
-
-  if (!swrError && userData) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
@@ -82,12 +78,12 @@ function LoginForm({ history }) {
         <S.ErrorMessage>8~20자 영문, 숫자로 입력해주세요.</S.ErrorMessage>
       )}
       <BottomContainer>
-        <li style={{ width: '70%' }}>비밀번호 찾기</li>
+        <li style={{ width: '60%' }}>비밀번호 찾기</li>
 
-        <li style={{ width: '15%' }}>
+        <li style={{ width: '20%' }}>
           <StyledLink to="/auth">인증하기</StyledLink>
         </li>
-        <li style={{ width: '15%' }}>
+        <li>
           <StyledLink to="/signup">회원가입</StyledLink>
         </li>
       </BottomContainer>

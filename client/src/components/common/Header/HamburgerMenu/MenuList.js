@@ -1,11 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../../../actions/auth_actions';
 import TextMenu from '../TextMenu';
 import Button from '../Button';
 import UserProfile from '../UserProfile';
+import color from '../../../../util/style/color';
 
 function MenuList() {
-  const loginUser = false;
+  const loginUser = useSelector(state => state.user.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    console.log('logout');
+    dispatch(logout());
+  };
   return (
     <MenuListContainer>
       {loginUser ? (
@@ -22,7 +31,7 @@ function MenuList() {
       <Line />
       <TextMenu />
       <BottomContainer>
-        {loginUser ? <Button text="로그아웃" border="#213E70" fontcolor="#213E70" /> : ''}
+        {loginUser ? <LogoutButton type="button" value="로그아웃" onClick={handleLogout} /> : ''}
       </BottomContainer>
     </MenuListContainer>
   );
@@ -46,5 +55,22 @@ const BottomContainer = styled.div`
   position: absolute;
   bottom: 50px;
   right: 2rem;
+`;
+const LogoutButton = styled.input`
+  font-family: 'Nanum Gothic Coding', monospace;
+  width: 65px;
+  height: 30px;
+  text-align: center;
+  background-color: white;
+  padding: 8px 10px;
+  border-radius: 30px;
+  border: 1px solid ${color.navy};
+  font-size: 10px;
+  color: ${color.navy};
+  cursor: pointer;
+  opacity: 0.97;
+  :hover {
+    opacity: 1;
+  }
 `;
 export default MenuList;
