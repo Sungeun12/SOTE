@@ -12,8 +12,10 @@ const app = express();
 const { PORT, MONGO_URI } = process.env;
 
 app.set("port", PORT);
+
+app.use(cors());
+
 app.use(
-  cors(),
   morgan("dev"),
   cookieParser(),
   express.json(),
