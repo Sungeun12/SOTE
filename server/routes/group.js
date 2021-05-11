@@ -98,39 +98,19 @@ router.get('/:id', (req, res) => {
 });
 
 // 파일 업로드
-router.post('/:id/upload', upload, (req, res) => {
+router.post('/:id/upload', upload, async (req, res) => {
   const groupId = req.params.id;
-  const filepath = '/group/' + req.file.filename;
+  const filepath = 'group/' + req.file.filename;
   const isEmailFile = req.file.mimetype === 'text/csv';
 
   if(isEmailFile){
-    const members = [];
-
-    // CSV 파일 파싱
-    fs.createReadStream('./uploads' + filepath)
-      .pipe(stripBom())
-      .pipe(csv())
-      .on('data', row => {
-        if(row['이름'] && row['이메일'])
-          members.push(row);
-      })
-      .on('end', () => {
-        console.log(members);
-        console.log('CSV file successfully processed');
-        
-        // 기존에 등록되어 있던 멤버십 일괄 삭제
-        Membership.deleteMany({ group: groupId });
-        
-        // 모든 회원 멤버십 등록
-        members.forEach(member => {
-          const membership = new Membership({
-            memberEmail: member['이메일'],
-            group: groupId,
-            status: 'joined'
-          });
-          membership.save();
-        })
-      });
+    try {
+      deleteAllMemberships(groupId);
+      const members = await parseEmailFile(filepath);
+      addMemberships(members, groupId);
+    } catch(err) {
+      return res.status(400).json({ success: false, err: err.message });
+    }
   }
   return res.status(201).json({ success: true, filepath });
 })
@@ -152,54 +132,119 @@ router.post('/:id/join', async (req, res) => {
     이름: user.name,
     이메일: user.email
   };
-
+  
   try {
-    // 이미 가입된 멤버인지 확인
-    const member = await Membership.findOne({ 
-      memberEmail: user.email, 
-      group: groupId 
-    });
-    if(member) return res.status(400).json({ success: false, err: '이미 가입된 멤버입니다.' });
-
-    // 그룹 이메일 파일 찾기
-    const group = await Group.findOne({ _id: groupId })
-    if(!group) return res.status(400).json({ success: false, err: '단체를 찾을 수 없습니다.' });
-    const filepath = './uploads' + group.emailFile;
-
-    // csv 파일에 새 멤버 추가
-    const members = await parseCSVFile(filepath);
-    members.push(newMember);
-
-    const json2csv = parse(members, { withBOM: true });        
-    fs.writeFile(filepath, json2csv, (err) => {
-      if(err) return res.status(400).json({ success: false, err: 'CSV 파일 쓰기에 실패하였습니다.' }); 
-    })
-    
-    // 멤버십 등록
-    const membership = new Membership({
-      memberEmail: user.email,
-      group: groupId,
-      status: 'joined'
-    });
-    await membership.save();
+    await checkIfAlreadyJoined(user.email, groupId);
+    const filepath = await findEmailFilepath(groupId);
+    const members = await parseEmailFile(filepath);
+    addMember(newMember, members);
+    updateEmailFile(members, filepath);
+    const membership = await addMembership(user.email, groupId);
     return res.status(201).json({ success: true, membershipId: membership._id });
   } catch(err) {
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json({ success: false, err: err.message });
   }
+})
 
-  async function parseCSVFile(filepath) {
-    const members = [];
-    return new Promise((resolve, reject) => {
-      const stream = 
-      fs.createReadStream(filepath)
-        .pipe(stripBom())
-        .pipe(csv());
-  
-      stream.on('data', row => members.push(row));
-      stream.on('end', () => resolve(members));
-      stream.on('error', err => reject(err));
-    })
+// 멤버 탈퇴
+router.post('/:id/leave', async (req, res) => {
+  const user = req.body;
+  const groupId = req.params.id;
+
+  try {
+    deleteMembership(user.email, groupId);
+    const filepath = await findEmailFilepath(groupId);
+    const members = await parseEmailFile(filepath);
+    removeMember(user, members);
+    updateEmailFile(members, filepath);
+  } catch(err) {
+    return res.status(400).json({ success: false, err: err.message });
   }
+})
+
+async function checkIfAlreadyJoined(memberEmail, group) {
+  const member = await Membership.findOne({ memberEmail, group });
+  if(member) throw new Error('이미 가입된 멤버입니다.');
+}
+
+async function addMembership(memberEmail, group) {
+  const membership = new Membership({ memberEmail, group, status: 'joined' });
+  return membership.save();
+}
+
+async function addMemberships(members, group) {
+  members.forEach(async member => {
+    const membership = new Membership({
+      memberEmail: member['이메일'],
+      group,
+      status: 'joined'
+    });
+    membership.save();
+  });
+}
+
+async function deleteMembership(memberEmail, group) {
+  const membership = await Membership.findOneAndDelete({ memberEmail, group });
+  if(!membership) throw new Error('존재하지 않는 멤버입니다.');
+}
+
+async function deleteAllMemberships(group) {
+  await Membership.deleteMany({ group });
+}
+
+async function findEmailFilepath(groupId) {
+  const group = await Group.findOne({ _id: groupId });
+  if(!group) throw new Error('단체를 찾을 수 없습니다.');
+  return group.emailFile;
+}
+
+async function parseEmailFile(filepath) {
+  const members = [];
+  return new Promise((resolve, reject) => {
+    const stream = 
+    fs.createReadStream('./uploads/' + filepath)
+      .pipe(stripBom())
+      .pipe(csv());
+
+    stream.on('data', row => {
+      if(row['이름'] && row['이메일']) members.push(row);
+    });
+    stream.on('end', () => resolve(members));
+    stream.on('error', err => reject(err));
+  })
+}
+
+async function updateEmailFile(members, filepath) {
+  const json2csv = parse(members, { withBOM: true });        
+  fs.writeFile('./uploads/' + filepath, json2csv, (err) => {
+    if(err) throw new Error('CSV 파일 쓰기에 실패하였습니다.');
+  })
+}
+
+function addMember(user, members) {
+  members.push(user);
+}
+
+function removeMember(user, members) {
+  const userIndex = members.findIndex(member => {
+    return member.이름 === user.name && member.이메일 === user.email
+  });
+  if(userIndex === -1){
+    throw new Error('해당 멤버를 CSV 파일에서 찾을 수 없습니다.');
+  }
+  members.splice(userIndex, 1);
+}
+
+// 매니저 관리
+router.post('/:id/manage', (req, res) => {
+  // send invitation email
+  // if answer -> managers.push
+})
+
+// 공지사항
+router.post('/:id/notice', (req, res) => {
+  // isAdmin ? CRUD : R 
+  // notices.push
 })
 
 module.exports = router;
