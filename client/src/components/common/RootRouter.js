@@ -11,10 +11,8 @@ function LoginRoutes() {
   return (
     <Switch>
       <Route exact path="/" component={Main} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/signup" component={SignUp} />
       <Route exact path="/createvote" component={CreateVote} />
-      <Route exact path="/auth" component={AuthConfirm} />
+      <Redirect from="*" to="/" />
     </Switch>
   );
 }
