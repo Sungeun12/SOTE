@@ -13,9 +13,8 @@ const { PORT, MONGO_URI } = process.env;
 
 app.set("port", PORT);
 
-app.use(cors());
-
 app.use(
+  cors(),
   morgan("dev"),
   cookieParser(),
   express.json(),
@@ -29,7 +28,7 @@ mongoose.connect(MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-app.use("/api/user", userRouter);
+app.use("/user", userRouter);
 app.use("/vote", voteRouter);
 
 app.listen(app.get("port"), () => {

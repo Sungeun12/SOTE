@@ -15,8 +15,8 @@ router.post("/signup", (req, res) => {
   }
 
   user.save((err, userInfo) => {
-    if (err) return res.json({ sucess: false, err });
-    return res.status(200).json({ sucess: true });
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ success: true });
   });
 });
 
@@ -128,7 +128,7 @@ router.post("/signin", (req, res) => {
       res
         .cookie("x_auth", user.token)
         .status(200)
-        .json({ loginSucess: true, userId: user._id });
+        .json({ loginSuccess: true, userId: user._id });
     });
   });
 });
@@ -148,9 +148,9 @@ router.get("/auth", auth, (req, res) => {
 
 router.get("/signout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, User) => {
-    if (err) return res.json({ sucess: false, err });
+    if (err) return res.json({ success: false, err });
     return res.status(200).send({
-      sucess: true,
+      success: true,
     });
   });
 });
