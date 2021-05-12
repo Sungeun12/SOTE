@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import useSWR from 'swr';
+import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import fetcher from '../../util/fetcher';
-import * as S from '../signUp/style';
+import * as S from '../SignUpForm/style';
 import color from '../../util/style/color';
+import { signIn } from '../../actions/auth_actions';
 
 function LoginForm() {
-  const { data: userData, error: swrError, revalidate } = useSWR(
-    'http://localhost:{서버포트}/api/user/',
-    fetcher,
-  );
+  const dispatch = useDispatch();
 
   const [logInError, setLogInError] = useState('');
   const {
@@ -23,28 +20,10 @@ function LoginForm() {
 
   const onSubmit = data => {
     setLogInError(false);
-    axios
-      .post(
-        'api/user/login',
-        {
-          email: `${data.email}@sookmyung.ac.kr`,
-          password: data.password,
-        },
-        {
-          withCredentials: true,
-        },
-      )
-      .then(() => {
-        revalidate();
-      })
-      .catch(error => {
-        setLogInError(error.response.data);
-      });
+    const userEmail = `${data.email}@sookmyung.ac.kr`;
+    const userPwd = data.password;
+    dispatch(signIn(userEmail, userPwd));
   };
-
-  if (!swrError && userData) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <S.Form onSubmit={handleSubmit(onSubmit)}>
@@ -83,9 +62,13 @@ function LoginForm() {
         <S.ErrorMessage>8~20자 영문, 숫자로 입력해주세요.</S.ErrorMessage>
       )}
       <BottomContainer>
-        <li>비밀번호 찾기</li>
+        <li style={{ width: '60%' }}>비밀번호 찾기</li>
+
+        <li style={{ width: '20%' }}>
+          <StyledLink to="/auth">인증하기</StyledLink>
+        </li>
         <li>
-          <ToSignUp to="/signup">회원가입</ToSignUp>
+          <StyledLink to="/signup">회원가입</StyledLink>
         </li>
       </BottomContainer>
       <S.SubmitButton type="submit">로그인</S.SubmitButton>
@@ -111,9 +94,9 @@ const BottomContainer = styled.ul`
   font-size: 1rem;
 `;
 
-const ToSignUp = styled(Link)`
+const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${color.darkGray};
 `;
 
-export default LoginForm;
+export default withRouter(LoginForm);

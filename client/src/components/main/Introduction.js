@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import votePic from '../../img/picture.png';
 import media from '../../util/style/media';
 import JoinButton from './JoinButton';
 
 function Introduction() {
-  const loginUser = true;
+  const loginUser = useSelector(state => state.user.user);
 
   return (
     <IntroductionContainer

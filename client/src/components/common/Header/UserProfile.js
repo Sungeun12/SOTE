@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaUserCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import dummy from './dummyUser.json';
 
 function UserProfile() {
+  const loginUser = useSelector(state => state.user.user);
   return (
     <UserContainer>
-      {dummy.user &&
+      {loginUser &&
         dummy.user.map(({ id, name, profilePath }) => (
           <UserItem key={id.toString(10)}>
             <UserName>{name}</UserName>

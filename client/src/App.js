@@ -3,7 +3,7 @@ import RootRouter from './components/common/RootRouter';
 import './App.css';
 
 function App() {
-  const loginUser = true;
+  const loginUser = false;
 
   return (
     <div className="App">

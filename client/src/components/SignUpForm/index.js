@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import * as S from './style';
 import { majorOptions } from '../../util/selectOption/selectOption';
 import color from '../../util/style/color';
 import { customStyles } from './style';
+import { signUp } from '../../actions/auth_actions';
 
-const SignUpForm = ({ history }) => {
+const SignUpForm = () => {
   const [signUpError, setSignUpError] = useState('');
-
+  const dispatch = useDispatch();
+  const request = useSelector(state => state.user.request);
   const {
     register,
     handleSubmit,
@@ -36,25 +38,16 @@ const SignUpForm = ({ history }) => {
   }, [check1, check2]);
 
   const onSubmit = data => {
+    data = {
+      email: `${data.email}@sookmyung.ac.kr`,
+      password: data.password,
+      id: data.id,
+      name: data.name,
+      major: data.major.label,
+      isAdmin: false,
+    };
     setSignUpError('');
-    axios
-      .post('http://localhost:5000/user/signup', {
-        email: `${data.email}@sookmyung.ac.kr`,
-        password: data.password,
-        id: data.id,
-        name: data.name,
-        major: data.major.label,
-        isAdmin: false,
-      })
-      .then(response => {
-        alert('회원가입이 완료되었습니다. 인증을 완료해주세요.');
-        console.log(response);
-        history.push('/auth');
-      })
-      .catch(error => {
-        console.log(error.response);
-        setSignUpError(error.response);
-      });
+    dispatch(signUp(data));
   };
 
   return (
@@ -84,16 +77,14 @@ const SignUpForm = ({ history }) => {
         />
         <S.Email>@ sookymyung.ac.kr</S.Email>
       </S.EmailWrapper>
-      <S.ButtonWrapper>
-        {errors.email && errors.email.type === 'required' && (
-          <S.ErrorMessage>이메일을 입력해주세요.</S.ErrorMessage>
-        )}
-        {errors.email && errors.email.type === 'pattern' && (
-          <S.ErrorMessage>
-            6자~30자 글자(a-z),숫자(0-9) 및 마침표(.)만 입력할 수 있습니다.
-          </S.ErrorMessage>
-        )}
-      </S.ButtonWrapper>
+      {errors.email && errors.email.type === 'required' && (
+        <S.ErrorMessage>이메일을 입력해주세요.</S.ErrorMessage>
+      )}
+      {errors.email && errors.email.type === 'pattern' && (
+        <S.ErrorMessage>
+          6자~30자 글자(a-z),숫자(0-9) 및 마침표(.)만 입력할 수 있습니다.
+        </S.ErrorMessage>
+      )}
       <S.Label>학과</S.Label>
       <Controller
         name="major"
@@ -195,6 +186,7 @@ const SignUpForm = ({ history }) => {
       </S.CheckBoxWrapper>
 
       <S.SubmitButton type="submit">회원가입 완료</S.SubmitButton>
+      {request && <div>loading...</div>}
       {signUpError && <S.ErrorMessage>{signUpError}</S.ErrorMessage>}
       <S.BottomText>
         이미 가입하셨나요?

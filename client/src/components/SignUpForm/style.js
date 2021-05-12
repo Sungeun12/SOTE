@@ -41,7 +41,7 @@ export const Input = styled.input`
   }
 `;
 export const EmailWrapper = styled.div`
-  margin-top: 1vh;
+  margin: 2vh 0 3vh 0;
   display: flex;
   border-radius: 4px;
   border: 1px solid #c2c2c2;
@@ -49,11 +49,7 @@ export const EmailWrapper = styled.div`
   height: 45px;
   align-items: center;
 `;
-export const ButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-`;
+
 export const EmailInput = styled.input`
   border: none;
   border-radius: 4px;
@@ -75,6 +71,14 @@ export const Email = styled.div`
   width: 50%;
   font-family: 'Nanum Gothic', sans-serif;
   border-left: 1px solid #c2c2c2;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
 `;
 export const AuthButton = styled.button`
   font-family: 'Nanum Gothic Coding', sans-serif;
@@ -145,7 +149,7 @@ export const ErrorMessage = styled.div`
   font-family: 'Nanum Gothic', sans-serif;
   font-size: 0.8rem;
   color: red;
-  margin: 5px 0;
+  margin: 0 0 3vh 0;
 `;
 export const CheckBoxWrapper = styled.div`
   border: 1px solid ${color.gray};

@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from '../components/login/LoginForm';
+import LoginForm from '../components/LoginForm';
 import AuthLayout from '../components/common/AuthLayout';
 
 function Login() {
