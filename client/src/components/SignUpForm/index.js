@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import * as S from './style';
 import { majorOptions } from '../../util/selectOption/selectOption';
 import color from '../../util/style/color';
 import { customStyles } from './style';
+import { signUp } from '../../actions/auth_actions';
 
 const SignUpForm = () => {
   const [signUpError, setSignUpError] = useState('');
-  const history = useHistory();
+  const dispatch = useDispatch();
+  const request = useSelector(state => state.user.request);
   const {
     register,
     handleSubmit,
@@ -37,23 +38,16 @@ const SignUpForm = () => {
   }, [check1, check2]);
 
   const onSubmit = data => {
+    data = {
+      email: `${data.email}@sookmyung.ac.kr`,
+      password: data.password,
+      id: data.id,
+      name: data.name,
+      major: data.major.label,
+      isAdmin: false,
+    };
     setSignUpError('');
-    axios
-      .post('/api/user/signup', {
-        email: `${data.email}@sookmyung.ac.kr`,
-        password: data.password,
-        id: data.id,
-        name: data.name,
-        major: data.major.label,
-        isAdmin: false,
-      })
-      .then(() => {
-        alert('회원가입이 완료되었습니다. 인증을 완료해주세요.');
-        history.push('/auth');
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    dispatch(signUp(data));
   };
 
   return (
@@ -192,6 +186,7 @@ const SignUpForm = () => {
       </S.CheckBoxWrapper>
 
       <S.SubmitButton type="submit">회원가입 완료</S.SubmitButton>
+      {request && <div>loading...</div>}
       {signUpError && <S.ErrorMessage>{signUpError}</S.ErrorMessage>}
       <S.BottomText>
         이미 가입하셨나요?

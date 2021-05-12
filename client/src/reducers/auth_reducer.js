@@ -1,9 +1,15 @@
 import { authConstants } from '../constants/auth_constants';
 
-export default function (state = { loggedIn: false, user: null }, action) {
+export default function (state = { loggedIn: false, user: null, request: false }, action) {
   switch (action.type) {
+    case authConstants.SIGNUP_REQUEST:
+      return { ...state, request: true };
+    case authConstants.SIGNUP_SUCCESS:
+      return { ...state };
+    case authConstants.SIGNUP_FAILURE:
+      return { ...state };
     case authConstants.SIGNIN_REQUEST:
-      return { ...state, loggedIn: true };
+      return { ...state, loggedIn: true, request: true };
     case authConstants.SIGNIN_SUCCESS:
       return { ...state, loggedIn: true, user: action.payload };
     case authConstants.SIGNIN_FAILURE:

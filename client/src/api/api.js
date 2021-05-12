@@ -1,15 +1,28 @@
 import axios from 'axios';
 import storage from '../util/storage';
 
+export function signUp(data) {
+  return axios
+    .post('http://localhost:5000/user/signup', data)
+    .then(response => response)
+    .catch(error => error);
+}
+
+export function sendMail(email) {
+  return axios
+    .post('http://localhost:5000/user/sendmail', { email })
+    .then(response => response)
+    .catch(error => error);
+}
+export function authConfirm(email, cauthNumber) {
+  return axios
+    .post('http://localhost:5000/user/authConfirm', { email, cauthNumber })
+    .then(response => response)
+    .catch(error => error);
+}
 export function signIn(email, password) {
   return axios
-    .post(
-      '/api/user/signin',
-      { email, password },
-      {
-        withCredentials: true,
-      },
-    )
+    .post('http://localhost:5000/user/signin', { email, password })
     .then(response => {
       console.log(response);
       if (response.data.userId) {
@@ -21,13 +34,8 @@ export function signIn(email, password) {
 }
 
 export function getUserProfile() {
-  return axios({
-    method: 'get',
-    url: '/api/user/auth',
-    config: {
-      withCredentials: true,
-    },
-  })
+  return axios
+    .get('http://localhost:5000/user/auth')
     .then(response => {
       if (response.data) {
         storage.set('name', response.data.name);
@@ -41,10 +49,7 @@ export function getUserProfile() {
 export function logout() {
   return axios({
     method: 'get',
-    url: '/api/user/signout',
-    config: {
-      withCredentials: true,
-    },
+    url: 'http://localhost:5000/user/signout',
   })
     .then(response => {
       storage.remove('user');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import axios from 'axios';
+import * as api from '../../api/api';
 import * as S from '../SignUpForm/style';
 import useInput from '../../hooks/useInput';
 import checkEmail from '../../util/RegExp/checkEmail';
@@ -19,17 +19,15 @@ function AuthForm() {
       setEmailError(true);
       return;
     }
-    axios
-      .post('/api/user/sendmail', {
-        email: `${email}@sookmyung.ac.kr`,
-      })
-      .then(() => {
-        console.log('전송');
-        setSendAuth(true);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const userEmail = `${email}@sookmyung.ac.kr`;
+    const response = api.sendMail(userEmail);
+
+    if (response) {
+      setSendAuth(true);
+    }
+    if (response.data && !response.data.loginSuccess) {
+      alert(response.data.message);
+    }
   };
 
   const authNumberConfirm = () => {
@@ -39,26 +37,25 @@ function AuthForm() {
     }
     if (!email) {
       alert('이메일을 입력해주세요');
-      return;
     }
+    const userEmail = `${email}@sookmyung.ac.kr`;
 
-    axios
-      .post('/api/user/authConfirm', {
-        email: `${email}@sookmyung.ac.kr`,
-        cauthNumber,
-      })
+    api
+      .authConfirm(userEmail, cauthNumber)
       .then(response => {
-        if (response.data.success) {
-          setAuth(true);
-          history.push('/login');
+        console.log(response.data);
+        if (response.data && !response.data.success) {
+          alert(response.data.message);
         }
-        alert(response.data.message);
-        setEmail('');
-        setCAuthNumber('');
+        if (response.data && response.data.success) {
+          setAuth(true);
+          alert(response.data.message);
+          history.push('/login');
+          setEmail('');
+          setCAuthNumber('');
+        }
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => console.log(error));
   };
 
   return (

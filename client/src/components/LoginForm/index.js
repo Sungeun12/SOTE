@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import * as S from '../SignUpForm/style';
 import color from '../../util/style/color';
+import { signIn } from '../../actions/auth_actions';
 
 function LoginForm() {
-  //  const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [logInError, setLogInError] = useState('');
   const {
@@ -20,25 +20,9 @@ function LoginForm() {
 
   const onSubmit = data => {
     setLogInError(false);
-    // const response = api.signIn(userEmail, userPwd);
-
-    axios
-      .post(
-        '/api/user/signin',
-        {
-          email: `${data.email}@sookmyung.ac.kr`,
-          password: data.password,
-        },
-        {
-          withCredentials: true,
-        },
-      )
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const userEmail = `${data.email}@sookmyung.ac.kr`;
+    const userPwd = data.password;
+    dispatch(signIn(userEmail, userPwd));
   };
 
   return (
