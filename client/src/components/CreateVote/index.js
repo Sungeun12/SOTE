@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Web3 from 'web3';
+import moment from 'moment';
 import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import Vote from '../../util/VoteContract/Vote.json';
 import ConnectForm from './ConnectForm';
 import media from '../../util/style/media';
 import color from '../../util/style/color';
+import Options from './voteInput/Options';
 
-function CreateVote() {
+function CreateVote({ history }) {
+  const [options, setOptions] = useState([
+    {
+      id: 0,
+      name: '',
+      description: '',
+      image: '',
+    },
+    {
+      id: 1,
+      name: '',
+      description: '',
+      image: '',
+    },
+  ]);
+
   const [web3, setWeb3] = useState(new Web3(window.ethereum));
   const [account, setAccount] = useState('');
 
@@ -37,20 +55,17 @@ function CreateVote() {
     fetchWeb3();
   }, []);
 
-  const methods = useForm({
-    defaultValues: {
-      options: [{ name: '' }, { name: '' }],
-    },
-  });
+  const methods = useForm();
 
   const onSubmit = async data => {
-    const optionNames = data.options.map(option => option.name);
+    const optionNames = options.map(option => option.name);
     const selectionType = parseInt(data.selectionType, 2);
     const openingTime = Math.floor(data.startDate.getTime() / 1000.0);
     const closingTime = Math.floor(data.endDate.getTime() / 1000.0);
 
-    console.log(account);
-    console.log(typeof startDate);
+    const startDate = moment(data.startDate).format('YYYY/MM/DD h:mm a').toString();
+    const endDate = moment(data.endDate).format('YYYY/MM/DD h:mm a').toString();
+
     const voteContract = new web3.eth.Contract(Vote.abi);
 
     voteContract
@@ -67,14 +82,35 @@ function CreateVote() {
       .then(newContractInstance => {
         console.log(newContractInstance.options.address);
         // contractAddr 변수에 담아 서버에 넘긴다
+        const body = {
+          contractAddr: newContractInstance.options.address,
+          orgainzer: 'userid',
+          group: '',
+          voteType: data.voteType.label,
+          title: data.title,
+          description: data.description,
+          selectionType,
+          category: data.freeVoteCategory.label,
+          startDate,
+          endDate,
+          options,
+        };
+        axios.post('http://localhost:5000/vote', body).then(response => {
+          if (response.data.success) {
+            alert('투표 만들기에 성공했습니다.');
+            history.push('/');
+          } else {
+            alert('투표 만들기에 실패 했습니다.');
+          }
+        });
       });
-
-    alert('투표가 만들어졌습니다.');
   };
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(onSubmit)}>
         <ConnectForm />
+        <Options options={options} setOptions={setOptions} />
         <ButtonContainer>
           <PreviewButton type="button" value="미리보기" />
           <SubmitButton type="submit" value="투표 만들기" />
@@ -139,5 +175,4 @@ const PreviewButton = styled.input`
     width: 50%;
   }
 `;
-
 export default CreateVote;

@@ -21,7 +21,7 @@ const menuTransition = {
   delay: 0.1,
 };
 
-function HamburgerMenu({ isOpen, toggleMenu }) {
+function HamburgerMenu({ isOpen, toggleMenu, loginUser }) {
   return (
     <HamburgerMenuContainer>
       <MenuToggle toggle={toggleMenu} isOpen={isOpen} />
@@ -31,7 +31,7 @@ function HamburgerMenu({ isOpen, toggleMenu }) {
         variants={menuVariants}
         transition={menuTransition}
       >
-        <MenuList />
+        <MenuList loginUser={loginUser} />
       </MenuContainer>
     </HamburgerMenuContainer>
   );

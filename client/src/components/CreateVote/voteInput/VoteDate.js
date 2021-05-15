@@ -57,8 +57,8 @@ function VoteDate({ watch, control }) {
               selected={field.value}
               showTimeSelect
               minDate={startDate}
-              dateFormat="yyyy.MM.dd aa h:mm"
-              placeholderText="YYYY.MM.dd aa h:mm"
+              dateFormat="yyyy.MM.dd HH:mm"
+              placeholderText="YYYY.MM.dd HH:mm"
               filterTime={filterEndDateTime}
             />
           )}
