@@ -15,18 +15,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/group');
   },
   filename: (req, file, cb) => {
-    if(file.mimetype == 'text/csv'){
-      cb(null, `email-${Date.now()}${path.extname(file.originalname)}`);
-    }
-    else if(file.mimetype === 'image/png'|| 
-      file.mimetype === 'image/jpg' ||
-      file.mimetype === 'image/jpeg'
-    ){
-      cb(null, `img-${Date.now()}${path.extname(file.originalname)}`);
-    }
-    else {
-      cb(new Error('잘못된 MIME 타입입니다.'));
-    }
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 
@@ -97,22 +86,32 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(400).json({ success: false, err }));
 });
 
-// 파일 업로드
-router.post('/:id/upload', upload, async (req, res) => {
+// 이메일 파일 경로 업데이트
+router.patch('/:id', (req, res) => {
+  Group.findByIdAndUpdate(req.params.id, {
+    emailFile: req.body.filepath
+  })
+    .then(group => res.status(200).json({ success: true }))
+    .catch(err => res.status(400).json({ success: false, err }));
+})
+
+// 이메일 파일 업로드
+router.post('/:id/emailupload', upload, async (req, res) => {
   const groupId = req.params.id;
   const filepath = 'group/' + req.file.filename;
-  const isEmailFile = req.file.mimetype === 'text/csv';
 
-  if(isEmailFile){
-    try {
-      deleteAllMemberships(groupId);
-      const members = await parseEmailFile(filepath);
-      addMemberships(members, groupId);
-    } catch(err) {
-      return res.status(400).json({ success: false, err: err.message });
-    }
+  if(req.file.mimetype !== 'text/csv')
+    return res.status(400).json({ success: false, err: "잘못된 MIME 타입입니다." });
+
+  try {
+    deleteAllMemberships(groupId);
+    const members = await parseEmailFile(filepath);
+    addMemberships(members, groupId);
+
+    return res.status(201).json({ success: true, filepath });
+  } catch(err) {
+    return res.status(400).json({ success: false, err });
   }
-  return res.status(201).json({ success: true, filepath });
 })
 
 // 이메일 파일 업데이트
@@ -160,6 +159,17 @@ router.post('/:id/leave', async (req, res) => {
   } catch(err) {
     return res.status(400).json({ success: false, err: err.message });
   }
+})
+
+
+// 기타 파일 업로드
+router.post('/upload', async (req, res) => {
+  upload(req, res, err => {
+    if(err) {
+      return res.status(400).json({ success: false, err });
+    }
+    return res.status(201).json({ success: true, filepath: req.file.path });
+  })
 })
 
 async function checkIfAlreadyJoined(memberEmail, group) {
@@ -234,17 +244,5 @@ function removeMember(user, members) {
   }
   members.splice(userIndex, 1);
 }
-
-// 매니저 관리
-router.post('/:id/manage', (req, res) => {
-  // send invitation email
-  // if answer -> managers.push
-})
-
-// 공지사항
-router.post('/:id/notice', (req, res) => {
-  // isAdmin ? CRUD : R 
-  // notices.push
-})
 
 module.exports = router;
