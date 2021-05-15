@@ -25,6 +25,9 @@ router.get('/', (req, res) => {
   const match = {};
   const inOrder = {};
   
+  if(q.gid) {
+    match.group = q.gid;
+  }
   if(q.type){
     match.voteType = q.type;
   }
