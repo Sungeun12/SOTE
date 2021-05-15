@@ -210,6 +210,33 @@ router.post('/upload', async (req, res) => {
   })
 })
 
+// 매니저 등록
+router.post('/:id/manager', async (req, res) => {
+  const groupId = req.params.id;
+  const email = req.body.email;
+
+  try {
+    const managerId = await findUserIdByEmail(email);
+    if(!managerId) 
+      return res.status(400).json({ success: false, err: '존재하지 않는 사용자입니다.' });
+    await Group.findByIdAndUpdate(groupId, { 
+      $push: { managers: managerId } 
+    });
+    return res.status(200).json({ success: true });
+} catch(err) {
+  return res.status(400).json({ success: false, err });
+}
+})
+
+// 매니저 삭제
+router.delete('/:id/manager', (req, res) => {
+  Group.findByIdAndUpdate(req.params.id, { 
+    $pull: { managers: req.body.managerId } 
+  })
+    .then(group => res.status(200).json({ success: true }))
+    .catch(err => res.status(400).json({ success: false, err }));
+})
+
 const findUserIdByEmail = async email => {
   const user = await User.findOne({ email });
   return user ? user._id : null;
