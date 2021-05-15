@@ -8,6 +8,11 @@ const noticeSchema = new Schema({
     ref: 'User',
     required: true
   },
+  group: {
+    type: ObjectId,
+    ref: 'Group',
+    required: true
+  },
   title: {
     type: String,
     required: true

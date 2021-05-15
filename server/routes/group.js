@@ -5,8 +5,8 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const stripBom = require('strip-bom-stream');
 const { parse } = require('json2csv');
+const { User } = require('../models/User');
 const Group = require('../models/Group');
-const Membership = require('../models/Membership');
 const router = express.Router();
 
 // MULTER CONFIG
@@ -97,6 +97,8 @@ router.patch('/:id', (req, res) => {
 
 // 이메일 파일 업로드
 router.post('/:id/emailupload', upload, async (req, res) => {
+  const members = [];
+  const unregistered = [];
   const groupId = req.params.id;
   const filepath = 'group/' + req.file.filename;
 
@@ -104,63 +106,99 @@ router.post('/:id/emailupload', upload, async (req, res) => {
     return res.status(400).json({ success: false, err: "잘못된 MIME 타입입니다." });
 
   try {
-    deleteAllMemberships(groupId);
-    const members = await parseEmailFile(filepath);
-    addMemberships(members, groupId);
-
+    const rows = await parseEmailFile(filepath);
+    const emails = rows.map(row => row['이메일']);
+    emails.forEach(email => {
+        const userId = await findUserIdByEmail(email);
+        if(!userId) unregistered.push(email);
+        else members.push(userId);
+    });
+    await setMembers(groupId, members);
+    await addToUnregistered(groupId, unregistered);
     return res.status(201).json({ success: true, filepath });
+  } catch(err) {
+    return res.status(400).json({ success: false, err: err.message });
+  }
+})
+
+// 멤버 가입 요청
+router.post('/:id/joinreq', async (req, res) => {
+  const userId = req.body.userId;
+  const groupId = req.params.id;
+  const user = await findUserById(userId);
+  const group = await Group.findById(groupId);
+  try {
+    if(group.unregistered.includes(user.email)) {
+      addMember(groupId, userId);
+      removeFromUnregistered(groupId, user.email);
+      return res.status(201).json({ success: true, result: 'joined' });
+    }
+    else if(group.joinPolicy === 'accept'){
+        const filepath = group.emailFile;
+        const rows = await parseEmailFile(filepath);
+        const row = {
+          이름: user.name,
+          이메일: user.email
+        };
+        rows.push(row);
+        overwriteEmailFile(filepath, rows);
+        addMember(groupId, userId);
+        return res.status(201).json({ success: true, result: 'joined' });
+    }
+    else if(group.joinPolicy === 'filter') {
+      await addToWaitinglist(groupId, userId);
+
+      // * 매니저에게 알림 발송 추가할 것 *
+  
+      return res.status(201).json({ success: true, result: 'wait' });
+    }
+    else {
+      throw new Error('단체의 가입 방식이 존재하지 않습니다.');
+    }
+  } catch (err) {
+    return res.status(400).json({ success: false, err });
+  }
+})
+
+// 멤버 등록
+router.post('/:id/join', async (req, res) => {
+  const user = req.body;
+  const groupId = req.params.id;
+  
+  try {
+    const userId = await findUserIdByEmail(user.email);
+    const filepath = await findEmailFilepath(groupId);
+    const rows = await parseEmailFile(filepath);
+    const row = {
+      이름: user.name,
+      이메일: user.email
+    };
+    rows.push(row);
+    overwriteEmailFile(filepath, rows);
+    addMember(groupId, userId);
+    return res.status(201).json({ success: true });
   } catch(err) {
     return res.status(400).json({ success: false, err });
   }
 })
 
-// 이메일 파일 업데이트
-router.patch('/:id/emailfile', (req, res) => {
-  Group.findByIdAndUpdate(req.params.id, {
-    emailFile: req.body.filepath
-  })
-    .then(group => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
-
-// 개별 멤버 가입
-router.post('/:id/join', async (req, res) => {
-  const user = req.body;
-  const groupId = req.params.id;
-  const newMember = {
-    이름: user.name,
-    이메일: user.email
-  };
-  
-  try {
-    await checkIfAlreadyJoined(user.email, groupId);
-    const filepath = await findEmailFilepath(groupId);
-    const members = await parseEmailFile(filepath);
-    addMember(newMember, members);
-    updateEmailFile(members, filepath);
-    const membership = await addMembership(user.email, groupId);
-    return res.status(201).json({ success: true, membershipId: membership._id });
-  } catch(err) {
-    return res.status(400).json({ success: false, err: err.message });
-  }
-})
-
 // 멤버 탈퇴
 router.post('/:id/leave', async (req, res) => {
-  const user = req.body;
+  const userId = req.body.userId;
   const groupId = req.params.id;
 
   try {
-    deleteMembership(user.email, groupId);
+    const user = await findUserById(userId);
     const filepath = await findEmailFilepath(groupId);
-    const members = await parseEmailFile(filepath);
-    removeMember(user, members);
-    updateEmailFile(members, filepath);
+    const rows = await parseEmailFile(filepath);
+    removeUserFromRows(user, rows);
+    overwriteEmailFile(filepath, rows);
+    removeMember(groupId, userId);
+    return res.status(200).json({ success: true });
   } catch(err) {
     return res.status(400).json({ success: false, err: err.message });
   }
 })
-
 
 // 기타 파일 업로드
 router.post('/upload', async (req, res) => {
@@ -172,44 +210,57 @@ router.post('/upload', async (req, res) => {
   })
 })
 
-async function checkIfAlreadyJoined(memberEmail, group) {
-  const member = await Membership.findOne({ memberEmail, group });
-  if(member) throw new Error('이미 가입된 멤버입니다.');
+const findUserIdByEmail = async email => {
+  const user = await User.findOne({ email });
+  return user ? user._id : null;
 }
 
-async function addMembership(memberEmail, group) {
-  const membership = new Membership({ memberEmail, group, status: 'joined' });
-  return membership.save();
-}
-
-async function addMemberships(members, group) {
-  members.forEach(async member => {
-    const membership = new Membership({
-      memberEmail: member['이메일'],
-      group,
-      status: 'joined'
-    });
-    membership.save();
+const addToUnregistered = async (groupId, unregistered) => {
+  await Group.findByIdAndUpdate(groupId, {
+    $push: { unregistered: { $each: unregistered } } 
   });
 }
 
-async function deleteMembership(memberEmail, group) {
-  const membership = await Membership.findOneAndDelete({ memberEmail, group });
-  if(!membership) throw new Error('존재하지 않는 멤버입니다.');
+const removeFromUnregistered = async (groupId, email) => {
+  await Group.findByIdAndUpdate(groupId, {
+    $pull: { unregistered: email } 
+  });
 }
 
-async function deleteAllMemberships(group) {
-  await Membership.deleteMany({ group });
+const setMembers = async (groupId, members) => {
+  await Group.findByIdAndUpdate(groupId, { $set: { members }});
 }
 
-async function findEmailFilepath(groupId) {
-  const group = await Group.findOne({ _id: groupId });
-  if(!group) throw new Error('단체를 찾을 수 없습니다.');
+const addToWaitinglist = async (groupId, userId) => {
+  await Group.findByIdAndUpdate(groupId, {
+    $push: { waitinglist: userId }
+  });
+}
+
+const findUserById = async userId => {
+  const user = await User.findById(userId);
+  return user;
+}
+
+const addMember = async (groupId, userId) => {
+  await Group.findByIdAndUpdate(groupId, {
+    $push: { members: userId }
+  });
+}
+
+const removeMember = async (groupId, userId) => {
+  await Group.findByIdAndUpdate(groupId, {
+    $pull: { members: userId }
+  });
+}
+
+const findEmailFilepath = async groupId => {
+  const group = await Group.findById(groupId);
   return group.emailFile;
 }
 
-async function parseEmailFile(filepath) {
-  const members = [];
+const parseEmailFile = async filepath => {
+  const rows = [];
   return new Promise((resolve, reject) => {
     const stream = 
     fs.createReadStream('./uploads/' + filepath)
@@ -217,27 +268,23 @@ async function parseEmailFile(filepath) {
       .pipe(csv());
 
     stream.on('data', row => {
-      if(row['이름'] && row['이메일']) members.push(row);
+      if(row['이름'] && row['이메일']) rows.push(row);
     });
-    stream.on('end', () => resolve(members));
+    stream.on('end', () => resolve(rows));
     stream.on('error', err => reject(err));
   })
 }
 
-async function updateEmailFile(members, filepath) {
-  const json2csv = parse(members, { withBOM: true });        
+const overwriteEmailFile = async (filepath, rows) => {
+  const json2csv = parse(rows, { withBOM: true });        
   fs.writeFile('./uploads/' + filepath, json2csv, (err) => {
     if(err) throw new Error('CSV 파일 쓰기에 실패하였습니다.');
   })
 }
 
-function addMember(user, members) {
-  members.push(user);
-}
-
-function removeMember(user, members) {
-  const userIndex = members.findIndex(member => {
-    return member.이름 === user.name && member.이메일 === user.email
+const removeUserFromRows = async (user, rows) => {
+  const userIndex = rows.findIndex(row => {
+    return row.이름 === user.name && row.이메일 === user.email
   });
   if(userIndex === -1){
     throw new Error('해당 멤버를 CSV 파일에서 찾을 수 없습니다.');

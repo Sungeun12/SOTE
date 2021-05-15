@@ -31,13 +31,16 @@ const groupSchema = new Schema({
     ref: 'User',
     required: true
   },
-  notices: {
+  members: {
     type: [ObjectId],
-    ref: 'Notice'
+    ref: 'User'
   },
-  memberCount: {
-    type: Number,
-    default: 0
+  waitinglist: {
+    type: [ObjectId],
+    ref: 'User'
+  },
+  unregistered: {
+    type: [String]
   }
 }, { timestamps: true });
 
