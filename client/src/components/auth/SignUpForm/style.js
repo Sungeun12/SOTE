@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import color from '../../util/style/color';
-import media from '../../util/style/media';
+import color from '../../../util/style/color';
+import media from '../../../util/style/media';
 
 export const Form = styled.form`
   width: 500px;

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaUserCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import dummy from './dummyUser.json';
+import storage from '../../../util/storage';
 
 function UserProfile() {
-  const loginUser = useSelector(state => state.user.user);
+  const loginUser = storage.get('user');
   return (
     <UserContainer>
       {loginUser &&
@@ -15,7 +15,7 @@ function UserProfile() {
             {profilePath ? (
               <UserImg src={profilePath} alt={id.toString(10)} />
             ) : (
-              <FaUserCircle size="25" color="#484646" />
+              <FaUserCircle size="25" color="#696868" />
             )}
           </UserItem>
         ))}

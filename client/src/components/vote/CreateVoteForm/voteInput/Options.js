@@ -1,11 +1,11 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import TextareaAutosize from 'react-textarea-autosize';
 import { MdClear, MdAddBox, MdWallpaper } from 'react-icons/md';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import styled from 'styled-components';
 import * as S from '../style';
-import color from '../../../util/style/color';
+import color from '../../../../util/style/color';
 
 function Options({ options, setOptions }) {
   const [addImg, setAddImg] = useState(false);
@@ -17,6 +17,23 @@ function Options({ options, setOptions }) {
   const toggleDescription = () => {
     setAddDesc(!addDesc);
   };
+  useEffect(() => {
+    if (!addImg) {
+      const newArr = [...options];
+      newArr.forEach((item, index) => {
+        newArr[index].image = '';
+      });
+      setOptions(newArr);
+    }
+
+    if (!addDesc) {
+      const newArr = [...options];
+      newArr.forEach((item, index) => {
+        newArr[index].description = '';
+      });
+      setOptions(newArr);
+    }
+  }, [addImg, addDesc]);
 
   const handleImageChange = (event, index) => {
     if (event.target.files !== null) {

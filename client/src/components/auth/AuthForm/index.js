@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import * as api from '../../api/api';
+import * as api from '../../../api/auth';
 import * as S from '../SignUpForm/style';
-import useInput from '../../hooks/useInput';
-import checkEmail from '../../util/RegExp/checkEmail';
+import useInput from '../../../hooks/useInput';
+import checkEmail from '../../../util/RegExp/checkEmail';
 
 function AuthForm() {
   const [sendAuth, setSendAuth] = useState(false);

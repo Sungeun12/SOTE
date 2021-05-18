@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Web3 from 'web3';
 import moment from 'moment';
 import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
-import Vote from '../../util/VoteContract/Vote.json';
+import * as api from '../../../api/vote';
+import Vote from '../../../util/VoteContract/Vote.json';
 import ConnectForm from './ConnectForm';
-import media from '../../util/style/media';
-import color from '../../util/style/color';
+import media from '../../../util/style/media';
+import color from '../../../util/style/color';
 import Options from './voteInput/Options';
+import storage from '../../../util/storage';
 
-function CreateVote({ history }) {
+function CreateVoteForm() {
+  const loginUser = storage.get('user');
+  console.log(loginUser);
   const [options, setOptions] = useState([
     {
       id: 0,
@@ -84,25 +87,19 @@ function CreateVote({ history }) {
         // contractAddr 변수에 담아 서버에 넘긴다
         const body = {
           contractAddr: newContractInstance.options.address,
-          orgainzer: 'userid',
-          group: '',
-          voteType: data.voteType.label,
+          organizer: loginUser,
+          group: null,
+          voteType: data.voteType.value,
           title: data.title,
           description: data.description,
-          selectionType,
-          category: data.freeVoteCategory.label,
+          selectionType: data.selectionType === '0' ? 'single' : 'multi',
+          category: data.freeVoteCategory ? data.freeVoteCategory.label : null,
           startDate,
           endDate,
           options,
         };
-        axios.post('http://localhost:5000/vote', body).then(response => {
-          if (response.data.success) {
-            alert('투표 만들기에 성공했습니다.');
-            history.push('/');
-          } else {
-            alert('투표 만들기에 실패 했습니다.');
-          }
-        });
+
+        api.createVote(body);
       });
   };
 
@@ -121,6 +118,7 @@ function CreateVote({ history }) {
 }
 
 const Form = styled.form`
+  width: 100%;
   margin: 7vh auto;
   width: 700px;
   @media (max-width: ${media.tablet}px) {
@@ -175,4 +173,4 @@ const PreviewButton = styled.input`
     width: 50%;
   }
 `;
-export default CreateVote;
+export default CreateVoteForm;

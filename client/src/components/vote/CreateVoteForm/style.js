@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import media from "../../util/style/media";
+import media from '../../../util/style/media';
 
 export const Label = styled.label`
   font-family: 'Nanum Gothic Coding', monospace;
   font-size: 1.2rem;
   width: 30%;
-     @media (max-width: ${media.tablet}px) {
+  @media (max-width: ${media.tablet}px) {
     margin-bottom: 3.5vh;
   }
 `;
@@ -17,10 +17,10 @@ export const LabelColumn = styled.label`
   width: 80%;
 `;
 
-
 export const customStyles = {
   option: (provided, state) => ({
     ...provided,
+    fontSize: '0.8rem',
     background: 'white',
     color: state.isSelected ? 'black' : 'gray',
   }),
@@ -31,12 +31,14 @@ export const customStyles = {
   }),
   menu: provided => ({
     ...provided,
+    fontSize: '0.8rem',
     color: '#838383',
   }),
   control: base => ({
     ...base,
+    fontSize: '0.8rem',
     boxShadow: 'none',
-    height: '45px'
+    height: '45px',
   }),
   singleValue: styles => ({
     ...styles,
@@ -45,7 +47,7 @@ export const customStyles = {
 };
 
 export const ErrorMessage = styled.div`
-font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'Nanum Gothic', sans-serif;
   font-size: 1rem;
   color: red;
   margin: 2vh 0;

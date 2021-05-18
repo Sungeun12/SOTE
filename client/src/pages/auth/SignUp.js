@@ -1,6 +1,6 @@
 import React from 'react';
-import SignUpForm from '../components/SignUpForm';
-import AuthLayout from '../components/common/AuthLayout';
+import SignUpForm from '../../components/auth/SignUpForm';
+import AuthLayout from '../../components/auth/AuthLayout';
 
 function SignUp() {
   return (
