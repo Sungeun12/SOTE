@@ -25,3 +25,10 @@ export function loadIdVote(id) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function patchVote(id) {
+  return axios
+    .patch(`http://localhost:5000/vote/${id}`)
+    .then(response => response)
+    .catch(error => error);
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3';
+import * as api from '../../../api/vote';
 import { loadIdVote, unloadVote } from '../../../actions/vote_actions';
 import Header from './Header';
 import Option from './Option';
@@ -94,6 +95,9 @@ function VoteDetail({ id }) {
         })
         .on('transactionHash', hash => {
           console.log(hash);
+        })
+        .then(() => {
+          api.patchVote(id);
         });
     }
     if (!singleType && networkData) {
@@ -105,6 +109,9 @@ function VoteDetail({ id }) {
         })
         .on('transactionHash', hash => {
           console.log(hash);
+        })
+        .then(() => {
+          api.patchVote(id);
         });
     }
   };
