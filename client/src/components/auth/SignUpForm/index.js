@@ -73,7 +73,7 @@ const SignUpForm = () => {
       <S.EmailWrapper>
         <S.EmailInput
           placeholder="이메일"
-          {...register('email', { required: true, pattern: /[a-zA-Z0-9_.-]{6,30}/ })}
+          {...register('email', { required: true, pattern: /[a-zA-Z0-9_.-]{5,30}/ })}
         />
         <S.Email>@ sookymyung.ac.kr</S.Email>
       </S.EmailWrapper>
