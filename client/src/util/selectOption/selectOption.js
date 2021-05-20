@@ -84,3 +84,10 @@ export const FreeVoteCategory = [
   { value: 4, label: '정치' },
   { value: 5, label: '기타' },
 ];
+
+export const groupCategory = [
+  { value: 0, label: '동아리' },
+  { value: 1, label: '학부/학과' },
+  { value: 2, label: '수업' },
+  { value: 3, label: '기타' },
+];

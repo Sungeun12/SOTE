@@ -6,12 +6,18 @@ import Login from '../../pages/Login';
 import SignUp from '../../pages/SignUp';
 import CreateVote from '../../pages/CreateVote';
 import AuthConfirm from '../../pages/AuthConfirm';
+import GroupList from '../../pages/group/GroupList';
+import GroupDetail from '../../pages/group/GroupDetail';
+import CreateGroup from '../../pages/group/CreateGroup';
 
 function LoginRoutes() {
   return (
     <Switch>
       <Route exact path="/" component={Main} />
       <Route exact path="/createvote" component={CreateVote} />
+      <Route exact path="/group" component={GroupList} />
+      <Route exact path="/group/:id" component={GroupDetail} />
+      <Route exact path="/creategroup" component={CreateGroup} />
       <Redirect from="*" to="/" />
     </Switch>
   );
