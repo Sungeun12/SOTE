@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const voteRouter = require("./routes/vote");
 const userRouter = require("./routes/user");
+const groupRouter = require("./routes/group");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 

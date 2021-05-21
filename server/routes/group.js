@@ -206,7 +206,7 @@ router.post('/upload', async (req, res) => {
     if(err) {
       return res.status(400).json({ success: false, err });
     }
-    return res.status(201).json({ success: true, filepath: req.file.path });
+    return res.status(201).json({ success: true, filepath: '/group/' + req.file.filename });
   })
 })
 
