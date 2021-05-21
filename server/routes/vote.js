@@ -1,6 +1,7 @@
 const express = require('express');
 const multer= require('multer');
 const path = require('path');
+const User = require('../models/User');
 const Vote = require('../models/Vote');
 const router = express.Router();
 
@@ -112,11 +113,18 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(400).json({ success: false, err }));
 });
 
-// 투표자 수 업데이트
-router.patch('/:id', (req, res) => {
-    Vote.findOneAndUpdate({ _id: req.params.id }, { $inc: { voteCount: 1 } })
-    .then(vote => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
+// 투표하기 (투표자수 및 사용자의 투표 배열 수정)
+router.post('/:id', async (req, res) => {
+    const voteId = req.params.id;
+    const userId = req.body.userId;
+
+    try {
+      await Vote.findByIdAndUpdate(voteId, { $inc: { voteCount: 1 } });
+      await User.findByIdAndUpdate(userId, { $push: { votes: voteId }});
+      return res.status(200).json({ success: true });
+    } catch(err) {
+      return res.status(400).json({ success: false, err });
+    }
 })
 
 module.exports = router;
