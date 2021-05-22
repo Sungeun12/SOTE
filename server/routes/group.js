@@ -5,8 +5,10 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const stripBom = require('strip-bom-stream');
 const { parse } = require('json2csv');
-const { User } = require('../models/User');
+const User = require('../models/User');
 const Group = require('../models/Group');
+const Vote = require('../models/Vote');
+const Notice = require('../models/Notice');
 const router = express.Router();
 
 // MULTER CONFIG
@@ -79,10 +81,26 @@ router.put('/', (req, res) => {
 
 // 개별 단체 조회
 router.get('/:id', (req, res) => {
-  Group.findOne({ _id: req.params.id })
-    // .populate('managers')
-    // .populate('notices')
-    .then(group => res.status(200).json({ success: true, data: group }))
+  const LIMIT = 10;
+  const groupId = req.params.id;
+
+  Promise.all([
+    Group.findById(groupId)
+      .populate('managers'),
+
+    Notice.find({ group: groupId })
+      .sort({'createdAt': 'desc' })
+      .limit(LIMIT)
+      .populate('writer'),
+
+    Vote.find({ group: groupId })
+      .sort({'createdAt': 'desc' })
+      .limit(LIMIT)
+      .populate('organizer')
+    ])
+    .then(([group, notices, votes]) => {
+      return res.status(200).json({ success: true, data: { group, notices, votes } });
+    })
     .catch(err => res.status(400).json({ success: false, err }));
 });
 
@@ -236,48 +254,6 @@ router.delete('/:id/manager', (req, res) => {
     .then(group => res.status(200).json({ success: true }))
     .catch(err => res.status(400).json({ success: false, err }));
 })
-
-// 모든 공지사항 조회
-router.get('/:id/notice', (req, res) => {
-  Notice.find({ group: req.params.id })
-    .populate('writer')
-    .then(notices => res.status(200).json({ success: true, data: notices }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
-
-// 공지사항 생성
-router.post('/:id/notice', (req, res) => {
-  const notice = new Notice({ ...req.body, group: req.params.id });
-  notice.save()
-    .then(notice => res.status(200).json({ success: true, data: notice._id }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
-
-// 개별 공지사항 조회
-router.get('/notice/:id', (req, res) => {
-  Notice.findOne({ _id: req.params.id })
-    .populate('writer')
-    .then(notice => res.status(200).json({ success: true, data: notice }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
-
-// 공지사항 삭제
-router.delete('/notice/:id', (req, res) => {
-  Notice.findOneAndDelete({ _id: req.params.id })
-    .then(notice => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
-
-// 공지사항 수정
-router.put('/notice', (req, res) => {
-  Notice.findByIdAndUpdate(req.body._id, {
-    title: req.body.title,
-    description: req.body.description,
-    files: req.body.files
-  })
-    .then(notice => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
-});
 
 const findUserIdByEmail = async email => {
   const user = await User.findOne({ email });
