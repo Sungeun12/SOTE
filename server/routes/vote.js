@@ -3,6 +3,8 @@ const multer= require('multer');
 const path = require('path');
 const User = require('../models/User');
 const Vote = require('../models/Vote');
+const Comment = require('../models/Comment');
+const util = require('./util');
 const router = express.Router();
 
 // MULTER CONFIG
@@ -104,13 +106,28 @@ router.post('/upload', async (req, res) => {
   })
 })
 
-// 개별 투표 조회
-router.get('/:id', (req, res) => {
-  Vote.findOne({ _id: req.params.id })
-    .populate('organizer', 'name')
-    .populate('group', 'name')
-    .then(vote => res.status(200).json({ success: true, data: vote }))
-    .catch(err => res.status(400).json({ success: false, err }));
+// 개별 투표 조회 (완료된 투표의 경우 댓글 포함)
+router.get('/:id', async (req, res) => {
+  const voteId = req.params.id;
+  try {
+    const vote = 
+      await Vote.findById(voteId)
+        .populate('organizer', 'name')
+        .populate('group', 'name');
+
+    if(vote.endDate > new Date())
+      return res.status(200).json({ success: true, data: vote });
+
+    const comments = 
+      await Comment.find({ on: voteId })
+        .sort('createdAt')
+        .populate('writer');
+
+    const trees = util.makeCommentTrees(comments);
+    return res.status(200).json({ success: true, data: { vote, comments: trees } });
+  } catch(err) {
+    return res.status(400).json({ success: false, err });
+  }
 });
 
 // 투표하기 (투표자수 및 사용자의 투표 배열 수정)
