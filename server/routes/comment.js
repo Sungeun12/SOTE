@@ -22,7 +22,7 @@ router.post('/:model/:id/comment', async (req, res) => {
     });
 
     await comment.save();
-    await User.populate(comment, { path: 'writer' });
+    await User.populate(comment, { path: 'writer', select: 'name image' });
     return res.status(201).json({ success: true, data: comment });
   } catch(err) {
     return res.status(400).json({ success: false, err });

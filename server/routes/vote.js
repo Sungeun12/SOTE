@@ -57,8 +57,8 @@ router.get('/', (req, res) => {
     .sort(inOrder)
     .limit(limit)
     .skip(skip)
-    .populate('organizer')
-    .populate('group')
+    .populate('organizer', 'name image')
+    .populate('group', 'name image')
     .then(votes => res.status(200).json({ success: true, data: votes }))
     .catch(err => res.status(400).json({ success: false, err }));
 });
@@ -80,14 +80,14 @@ router.get('/major', async (req, res) => {
   const official = await Vote.find({ voteType: 'official', endDate: { $gt: currentDate }})
   .sort({voteCount: 'desc'})
   .limit(MAJOR_LIMIT)
-  .populate('organizer')
-  .populate('group');
+  .populate('organizer', 'name image')
+  .populate('group', 'name image');
 
   const free = await Vote.find({ voteType: 'free', endDate: { $gt: currentDate } })
   .sort({voteCount: 'desc'})
   .limit(MAJOR_LIMIT)
-  .populate('organizer')
-  .populate('group');
+  .populate('organizer', 'name image')
+  .populate('group', 'name image');
 
   return res.status(200).json({ success: true, data: { official, free } });
   } 
@@ -119,15 +119,13 @@ router.get('/:id', async (req, res) => {
     const comments = 
       await Comment.find({ on: voteId })
         .sort('createdAt')
-        .populate('writer');
+        .populate('writer', 'name image');
 
     const trees = util.makeCommentTrees(comments);
     return res.status(200).json({ success: true, data: { vote, comments: trees } });
   } catch(err) {
     return res.status(400).json({ success: false, err });
   }
-        .populate('organizer', 'name')
-        .populate('group', 'name');
 });
 
 // 투표하기 (투표자수 및 사용자의 투표 배열 수정)

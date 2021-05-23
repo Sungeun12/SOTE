@@ -86,17 +86,17 @@ router.get('/:id', (req, res) => {
 
   Promise.all([
     Group.findById(groupId)
-      .populate('managers'),
+      .populate('managers', 'name image'),
 
     Notice.find({ group: groupId })
       .sort({'createdAt': 'desc' })
       .limit(LIMIT)
-      .populate('writer'),
+      .populate('writer', 'name image'),
 
     Vote.find({ group: groupId })
       .sort({'createdAt': 'desc' })
       .limit(LIMIT)
-      .populate('organizer')
+      .populate('organizer', 'name image')
     ])
     .then(([group, notices, votes]) => {
       return res.status(200).json({ success: true, data: { group, notices, votes } });

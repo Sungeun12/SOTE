@@ -16,7 +16,7 @@ router.get('/group/:id/notice', (req, res) => {
     .sort({ 'createdAt': 'desc' })
     .limit(limit)
     .skip(skip)
-    .populate('writer')
+    .populate('writer', 'name image')
     .then(notices => res.status(200).json({ success: true, data: notices }))
     .catch(err => res.status(400).json({ success: false, err }));
 })
@@ -35,11 +35,11 @@ router.get('/notice/:id', (req, res) => {
 
   Promise.all([
     Notice.findById(noticeId)
-      .populate('writer'),
+      .populate('writer', 'name image'),
 
     Comment.find({ post: noticeId })
       .sort('createdAt')
-      .populate('writer')
+      .populate('writer', 'name image')
     ])
     .then(([notice, comments]) => {
       const trees = util.makeCommentTrees(comments);
