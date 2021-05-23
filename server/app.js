@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const voteRouter = require("./routes/vote");
 const userRouter = require("./routes/user");
 const groupRouter = require("./routes/group");
+const noticeRouter = require("./routes/notice");
+const commentRouter = require("./routes/comment");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -32,6 +34,8 @@ mongoose.connect(MONGO_URI, {
 app.use("/user", userRouter);
 app.use('/vote', voteRouter);
 app.use('/group', groupRouter);
+app.use('/', noticeRouter);
+app.use('/', commentRouter);
 
 app.listen(app.get("port"), () => {
   console.log(`server running on port ${app.get("port")}...`);
