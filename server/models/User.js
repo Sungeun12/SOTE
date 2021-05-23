@@ -41,6 +41,9 @@ const userSchema = new Schema({
     required: [true, "학과를 입력해주세요!"],
     maxlength: 50,
   },
+  image: {
+    type: String
+  },
   isAdmin: {
     type: Boolean,
     default: false,

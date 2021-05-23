@@ -80,8 +80,7 @@ router.put('/', (req, res) => {
 // 개별 단체 조회
 router.get('/:id', (req, res) => {
   Group.findOne({ _id: req.params.id })
-    // .populate('managers')
-    // .populate('notices')
+    .populate('managers')
     .then(group => res.status(200).json({ success: true, data: group }))
     .catch(err => res.status(400).json({ success: false, err }));
 });

@@ -55,8 +55,8 @@ router.get('/', (req, res) => {
     .sort(inOrder)
     .limit(limit)
     .skip(skip)
-    .populate('organizer', 'name')
-    .populate('group', 'name')
+    .populate('organizer')
+    .populate('group')
     .then(votes => res.status(200).json({ success: true, data: votes }))
     .catch(err => res.status(400).json({ success: false, err }));
 });
@@ -78,14 +78,14 @@ router.get('/major', async (req, res) => {
   const official = await Vote.find({ voteType: 'official', endDate: { $gt: currentDate }})
   .sort({voteCount: 'desc'})
   .limit(MAJOR_LIMIT)
-  .populate('organizer', 'name')
-  .populate('group', 'name');
+  .populate('organizer')
+  .populate('group');
 
   const free = await Vote.find({ voteType: 'free', endDate: { $gt: currentDate } })
   .sort({voteCount: 'desc'})
   .limit(MAJOR_LIMIT)
-  .populate('organizer', 'name')
-  .populate('group', 'name');
+  .populate('organizer')
+  .populate('group');
 
   return res.status(200).json({ success: true, data: { official, free } });
   } 
@@ -107,8 +107,8 @@ router.post('/upload', async (req, res) => {
 // 개별 투표 조회
 router.get('/:id', (req, res) => {
   Vote.findOne({ _id: req.params.id })
-    .populate('organizer', 'name')
-    .populate('group', 'name')
+    .populate('organizer')
+    .populate('group')
     .then(vote => res.status(200).json({ success: true, data: vote }))
     .catch(err => res.status(400).json({ success: false, err }));
 });
