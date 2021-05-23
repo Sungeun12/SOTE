@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const Comment = require('../models/Comment');
+const Like = require('../models/Like');
 const router = express.Router();
 
 // 댓글 생성
@@ -33,7 +34,7 @@ router.post('/comment/:id', (req, res) => {
   Comment.findByIdAndUpdate(req.params.id, 
     { text: req.body.text },
     { new: true })
-    .then(comment => res.status(201).json({ success: true, data: comment }))
+    .then(comment => res.status(200).json({ success: true, data: comment }))
     .catch(err => res.status(400).json({ success: false, err }));
 })
 
@@ -41,7 +42,29 @@ router.post('/comment/:id', (req, res) => {
 router.patch('/comment/:id', (req, res) => {
   Comment.findByIdAndUpdate(req.params.id,
     { isDeleted: true })
-    .then(comment => res.status(201).json({ success: true, data: comment }))
+    .then(comment => res.status(200).json({ success: true, data: comment }))
+    .catch(err => res.status(400).json({ success: false, err }));
+})
+
+// 댓글 좋아요 전체 조회
+router.get('/comment/likes', (req, res) => {
+  Like.find({ commentId: req.body.commentId })
+    .then(likes => res.status(200).json({ success: true, data: likes }))
+    .catch(err => res.status(400).json({ success: false, err }));
+})
+
+// 댓글 좋아요
+router.post('/comment/like', (req, res) => {
+  const like = new Like(req.body);
+  like.save()
+    .then(like => res.status(201).json({ success: true }))
+    .catch(err => res.status(400).json({ success: false, err }));
+})
+
+// 댓글 좋아요 취소
+router.post('/comment/unlike', (req, res) => {
+  Like.findOneAndDelete(req.body)
+    .then(like => res.status(200).json({ success: true }))
     .catch(err => res.status(400).json({ success: false, err }));
 })
 
