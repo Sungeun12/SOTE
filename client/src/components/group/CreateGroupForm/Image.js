@@ -42,7 +42,7 @@ function Image() {
             id="group"
             style={{ display: 'none' }}
             type="file"
-            accept=".jpg,.jpeg,.gif,.png,.mov,.mp4"
+            accept=".jpg,.jpeg,.png,"
             onChange={event => handleImageChange(event)}
           />
         </BoxUpload>
@@ -66,8 +66,8 @@ const ImageLabel = styled.label`
 const ImagePreview = styled.div`
   position: relative;
   #uploaded-image {
-    width: 70px;
-    height: 80px;
+   width: 230px;
+  height: 150px;
     object-fit: cover;
     border-radius: 3px;
   }
