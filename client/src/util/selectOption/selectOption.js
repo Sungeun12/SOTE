@@ -85,6 +85,13 @@ export const FreeVoteCategory = [
   { value: 5, label: '기타' },
 ];
 
+export const groupCategory = [
+  { value: 0, label: '동아리' },
+  { value: 1, label: '학부/학과' },
+  { value: 2, label: '수업' },
+  { value: 3, label: '기타' }
+];
+
 export const sortTypes = [
   { value: 'recent', label: '최신순' },
   { value: 'popular', label: '인기순' },
