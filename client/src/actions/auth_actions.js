@@ -1,5 +1,5 @@
 import { authConstants } from '../constants/auth_constants';
-import * as api from '../api/api';
+import * as api from '../api/auth';
 import { history } from '../util/history';
 
 export const signUp = data => async dispatch => {

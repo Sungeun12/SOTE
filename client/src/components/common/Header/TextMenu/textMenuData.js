@@ -18,7 +18,7 @@ export const textMenuData = [
 
 export const dropDownMenuData = [
   {
-    link: '/vote/offical',
+    link: '/vote/official',
     text: '공식 행사 투표',
   },
   {

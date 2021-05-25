@@ -24,7 +24,6 @@ export function signIn(email, password) {
   return axios
     .post('http://localhost:5000/user/signin', { email, password })
     .then(response => {
-      console.log(response);
       if (response.data.userId) {
         storage.set('user', response.data.userId);
       }

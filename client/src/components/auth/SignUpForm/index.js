@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import * as S from './style';
-import { majorOptions } from '../../util/selectOption/selectOption';
-import color from '../../util/style/color';
+import { majorOptions } from '../../../util/selectOption/selectOption';
+import color from '../../../util/style/color';
 import { customStyles } from './style';
-import { signUp } from '../../actions/auth_actions';
+import { signUp } from '../../../actions/auth_actions';
 
 const SignUpForm = () => {
   const [signUpError, setSignUpError] = useState('');
@@ -73,7 +73,7 @@ const SignUpForm = () => {
       <S.EmailWrapper>
         <S.EmailInput
           placeholder="이메일"
-          {...register('email', { required: true, pattern: /[a-zA-Z0-9_.-]{6,30}/ })}
+          {...register('email', { required: true, pattern: /[a-zA-Z0-9_.-]{5,30}/ })}
         />
         <S.Email>@ sookymyung.ac.kr</S.Email>
       </S.EmailWrapper>

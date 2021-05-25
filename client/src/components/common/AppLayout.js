@@ -5,9 +5,7 @@ import Footer from './Footer';
 const AppLayout = ({ children }) => (
   <div>
     <Header />
-
     <div>{children}</div>
-
     <Footer />
   </div>
 );

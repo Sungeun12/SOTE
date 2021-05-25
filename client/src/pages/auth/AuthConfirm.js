@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthLayout from '../components/common/AuthLayout';
-import AuthForm from '../components/AuthForm';
+import AuthLayout from '../../components/auth/AuthLayout';
+import AuthForm from '../../components/auth/AuthForm';
 
 function AuthConfirm() {
   return (
