@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import CreateGroupButton from '../../components/group/CreateGroupButton';
+import List from '../../components/group/GroupList';
 import media from '../../util/style/media';
 
 function GroupList() {
   return (
     <Container>
-      <CreateGroupButton />
+      <List />
     </Container>
   );
 }
@@ -14,7 +14,7 @@ function GroupList() {
 const Container = styled.div`
   width: 80%;
   @media (max-width: ${media.tablet}px) {
-    width: 80%;
+    width: 90%;
   }
   margin: 7vh auto;
 `;

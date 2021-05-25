@@ -86,13 +86,26 @@ export const FreeVoteCategory = [
 ];
 
 export const groupCategory = [
-  { value: 0, label: '동아리' },
-  { value: 1, label: '학부/학과' },
-  { value: 2, label: '수업' },
-  { value: 3, label: '기타' }
+  { value: 'club', label: '동아리' },
+  { value: 'major', label: '학부/학과' },
+  { value: 'class', label: '수업' },
+  { value: 'etc', label: '기타' },
 ];
 
 export const sortTypes = [
   { value: 'recent', label: '최신순' },
   { value: 'popular', label: '인기순' },
+];
+
+export const joinPolicy = [
+  { value: 'accept', label: '모든 가입 수락' },
+  { value: 'filter', label: '승인 후 가입 수락' },
+];
+
+export const groupSort = [
+  { value: 'all', label: '전체' },
+  { value: 'club', label: '동아리' },
+  { value: 'major', label: '학부/학과' },
+  { value: 'class', label: '수업' },
+  { value: 'etc', label: '기타' },
 ];

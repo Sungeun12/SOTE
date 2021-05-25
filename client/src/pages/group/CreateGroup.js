@@ -9,7 +9,7 @@ function CreateGroup() {
     <CreateGroupContainer>
       <Header>
         <h1>단체 만들기</h1>
-        <Text>간단하게 단체를 만들어보세요.</Text>
+        <Text>원하는 단체를 만들어보세요.</Text>
       </Header>
       <CreateGroupForm />
     </CreateGroupContainer>

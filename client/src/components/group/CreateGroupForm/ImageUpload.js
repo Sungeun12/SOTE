@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { MdWallpaper } from 'react-icons/md';
 import styled from 'styled-components';
 import axios from 'axios';
 
-function Image() {
-  const [image, setImage] = useState(false);
-  const deleteImage = () => {};
+function ImageUpload({ image, setImage }) {
+  const deleteImage = () => {
+    setImage('');
+  };
   const handleImageChange = event => {
     if (event.target.files !== null) {
       const formData = new FormData();
@@ -75,12 +76,12 @@ const ImagePreview = styled.div`
     position: absolute;
     cursor: pointer;
     z-index: 10;
-    right: -5px;
-    top: -10px;
+    right: 0px;
+    top: 5px;
     opacity: .6;
     
     :hover {
     opacity: 1;
   }
 `;
-export default Image;
+export default ImageUpload;
