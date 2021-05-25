@@ -71,9 +71,9 @@ export const majorOptions = [
 ];
 
 export const voteTypes = [
-  { value: 0, label: '공식 행사 투표' },
-  { value: 1, label: '자유 투표' },
-  { value: 2, label: '단체' },
+  { value: 'official', label: '공식 행사 투표' },
+  { value: 'free', label: '자유 투표' },
+  { value: 'group', label: '단체' },
 ];
 
 export const FreeVoteCategory = [
@@ -89,5 +89,10 @@ export const groupCategory = [
   { value: 0, label: '동아리' },
   { value: 1, label: '학부/학과' },
   { value: 2, label: '수업' },
-  { value: 3, label: '기타' },
+  { value: 3, label: '기타' }
+];
+
+export const sortTypes = [
+  { value: 'recent', label: '최신순' },
+  { value: 'popular', label: '인기순' },
 ];

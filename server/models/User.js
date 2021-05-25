@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
+const { Types: { ObjectId } } = Schema;
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 mongoose.set("useCreateIndex", true);
 
-const userSchema = mongoose.Schema({
+
+const userSchema = new Schema({
   name: {
     type: String,
     required: [true, "이름을 입력해주세요!"],
@@ -38,9 +41,12 @@ const userSchema = mongoose.Schema({
     required: [true, "학과를 입력해주세요!"],
     maxlength: 50,
   },
+  image: {
+    type: String
+  },
   isAdmin: {
     type: Boolean,
-    defalut: false,
+    default: false,
   },
   token: {
     type: String,
@@ -48,8 +54,9 @@ const userSchema = mongoose.Schema({
   tokenExp: {
     type: Number,
   },
-  Vote: {
-    type: Array,
+  votes: {
+    type: [ObjectId],
+    ref: 'Vote'
   },
   code: {
     type: String,
@@ -169,6 +176,4 @@ userSchema.statics.findByToken = function (token, cb) {
   });
 };
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = { User };
+module.exports = mongoose.model('User', userSchema);

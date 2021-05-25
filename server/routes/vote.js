@@ -1,7 +1,10 @@
 const express = require('express');
 const multer= require('multer');
 const path = require('path');
+const User = require('../models/User');
 const Vote = require('../models/Vote');
+const Comment = require('../models/Comment');
+const util = require('./util');
 const router = express.Router();
 
 // MULTER CONFIG
@@ -54,8 +57,8 @@ router.get('/', (req, res) => {
     .sort(inOrder)
     .limit(limit)
     .skip(skip)
-    .populate('organizer', 'name')
-    .populate('group', 'name')
+    .populate('organizer', 'name image')
+    .populate('group', 'name image')
     .then(votes => res.status(200).json({ success: true, data: votes }))
     .catch(err => res.status(400).json({ success: false, err }));
 });
@@ -77,14 +80,14 @@ router.get('/major', async (req, res) => {
   const official = await Vote.find({ voteType: 'official', endDate: { $gt: currentDate }})
   .sort({voteCount: 'desc'})
   .limit(MAJOR_LIMIT)
-  .populate('organizer', 'name')
-  .populate('group', 'name');
+  .populate('organizer', 'name image')
+  .populate('group', 'name image');
 
   const free = await Vote.find({ voteType: 'free', endDate: { $gt: currentDate } })
   .sort({voteCount: 'desc'})
   .limit(MAJOR_LIMIT)
-  .populate('organizer', 'name')
-  .populate('group', 'name');
+  .populate('organizer', 'name image')
+  .populate('group', 'name image');
 
   return res.status(200).json({ success: true, data: { official, free } });
   } 
@@ -103,20 +106,40 @@ router.post('/upload', async (req, res) => {
   })
 })
 
-// 개별 투표 조회
-router.get('/:id', (req, res) => {
-  Vote.findOne({ _id: req.params.id })
-    .populate('organizer', 'name')
-    .populate('group', 'name')
-    .then(vote => res.status(200).json({ success: true, data: vote }))
-    .catch(err => res.status(400).json({ success: false, err }));
+// 개별 투표 조회 (완료된 투표의 경우 댓글 포함)
+router.get('/:id', async (req, res) => {
+  const voteId = req.params.id;
+  try {
+    const vote = 
+      await Vote.findById(voteId)
+
+    if(vote.endDate > new Date())
+      return res.status(200).json({ success: true, data: vote });
+
+    const comments = 
+      await Comment.find({ on: voteId })
+        .sort('createdAt')
+        .populate('writer', 'name image');
+
+    const trees = util.makeCommentTrees(comments);
+    return res.status(200).json({ success: true, data: { vote, comments: trees } });
+  } catch(err) {
+    return res.status(400).json({ success: false, err });
+  }
 });
 
-// 투표자 수 업데이트
-router.patch('/:id', (req, res) => {
-    Vote.findOneAndUpdate({ _id: req.params.id }, { $inc: { voteCount: 1 } })
-    .then(vote => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
+// 투표하기 (투표자수 및 사용자의 투표 배열 수정)
+router.post('/:id', async (req, res) => {
+    const voteId = req.params.id;
+    const userId = req.body.userId;
+
+    try {
+      await Vote.findByIdAndUpdate(voteId, { $inc: { voteCount: 1 } });
+      await User.findByIdAndUpdate(userId, { $push: { votes: voteId }});
+      return res.status(200).json({ success: true });
+    } catch(err) {
+      return res.status(400).json({ success: false, err });
+    }
 })
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const { User } = require("../models/User")
+const User = require("../models/User")
 
 
 let auth =(req,res,next)=>{
@@ -22,4 +22,4 @@ let auth =(req,res,next)=>{
     //유저가 없으면 인증 No
 }
 
-module.exports={auth}
+module.exports= auth
