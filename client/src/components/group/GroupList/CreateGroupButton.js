@@ -16,8 +16,11 @@ const StyledLink = styled(Link)`
 `;
 
 const Button = styled.button`
-  width: 130px;
+  margin-right: 1vw;
+  width: 150px;
   height: 50px;
+  text-align: center;
+  padding: 8px 10px;
   background-color: ${color.navy};
   color: white;
   font-family: 'Nanum Gothic Coding', sans-serif;
