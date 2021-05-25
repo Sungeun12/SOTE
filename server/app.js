@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const voteRouter = require("./routes/vote");
-const groupRouter = require("./routes/group");
 const userRouter = require("./routes/user");
 const groupRouter = require("./routes/group");
 const noticeRouter = require("./routes/notice");
