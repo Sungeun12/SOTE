@@ -5,7 +5,7 @@ const { Types: { ObjectId } } = Schema;
 const groupSchema = new Schema({
   category: {
     type: String,
-    enum: ['학부/학과', '동아리', '수업', '기타'],
+    enum: ['all', 'club', 'major', 'class', 'etc'],
     required: true
   },
   name: {
