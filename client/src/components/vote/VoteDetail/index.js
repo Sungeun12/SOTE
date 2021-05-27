@@ -10,6 +10,7 @@ import media from '../../../util/style/media';
 import SelectOption from './SelectOption';
 import color from '../../../util/style/color';
 import Vote from '../../../util/VoteContract/Vote.json';
+import Loading from './Loading';
 
 function VoteDetail({ id }) {
   const [web3, setWeb3] = useState(new Web3(window.ethereum));
@@ -77,16 +78,8 @@ function VoteDetail({ id }) {
   }, []);
 
   const makeVote = async () => {
-    const networkId = await web3.eth.net.getId();
-    const networkData = Vote.abi.networks[networkId];
-    console.log(networkData);
-
-    if (!networkData) {
-      console.log('Vote contract not deployed to detected network.');
-    }
-
-    if (singleType && networkData) {
-      const voteContract = new web3.eth.Contract(Vote.abi, networkData.address);
+    if (singleType) {
+      const voteContract = new web3.eth.Contract(Vote.abi, Vote.networks['1617859458977'].address);
 
       voteContract.methods
         .castVoteForSingleOption(result)
@@ -100,8 +93,8 @@ function VoteDetail({ id }) {
           api.patchVote(id);
         });
     }
-    if (!singleType && networkData) {
-      const voteContract = new web3.eth.Contract(Vote.abi, networkData.address);
+    if (!singleType) {
+      const voteContract = new web3.eth.Contract(Vote.abi, Vote.networks['1618145015655'].address);
       voteContract.methods
         .castVoteForMultiOptions(result)
         .send({
@@ -115,9 +108,11 @@ function VoteDetail({ id }) {
         });
     }
   };
+  if (!currentVote) {
+    return <Loading />;
+  }
   return (
     <Container>
-      {!currentVote && <div>loading...</div>}
       <Header currentVote={currentVote} />
       {currentOptions.map(({ image, name, description }, index) => (
         <Option index={index} name={name} image={image} description={description} key={name} />

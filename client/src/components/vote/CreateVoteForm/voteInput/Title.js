@@ -3,17 +3,22 @@ import styled from 'styled-components';
 import * as S from '../style';
 import media from '../../../../util/style/media';
 
-function Title({ register }) {
+function Title({ register, formState: { errors } }) {
   return (
-    <InputContainer>
-      <S.Label htmlFor="title">투표 명</S.Label>
-      <Input
-        id="title"
-        type="text"
-        {...register('title', { required: true, maxLength: 30 })}
-        placeholder="투표 명을 입력해주세요."
-      />
-    </InputContainer>
+    <div>
+      <InputContainer>
+        <S.Label htmlFor="title">투표 명</S.Label>
+        <Input
+          id="title"
+          type="text"
+          {...register('title', { required: true, maxLength: 50 })}
+          placeholder="투표 명을 입력해주세요."
+        />
+      </InputContainer>
+      {errors.title && errors.title.type === 'maxLength' && (
+        <S.ErrorMessage>투표 명은 50자 이내로 작성해주세요.</S.ErrorMessage>
+      )}
+    </div>
   );
 }
 
