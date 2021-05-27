@@ -16,6 +16,7 @@ function VoteList({ match, titleCategory }) {
   const [sort, setSort] = useState(sortTypes[0]);
   const [closed, setClosed] = useState('false');
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (active === '진행중인투표') {
       setClosed('false');
@@ -33,14 +34,14 @@ function VoteList({ match, titleCategory }) {
 
   const voteList = useSelector(state => state.vote.voteList);
   const request = useSelector(state => state.vote.request);
-  console.log(voteList);
+
   return (
     <Container>
       <ToggleButton active={active} setActive={setActive} types={types} />
       {request && <TextAlert>loading...</TextAlert>}
-      {!request && voteList.length === 0 && <TextAlert>현재 투표가 없습니다.</TextAlert>}
+      {!request && voteList?.length === 0 && <TextAlert>현재 투표가 없습니다.</TextAlert>}
       <VoteItemContainer>
-        <div style={{ marginLeft: '82%' }}>
+        <div style={{ marginLeft: 'auto' }}>
           <Select
             value={sortTypes.find(opt => opt.value === sort)}
             options={sortTypes}
@@ -53,7 +54,7 @@ function VoteList({ match, titleCategory }) {
           />
         </div>
         <VoteItemWrapper>
-          {voteList.map(({ title, organizer, startDate, endDate, category, _id }) => (
+          {voteList.map(({ title, organizer, startDate, endDate, category, _id, description }) => (
             <VoteItem
               key={_id}
               title={title}
@@ -64,6 +65,7 @@ function VoteList({ match, titleCategory }) {
               _id={_id}
               match={match}
               titleCategory={titleCategory}
+              description={description}
               closed={closed}
             />
           ))}
@@ -80,21 +82,30 @@ const Container = styled.div`
 `;
 const VoteItemContainer = styled.div`
   width: 100%;
+  justify-content: center;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 `;
 const VoteItemWrapper = styled.div`
-  justify-content: center;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   margin: 5vh auto;
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 6vh;
+    column-gap: 5vw;
+  }
   @media (max-width: ${media.tablet}px) {
     grid-template-columns: 1fr 1fr;
     row-gap: 6vh;
-    column-gap: 10vw;
+    column-gap: 15vw;
   }
-  row-gap: 3vh;
+  @media (max-width: ${media.mobileL}px) {
+    grid-template-columns: 1fr;
+    row-gap: 6vh;
+  }
+  row-gap: 10vh;
   column-gap: 4vw;
 `;
 const TextAlert = styled.div`

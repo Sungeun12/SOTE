@@ -6,13 +6,14 @@ const initialState = {
   error: false,
   currentVote: { title: '', startDate: '', endDate: '' },
   currentOptions: [],
+  comments: [],
 };
 export default function (state = initialState, action) {
   switch (action.type) {
     case voteConstants.ALL_VOTE_LOAD_REQUEST:
       return { ...state, request: true };
     case voteConstants.ALL_VOTE_LOAD_SUCCESS:
-      return { ...state, voteList: action.payload, request: false };
+      return { ...state, voteList: action.payload.data, request: false };
     case voteConstants.ALL_VOTE_LOAD_FAILURE:
       return { ...state, error: true };
 
@@ -30,6 +31,20 @@ export default function (state = initialState, action) {
       };
     case voteConstants.ID_VOTE_LOAD_FAILURE:
       return { ...state, error: true };
+
+    case voteConstants.CLOSED_ID_VOTE_LOAD_REQUEST:
+      return { ...state, request: true };
+    case voteConstants.CLOSED_ID_VOTE_LOAD_SUCCESS:
+      return {
+        ...state,
+        currentVote: action.payload.vote,
+        currentOptions: action.payload.vote.options,
+        comments: action.payload.comments,
+        request: false,
+      };
+    case voteConstants.CLOSED_ID_VOTE_LOAD_FAILURE:
+      return { ...state, error: true };
+
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Result from '../../components/vote/VoteResult';
+import media from '../../util/style/media';
 
 function VoteResult({ match }) {
   const { id } = match.params;
@@ -12,8 +13,11 @@ function VoteResult({ match }) {
 }
 
 const Container = styled.div`
-  width: 100vw;
+  width: 60%;
   height: 100%;
-  margin: 7vh 0px;
+  margin: 7vh auto;
+  @media (max-width: ${media.tablet}px) {
+    width: 95%;
+  }
 `;
 export default VoteResult;

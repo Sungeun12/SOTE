@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import { MdTurnedInNot } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
 import color from '../../../util/style/color';
+import media from '../../../util/style/media';
+import { getDday } from '../../../util/getDday';
 
 function VoteItem({ title, organizer, startDate, endDate, category, _id, titleCategory, closed }) {
   const colors = ['#1838a8', '#eed030', '#838383'];
@@ -18,16 +22,31 @@ function VoteItem({ title, organizer, startDate, endDate, category, _id, titleCa
       setTheme(colors[2]);
     }
   }, [titleCategory]);
-  console.log(startDate, endDate);
+  const newStart = moment(startDate).format('YYYY/MM/DD h:mm a');
+  const newEnd = moment(endDate).format('YYYY/MM/DD h:mm a');
+  const dDay = getDday(newEnd);
+
   return (
     <ItemWrapper>
       <HeaderContainer>
-        <DdayDiv theme={theme}>D-15</DdayDiv>
+        {closed === 'true' ? (
+          <DdayDiv theme={theme}>완료</DdayDiv>
+        ) : (
+          <DdayDiv theme={theme}>D-{dDay}</DdayDiv>
+        )}
         <MdTurnedInNot size="30" />
       </HeaderContainer>
       <Title>{title}</Title>
-      <Text>{organizer}</Text>
-      <Date>2021-05-27 ~2021-03-20</Date>
+      <OrganizerWrapper>
+        {organizer.profile ? (
+          <img src={organizer.profile} alt={organizer.profile} />
+        ) : (
+          <FaUserCircle size="20" color="#696868" style={{ marginRight: '10px' }} />
+        )}
+        {organizer.name}
+      </OrganizerWrapper>
+      <DateDiv>시작일시: {newStart}</DateDiv>
+      <DateDiv>종료 일시: {newEnd}</DateDiv>
       <BottomContainer>
         {category ? <Category>#{category}</Category> : <div />}
         <Participant>참여: 00명</Participant>
@@ -46,12 +65,20 @@ function VoteItem({ title, organizer, startDate, endDate, category, _id, titleCa
 }
 
 const ItemWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
   border: 1px solid ${color.gray};
-  width: 250px;
-  height: 310px;
+  width: 20vw;
+  height: 330px;
   border-radius: 5px;
+  @media (max-width: 1000px) {
+    width: 27vw;
+    height: 350px;
+  }
+  @media (max-width: ${media.tablet}px) {
+    width: 250px;
+    height: 350px;
+  }
 `;
 const HeaderContainer = styled.div`
   color: ${color.gray};
@@ -70,18 +97,21 @@ const DdayDiv = styled.div`
   border-radius: 5px 0 10px 0;
 `;
 const Title = styled.div`
+  margin: 4vh auto 2vh auto;
   text-align: center;
-  width: 90%;
-  margin: 5vh auto 2vh auto;
+  width: 95%;
   line-height: 25px;
 `;
-const Text = styled.div`
-  margin: 0vh 0vw 3vh 1vw;
+const OrganizerWrapper = styled.div`
   font-family: 'Nanum Gothic', monospace;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 1vw 3vh 0;
 `;
-const Date = styled.div`
-  text-align: center;
-  margin: 1vh 1vw;
+const DateDiv = styled.div`
+  margin: 1vh 0 2vh 1vw;
   font-family: 'Nanum Gothic', monospace;
   font-size: 0.8rem;
 `;
@@ -108,7 +138,9 @@ const Participant = styled.div`
 const ToVoteLink = styled(Link)`
   text-decoration: none;
   margin: 0 auto;
-  justify-content: flex-end;
+  position: absolute;
+  bottom: 20px;
+  right: 32%;
 `;
 const VoteButton = styled.input`
   text-align: center;

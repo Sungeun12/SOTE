@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadIdVote, unloadVote } from '../../../actions/vote_actions';
+import { loadClosedIdVote, unloadVote } from '../../../actions/vote_actions';
 import Header from '../VoteDetail/Header';
-import media from '../../../util/style/media';
+import ResultGraph from './ResultGraph';
+import Comment from './Comment';
+import color from '../../../util/style/color';
 
 function VoteResult({ id }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadIdVote(id));
+    dispatch(loadClosedIdVote(id));
     return () => {
       dispatch(unloadVote());
     };
   }, [dispatch, id]);
+
+  const comments = useSelector(state => state.vote.comments);
   const currentVote = useSelector(state => state.vote.currentVote);
   const currentOptions = useSelector(state => state.vote.currentOptions);
   console.log(currentVote);
@@ -20,6 +24,9 @@ function VoteResult({ id }) {
   return (
     <Container>
       <Header currentVote={currentVote} closed />
+      <ResultGraph />
+      <Line />
+      <Comment comments={comments} id={id} />
     </Container>
   );
 }
@@ -27,10 +34,13 @@ function VoteResult({ id }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
-  @media (max-width: ${media.tablet}px) {
-    width: 95%;
-  }
+`;
+const Line = styled.div`
+  margin: 3vh 0;
+  width: 100%;
+  border-bottom: 1px solid ${color.gray};
+  opacity: 0.3;
 `;
 export default VoteResult;

@@ -3,20 +3,35 @@ import { useParams } from 'react-router';
 import styled from 'styled-components';
 import { MdTurnedInNot, MdGroup } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import moment from 'moment';
 import color from '../../../util/style/color';
+import Loading from './Loading';
+import { getDday } from '../../../util/getDday';
 
 function Header({ currentVote, closed }) {
   const params = useParams();
-  const userPic = useSelector(state => state.user.userPic);
+  const [loading, setLoading] = useState(true);
+  const [newStart, setNewStart] = useState('');
+  const [newEnd, setNewEnd] = useState('');
   const colors = ['#1838a8', '#eed030', '#838383'];
   const [theme, setTheme] = useState('white');
   const [titleCategory, setTitleCategory] = useState(params.category);
+  const dDay = newEnd ? getDday(newEnd) : '';
+  useEffect(() => {
+    if (currentVote) {
+      setLoading(false);
+      setNewStart(moment(currentVote.startDate).format('YYYY/MM/DD h:mm a'));
+      setNewEnd(moment(currentVote.endDate).format('YYYY/MM/DD h:mm a'));
+    }
+    if (!currentVote) {
+      setLoading(true);
+    }
+  }, [currentVote]);
 
   useEffect(() => {
     setTitleCategory(params.category);
   }, [params]);
-
+  console.log(currentVote);
   useEffect(() => {
     if (closed === true) {
       setTheme(colors[2]);
@@ -29,26 +44,30 @@ function Header({ currentVote, closed }) {
     }
   }, [titleCategory, closed]);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <HeaderContainer>
       <TopWrapper>
-        <Dday theme={theme}>D-15</Dday>
+        {closed ? <Dday theme={theme}>완료</Dday> : <Dday theme={theme}>D-{dDay}</Dday>}
+
         <MdTurnedInNot size="30" />
       </TopWrapper>
       <TitleWrapper>
-        <Title>{currentVote && currentVote.title}</Title>
+        <Title>{currentVote?.title}</Title>
         <Date>
-          {currentVote && currentVote.startDate}~{currentVote && currentVote.endDate}
+          {newStart} ~ {newEnd}
         </Date>
       </TitleWrapper>
       <BottomWrapper>
         <UserInfo>
-          {userPic ? (
-            <img src={userPic} alt={userPic} />
+          {currentVote?.organizer?.profile ? (
+            <img src={currentVote.organizer.profile} alt="투표 작성자 이미지" />
           ) : (
             <FaUserCircle size="25" color="#696868" style={{ marginRight: '20px' }} />
           )}
-          <div>김눈송</div>
+          <div>{currentVote?.organizer}</div>
         </UserInfo>
         <Participant>
           <MdGroup size="25" color="#696868" style={{ marginRight: '20px' }} />

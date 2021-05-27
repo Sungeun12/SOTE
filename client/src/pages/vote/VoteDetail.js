@@ -13,8 +13,8 @@ function VoteDetail({ match }) {
 }
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
-  margin: 7vh 0px;
+  margin: 7vh auto;
 `;
 export default VoteDetail;
