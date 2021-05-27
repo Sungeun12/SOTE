@@ -32,3 +32,10 @@ export function patchVote(id) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function uploadComment(id, body) {
+  return axios
+    .post(`http://localhost:5000/vote/${id}/comment`, body)
+    .then(response => response)
+    .catch(error => error);
+}
