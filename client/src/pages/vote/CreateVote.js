@@ -9,7 +9,7 @@ function CreateVote() {
     <CreateVoteContainer>
       <Header>
         <h1>투표 만들기</h1>
-        <Text>모든 값을 입력해주세요!</Text>
+        <Text>원하는 투표를 만들어보세요!</Text>
         <CreateVoteForm />
       </Header>
     </CreateVoteContainer>
@@ -17,8 +17,8 @@ function CreateVote() {
 }
 
 const CreateVoteContainer = styled.div`
-  width: 100vw;
-  margin: 7vh 0px;
+  width: 100%;
+  margin: 7vh auto;
 `;
 const Header = styled.div`
   margin: 0vh auto;

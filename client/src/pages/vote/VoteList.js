@@ -25,9 +25,9 @@ function VoteList({ match }) {
 }
 
 const Container = styled.div`
-  width: 100vw;
+  width: 95%;
   height: 100%;
-  margin: 7vh 0px;
+  margin: 7vh auto;
 `;
 const Title = styled.div`
   font-family: 'Nanum Gothic Coding', sans-serif;

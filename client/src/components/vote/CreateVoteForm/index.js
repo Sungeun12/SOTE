@@ -119,11 +119,6 @@ function CreateVoteForm() {
 
 const Form = styled.form`
   width: 100%;
-  margin: 7vh auto;
-  width: 700px;
-  @media (max-width: ${media.tablet}px) {
-    width: 80%;
-  }
 `;
 const ButtonContainer = styled.div`
   margin: 5vh auto;
