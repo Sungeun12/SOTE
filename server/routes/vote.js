@@ -112,6 +112,8 @@ router.get('/:id', async (req, res) => {
   try {
     const vote = 
       await Vote.findById(voteId)
+        .populate('organizer', 'name image')
+        .populate('group', 'name image');
 
     if(vote.endDate > new Date())
       return res.status(200).json({ success: true, data: vote });
