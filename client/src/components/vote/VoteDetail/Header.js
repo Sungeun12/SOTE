@@ -67,7 +67,7 @@ function Header({ currentVote, closed }) {
           ) : (
             <FaUserCircle size="25" color="#696868" style={{ marginRight: '20px' }} />
           )}
-          <div>{currentVote?.organizer}</div>
+          <div>{currentVote?.organizer?.name}</div>
         </UserInfo>
         <Participant>
           <MdGroup size="25" color="#696868" style={{ marginRight: '20px' }} />
