@@ -1,24 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaUserCircle } from 'react-icons/fa';
-import dummy from './dummyUser.json';
-import storage from '../../../util/storage';
+import { useSelector } from 'react-redux';
 
 function UserProfile() {
-  const loginUser = storage.get('user');
+  const loginUser = useSelector(state => state.user.user);
+  const profilePath = false;
+
   return (
     <UserContainer>
-      {loginUser &&
-        dummy.user.map(({ id, name, profilePath }) => (
-          <UserItem key={id.toString(10)}>
-            <UserName>{name}</UserName>
-            {profilePath ? (
-              <UserImg src={profilePath} alt={id.toString(10)} />
-            ) : (
-              <FaUserCircle size="25" color="#696868" />
-            )}
-          </UserItem>
-        ))}
+      {loginUser && (
+        // eslint-disable-next-line no-underscore-dangle
+        <UserItem key={loginUser._id}>
+          <UserName>{loginUser.name}</UserName>
+          {profilePath ? (
+            <UserImg src={profilePath} alt="프로필사진" />
+          ) : (
+            <FaUserCircle size="25" color="#696868" />
+          )}
+        </UserItem>
+      )}
     </UserContainer>
   );
 }

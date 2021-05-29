@@ -22,7 +22,7 @@ export function authConfirm(email, cauthNumber) {
 }
 export function signIn(email, password) {
   return axios
-    .post('http://localhost:5000/user/signin', { email, password })
+    .post('http://localhost:5000/user/signin', { email, password }, { withCredentials: true })
     .then(response => {
       if (response.data.userId) {
         storage.set('user', response.data.userId);
@@ -34,7 +34,7 @@ export function signIn(email, password) {
 
 export function getUserProfile() {
   return axios
-    .get('http://localhost:5000/user/auth')
+    .get('http://localhost:5000/user/auth', { withCredentials: true })
     .then(response => {
       if (response.data) {
         storage.set('name', response.data.name);

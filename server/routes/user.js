@@ -4,19 +4,19 @@ const auth = require("../middleware/auth");
 const User = require("../models/User");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-const multer= require('multer');
-const path = require('path');
+const multer = require("multer");
+const path = require("path");
 
 // MULTER CONFIG
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/user');
+    cb(null, "uploads/user");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
-  }
+  },
 });
-const upload = multer({ storage }).single('user');
+const upload = multer({ storage }).single("user");
 
 router.post("/signup", (req, res) => {
   //회원 가입할 때 필요한 정보들을 client에서 가져오면 그것들을 데이터 베이스에 넣어준다.
@@ -35,8 +35,6 @@ router.post("/signup", (req, res) => {
 
 router.post("/sendmail", async function (req, res) {
   const user_email = req.body.email; //받아온 email user_email에 초기화
-
-  console.log(user_email);
 
   var concode;
 
@@ -92,7 +90,7 @@ router.post("/authConfirm", (req, res) => {
     var cipher = crypto.createCipher("aes-256-cbc", key);
     var result3 = cipher.update(data, "utf8", "base64");
     result3 += cipher.final("base64");
-    console.log(result3);
+
     if (result3 === user.code) {
       //코드까지 맞다면 토큰을 생성하기
       user.generateCodeToken((err, user) => {
@@ -139,7 +137,10 @@ router.post("/signin", (req, res) => {
 
       //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지
       res
-        .cookie("x_auth", user.token)
+        .cookie("x_auth", user.token, {
+          expires: new Date(Date.now() + 900000),
+          httpOnly: true,
+        })
         .status(200)
         .json({ loginSuccess: true, userId: user._id });
     });
@@ -169,22 +170,24 @@ router.get("/signout", auth, (req, res) => {
 });
 
 // 프로필 이미지 업로드
-router.post('/upload', async (req, res) => {
-  upload(req, res, err => {
-    if(err) {
+router.post("/upload", async (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
       return res.status(400).json({ success: false, err });
     }
-    return res.status(201).json({ success: true, filepath: '/user/' + req.file.filename });
-  })
-})
+    return res
+      .status(201)
+      .json({ success: true, filepath: "/user/" + req.file.filename });
+  });
+});
 
 // 이미지 파일 경로 업데이트
-router.patch('/', (req, res) => {
+router.patch("/", (req, res) => {
   User.findByIdAndUpdate(req.body.userId, {
-    image: req.body.filepath
+    image: req.body.filepath,
   })
-    .then(user => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
+    .then((user) => res.status(200).json({ success: true }))
+    .catch((err) => res.status(400).json({ success: false, err }));
+});
 
 module.exports = router;

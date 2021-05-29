@@ -17,7 +17,10 @@ const { PORT, MONGO_URI } = process.env;
 app.set("port", PORT);
 
 app.use(
-  cors(),
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
   morgan("dev"),
   cookieParser(),
   express.json(),
@@ -32,10 +35,10 @@ mongoose.connect(MONGO_URI, {
 });
 
 app.use("/user", userRouter);
-app.use('/vote', voteRouter);
-app.use('/group', groupRouter);
-app.use('/', noticeRouter);
-app.use('/', commentRouter);
+app.use("/vote", voteRouter);
+app.use("/group", groupRouter);
+app.use("/", noticeRouter);
+app.use("/", commentRouter);
 
 app.listen(app.get("port"), () => {
   console.log(`server running on port ${app.get("port")}...`);
