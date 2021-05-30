@@ -23,7 +23,7 @@ export function createGroup(body) {
 
 export function loadGroup(category, order) {
   return axios
-    .get(`http://localhost:5000/group?category=${category}?order=${order}`)
+    .get(`http://localhost:5000/group?category=${category}&order=${order}`)
     .then(response => response)
     .catch(error => error);
 }

@@ -5,7 +5,7 @@ const { Types: { ObjectId } } = Schema;
 const groupSchema = new Schema({
   category: {
     type: String,
-    enum: ['all', 'club', 'major', 'class', 'etc'],
+    enum: ['club', 'major', 'class', 'etc'],
     required: true
   },
   name: {

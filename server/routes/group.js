@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
   const match = {};
   const inOrder = {};
 
-  if(q.category){
+  if(q.category && q.category !== 'all'){
     match.category = q.category;
   }
   if(q.order === 'popular'){
