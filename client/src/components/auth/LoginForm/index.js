@@ -15,6 +15,7 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -23,6 +24,8 @@ function LoginForm() {
     const userEmail = `${data.email}@sookmyung.ac.kr`;
     const userPwd = data.password;
     dispatch(signIn(userEmail, userPwd));
+    setValue('email', '');
+    setValue('password', '');
   };
 
   return (
