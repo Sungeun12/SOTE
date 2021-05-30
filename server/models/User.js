@@ -42,7 +42,8 @@ const userSchema = new Schema({
     maxlength: 50,
   },
   image: {
-    type: String
+    type: String,
+    default: ""
   },
   isAdmin: {
     type: Boolean,

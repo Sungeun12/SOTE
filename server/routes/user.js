@@ -148,12 +148,14 @@ router.get("/auth", auth, (req, res) => {
   //여기까지 middleware를 통과해 왔다는 얘기는
   //Authentication이 True라는 말
   res.status(200).json({
-    _id: req.user._id,
-    isAdmin: req.user.role,
     isAuth: true,
+    _id: req.user._id,
+    isAdmin: req.user.isAdmin,
     email: req.user.email,
     name: req.user.name,
     major: req.user.major,
+    image: req.user.image,
+    votes: req.user.votes
   });
 });
 
