@@ -1,7 +1,7 @@
 const express = require('express');
 const Comment = require('../models/Comment');
 const Notice = require('../models/Notice');
-const util = require('./util');
+const util = require('../util');
 const router = express.Router();
 
 // 단체의 모든 공지사항 조회

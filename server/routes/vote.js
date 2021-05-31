@@ -4,7 +4,7 @@ const path = require('path');
 const User = require('../models/User');
 const Vote = require('../models/Vote');
 const Comment = require('../models/Comment');
-const util = require('./util');
+const util = require('../util');
 const router = express.Router();
 
 // MULTER CONFIG
