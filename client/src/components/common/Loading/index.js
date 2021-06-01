@@ -9,5 +9,6 @@ const Container = styled.div`
   text-align: center;
   font-size: 1.3rem;
   font-family: 'Nanum Gothic', monospace;
+  height: 100vh;
 `;
 export default Loading;
