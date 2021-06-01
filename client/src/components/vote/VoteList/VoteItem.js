@@ -8,7 +8,17 @@ import color from '../../../util/style/color';
 import media from '../../../util/style/media';
 import { getDday } from '../../../util/getDday';
 
-function VoteItem({ title, organizer, startDate, endDate, category, _id, titleCategory, closed }) {
+function VoteItem({
+  title,
+  organizer,
+  startDate,
+  endDate,
+  category,
+  _id,
+  titleCategory,
+  closed,
+  voteCount,
+}) {
   const colors = ['#1838a8', '#eed030', '#838383'];
   const [theme, setTheme] = useState(colors[0]);
   useEffect(() => {
@@ -49,7 +59,7 @@ function VoteItem({ title, organizer, startDate, endDate, category, _id, titleCa
       <DateDiv>종료 일시: {newEnd}</DateDiv>
       <BottomContainer>
         {category ? <Category>#{category}</Category> : <div />}
-        <Participant>참여: 00명</Participant>
+        <Participant>참여: {voteCount}명</Participant>
       </BottomContainer>
       {closed === 'true' ? (
         <ToVoteLink to={`/vote/${titleCategory}/${_id}/closed`}>
