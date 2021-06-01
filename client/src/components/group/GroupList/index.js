@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import CreateGroupButton from './CreateGroupButton';
 import { groupSort, sortTypes } from '../../../util/selectOption/selectOption';
 import { customStyles } from '../../vote/VoteList/style';
 import { loadAllGroup, unloadGroup } from '../../../actions/group_actions';
+import GroupItem from './GroupItem';
 
 function GroupList() {
   const dispatch = useDispatch();
   const [category, setCategory] = useState(groupSort[0].value);
   const [order, setOrder] = useState(sortTypes[0].value);
-  console.log(category);
+  const group = useSelector(state => state.group.groupList);
+  console.log(group);
   useEffect(() => {
     dispatch(loadAllGroup(category, order));
     return () => {
@@ -47,6 +49,18 @@ function GroupList() {
           />
         </SelectWrapper>
       </TopWrapper>
+      <GroupContainer>
+        {group &&
+          group.map(({ description, members, name, image }) => (
+            <GroupItem
+              key={name}
+              description={description}
+              members={members}
+              name={name}
+              image={image}
+            />
+          ))}
+      </GroupContainer>
     </ListContainer>
   );
 }
@@ -65,5 +79,9 @@ const SelectWrapper = styled.div`
 `;
 const Space = styled.div`
   width: 1vw;
+`;
+const GroupContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 export default GroupList;
