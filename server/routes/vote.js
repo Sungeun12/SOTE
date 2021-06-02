@@ -64,11 +64,21 @@ router.get('/', (req, res) => {
 });
 
 // 투표 만들기
-router.post('/', (req, res) => {
-  const vote = new Vote(req.body);
-  vote.save()
-    .then(vote => res.status(201).json({ success: true, voteId: vote._id }))
-    .catch(err => res.status(400).json({ success: false, err }));
+router.post('/', async (req, res) => {
+  try {
+    const vote = new Vote(req.body);
+    await vote.save();
+
+    const group = await Group.findById(vote.group);
+    const message = { groupName: group.name, when: 'voteOpen' };
+
+    for(const member of group.members){
+      await User.findByIdAndUpdate(member, { $push: { notificationMessage: message } });
+    }
+    return res.status(201).json({ success: true, voteId: vote._id });
+  } catch(err) {
+    return res.status(400).json({ success: false, err });
+  }
 });
 
 // 주요 투표 보기
