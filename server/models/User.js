@@ -64,6 +64,27 @@ const userSchema = new Schema({
   codetoken: {
     type: String,
   },
+  notificationMessage: {
+    type: [{
+      groupName: {
+        type: String,
+        required: true
+      },
+      when: {
+        type: String,
+        enum: ['joinReq', 'joinRes', 'voteOpen', 'voteClose'],
+        required: true
+      },
+      isRead: {
+        type: Boolean,
+        default: false
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }]
+  }
 });
 
 userSchema.pre("save", function (next) {
