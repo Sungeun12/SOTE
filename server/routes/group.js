@@ -164,10 +164,11 @@ router.post('/:id/joinreq', async (req, res) => {
         return res.status(201).json({ success: true, result: 'joined' });
     }
     else if(group.joinPolicy === 'filter') {
+      const message = { groupName: group.name, when: 'joinReq' };
+      for(const manager of group.managers) {
+        await User.findByIdAndUpdate(manager, { $push: { notificationMessage: message } });
+      }
       await addToWaitinglist(groupId, userId);
-
-      // * 매니저에게 알림 발송 추가할 것 *
-  
       return res.status(201).json({ success: true, result: 'wait' });
     }
     else {
@@ -194,6 +195,7 @@ router.post('/:id/join', async (req, res) => {
     rows.push(row);
     overwriteEmailFile(filepath, rows);
     addMember(groupId, userId);
+    handleJoinRequest(groupId, userId);
     return res.status(201).json({ success: true });
   } catch(err) {
     return res.status(400).json({ success: false, err });
@@ -280,6 +282,18 @@ const addToWaitinglist = async (groupId, userId) => {
   await Group.findByIdAndUpdate(groupId, {
     $push: { waitinglist: userId }
   });
+}
+
+const handleJoinRequest = async (groupId, userId) => {
+  const group = await Group.findById(groupId);
+  if(!group.waitinglist.includes(userId)) return;
+
+  await Group.findByIdAndUpdate(groupId, {
+    $pull: { waitinglist: userId } 
+  });
+
+  const message = { groupName: group.name, when: 'joinRes' };
+  await User.findByIdAndUpdate(userId, { $push: { notificationMessage: message } });
 }
 
 const findUserById = async userId => {
