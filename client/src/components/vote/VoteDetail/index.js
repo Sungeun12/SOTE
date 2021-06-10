@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3';
 import * as api from '../../../api/vote';
@@ -10,9 +11,12 @@ import media from '../../../util/style/media';
 import SelectOption from './SelectOption';
 import color from '../../../util/style/color';
 import Vote from '../../../util/VoteContract/Vote.json';
-import Loading from './Loading';
+import Loading from '../../common/Loading';
+import storage from '../../../util/storage';
 
 function VoteDetail({ id }) {
+  const history = useHistory();
+  const userId = storage.get('user');
   const [web3, setWeb3] = useState(new Web3(window.ethereum));
   const [account, setAccount] = useState('');
 
@@ -20,6 +24,7 @@ function VoteDetail({ id }) {
   const currentOptions = useSelector(state => state.vote.currentOptions);
   const [singleType, setSingleType] = useState(true);
   const [result, setResult] = useState([]);
+  const [singleResult, setSingleResult] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,9 +41,12 @@ function VoteDetail({ id }) {
       setSingleType(false);
     }
   }, [currentVote]);
-
+  console.log(singleResult);
   const addResult = _id => {
     if (result.includes(_id)) return;
+    if (singleType) {
+      setSingleResult(_id);
+    }
 
     const newArray = result.concat(_id);
     setResult(newArray);
@@ -49,7 +57,7 @@ function VoteDetail({ id }) {
     const newArray = result.filter(item => item !== _id);
     setResult(newArray);
   };
-  console.log('result', result);
+  console.log('result', currentVote);
 
   const initWeb3 = async () => {
     if (window.ethereum) {
@@ -79,10 +87,10 @@ function VoteDetail({ id }) {
 
   const makeVote = async () => {
     if (singleType) {
-      const voteContract = new web3.eth.Contract(Vote.abi, Vote.networks['1617859458977'].address);
+      const voteContract = new web3.eth.Contract(Vote.abi, currentVote.contractAddr);
 
       voteContract.methods
-        .castVoteForSingleOption(result)
+        .castVoteForSingleOption(singleResult)
         .send({
           from: account,
         })
@@ -90,11 +98,11 @@ function VoteDetail({ id }) {
           console.log(hash);
         })
         .then(() => {
-          api.patchVote(id);
+          api.vote(id);
         });
     }
     if (!singleType) {
-      const voteContract = new web3.eth.Contract(Vote.abi, Vote.networks['1618145015655'].address);
+      const voteContract = new web3.eth.Contract(Vote.abi, currentVote.contractAddr);
       voteContract.methods
         .castVoteForMultiOptions(result)
         .send({
@@ -104,7 +112,12 @@ function VoteDetail({ id }) {
           console.log(hash);
         })
         .then(() => {
-          api.patchVote(id);
+          const body = {
+            userId,
+          };
+          api.vote(id, body);
+          alert('투표가 완료되었습니다.');
+          history.push('/vote/official');
         });
     }
   };
