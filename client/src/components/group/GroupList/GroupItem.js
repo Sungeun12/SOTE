@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdPersonOutline } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
-function GroupItem({ description, name, members, image }) {
+function GroupItem({ description, name, members, image, id }) {
   console.log(description);
   return (
-    <ItemContainer>
+    <ItemContainer to={`/group/${id}/home`}>
       <Img src={`http://localhost:5000/${image}`} alt={image} />
       <TitleWrapper>
         <Name>{name}</Name>
@@ -18,10 +19,13 @@ function GroupItem({ description, name, members, image }) {
   );
 }
 
-const ItemContainer = styled.div`
+const ItemContainer = styled(Link)`
   display: flex;
   flex-direction: column;
-  margin: 5vh auto;
+  margin: 0 auto;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
 `;
 const Img = styled.img`
   width: 300px;

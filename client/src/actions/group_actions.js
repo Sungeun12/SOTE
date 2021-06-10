@@ -23,5 +23,16 @@ export const loadAllGroup = (category, order) => async dispatch => {
     },
   );
 };
+export const loadIdGroup = id => async dispatch => {
+  dispatch({ type: groupConstants.ID_GROUP_LOAD_REQUEST });
+  await api.loadIdGroup(id).then(
+    response => {
+      dispatch({ type: groupConstants.ID_GROUP_LOAD_SUCCESS, payload: response.data.data });
+    },
+    error => {
+      dispatch({ type: groupConstants.ID_GROUP_LOAD_FAILURE, payload: error.toString() });
+    },
+  );
+};
 
 export const unloadGroup = () => ({ type: groupConstants.UNLOAD_GROUP });

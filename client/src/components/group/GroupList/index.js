@@ -13,6 +13,7 @@ function GroupList() {
   const [category, setCategory] = useState(groupSort[0].value);
   const [order, setOrder] = useState(sortTypes[0].value);
   const group = useSelector(state => state.group.groupList);
+  const request = useSelector(state => state.group.request);
   console.log(group);
   useEffect(() => {
     dispatch(loadAllGroup(category, order));
@@ -49,15 +50,17 @@ function GroupList() {
           />
         </SelectWrapper>
       </TopWrapper>
+      {request && <TextAlert>loading...</TextAlert>}
       <GroupContainer>
         {group &&
-          group.map(({ description, members, name, image }) => (
+          group.map(({ description, members, name, image, _id }) => (
             <GroupItem
               key={name}
               description={description}
               members={members}
               name={name}
               image={image}
+              id={_id}
             />
           ))}
       </GroupContainer>
@@ -83,5 +86,14 @@ const Space = styled.div`
 const GroupContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 6vh;
+  column-gap: 4.5vw;
+  margin-top: 5vh;
+`;
+const TextAlert = styled.div`
+  margin: 5vh 0;
+  text-align: center;
+  font-family: 'Nanum Gothic', monospace;
+  height: 100vh;
 `;
 export default GroupList;
