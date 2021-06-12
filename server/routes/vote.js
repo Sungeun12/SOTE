@@ -119,7 +119,7 @@ router.get('/:id', async (req, res) => {
       return res.status(200).json({ success: true, data: vote });
 
     const comments = 
-      await Comment.find({ on: voteId })
+      await Comment.find({ post: voteId })
         .sort('createdAt')
         .populate('writer', 'name image');
 
