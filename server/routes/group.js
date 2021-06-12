@@ -90,9 +90,7 @@ router.get('/:id', (req, res) => {
 
   Promise.all([
     Group.findById(groupId)
-      .populate('managers', 'name image email')
-      .populate('members', 'name image email')
-      .populate('waitinglist', 'name image email'),
+      .populate('managers', 'name image'),
 
     Notice.find({ group: groupId })
       .sort({'createdAt': 'desc' })

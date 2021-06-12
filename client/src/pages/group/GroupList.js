@@ -12,7 +12,7 @@ function GroupList() {
 }
 
 const Container = styled.div`
-  width: 90%;
+  width: 80%;
   @media (max-width: ${media.tablet}px) {
     width: 90%;
   }

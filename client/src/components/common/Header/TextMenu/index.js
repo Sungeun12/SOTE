@@ -39,7 +39,7 @@ function TextMenu() {
           </MenuItem>
         ) : (
           <MenuItem key={text}>
-            <StyledLink to={link} activeClassName="active">
+            <StyledLink exact to={link} activeClassName="active">
               {text}
             </StyledLink>
           </MenuItem>

@@ -16,21 +16,10 @@ export const loadAllGroup = (category, order) => async dispatch => {
   dispatch({ type: groupConstants.ALL_GROUP_LOAD_REQUEST });
   await api.loadGroup(category, order).then(
     response => {
-      dispatch({ type: groupConstants.ALL_GROUP_LOAD_SUCCESS, payload: response.data.data });
+      dispatch({ type: groupConstants.ALL_GROUP_LOAD_SUCCESS, payload: response.data });
     },
     error => {
       dispatch({ type: groupConstants.ALL_GROUP_LOAD_FAILURE, payload: error.toString() });
-    },
-  );
-};
-export const loadIdGroup = id => async dispatch => {
-  dispatch({ type: groupConstants.ID_GROUP_LOAD_REQUEST });
-  await api.loadIdGroup(id).then(
-    response => {
-      dispatch({ type: groupConstants.ID_GROUP_LOAD_SUCCESS, payload: response.data.data });
-    },
-    error => {
-      dispatch({ type: groupConstants.ID_GROUP_LOAD_FAILURE, payload: error.toString() });
     },
   );
 };

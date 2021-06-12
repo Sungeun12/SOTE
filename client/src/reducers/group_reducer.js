@@ -11,20 +11,6 @@ export default function (state = {}, action) {
       };
     case groupConstants.CREATE_GROUP_FAILURE:
       return {};
-
-    case groupConstants.ALL_GROUP_LOAD_REQUEST:
-      return { request: true };
-    case groupConstants.ALL_GROUP_LOAD_SUCCESS:
-      return { groupList: action.payload };
-    case groupConstants.ALL_GROUP_LOAD_FAILURE:
-      return {};
-
-    case groupConstants.ID_GROUP_LOAD_REQUEST:
-      return { request: true };
-    case groupConstants.ID_GROUP_LOAD_SUCCESS:
-      return { currentGroup: action.payload.group };
-    case groupConstants.ID_GROUP_LOAD_FAILURE:
-      return {};
     default:
       return state;
   }
