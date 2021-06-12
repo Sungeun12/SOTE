@@ -62,7 +62,11 @@ router.post('/', (req, res) => {
     joinPolicy: req.body.joinPolicy
   });
   group.save()
-    .then(group => res.status(201).json({ success: true, groupId: group._id }))
+    .then(group => {
+      if(group.emailFile)
+        handleEmailFile(group._id, group.emailFile);
+      return res.status(201).json({ success: true, groupId: group._id });
+    })
     .catch(err => res.status(400).json({ success: false, err }));
 });
 
@@ -108,37 +112,15 @@ router.get('/:id', (req, res) => {
 
 // 이메일 파일 경로 업데이트
 router.patch('/:id', (req, res) => {
-  Group.findByIdAndUpdate(req.params.id, {
-    emailFile: req.body.filepath
-  })
-    .then(group => res.status(200).json({ success: true }))
-    .catch(err => res.status(400).json({ success: false, err }));
-})
-
-// 이메일 파일 업로드
-router.post('/:id/emailupload', upload, async (req, res) => {
-  const members = [];
-  const unregistered = [];
   const groupId = req.params.id;
-  const filepath = 'group/' + req.file.filename;
+  const filepath = req.body.filepath;
 
-  if(req.file.mimetype !== 'text/csv')
-    return res.status(400).json({ success: false, err: "잘못된 MIME 타입입니다." });
-
-  try {
-    const rows = await parseEmailFile(filepath);
-    const emails = rows.map(row => row['이메일']);
-    for(const email of emails) {
-      const userId = await findUserIdByEmail(email);
-      if(!userId) unregistered.push(email);
-      else members.push(userId);
-    }
-    await setMembers(groupId, members);
-    await addToUnregistered(groupId, unregistered);
-    return res.status(201).json({ success: true, filepath });
-  } catch(err) {
-    return res.status(400).json({ success: false, err: err.message });
-  }
+  Group.findByIdAndUpdate(groupId, { emailFile: filepath })
+    .then(group => {
+      handleEmailFile(groupId, filepath);
+      return res.status(200).json({ success: true });
+    })
+    .catch(err => res.status(400).json({ success: false, err }));
 })
 
 // 멤버 가입 요청
@@ -153,8 +135,10 @@ router.post('/:id/joinreq', async (req, res) => {
       removeFromUnregistered(groupId, user.email);
       return res.status(201).json({ success: true, result: 'joined' });
     }
+
     else if(group.joinPolicy === 'accept'){
-        const filepath = group.emailFile;
+      const filepath = group.emailFile;
+      if(filepath){
         const rows = await parseEmailFile(filepath);
         const row = {
           이름: user.name,
@@ -162,6 +146,7 @@ router.post('/:id/joinreq', async (req, res) => {
         };
         rows.push(row);
         overwriteEmailFile(filepath, rows);
+      }
         addMember(groupId, userId);
         return res.status(201).json({ success: true, result: 'joined' });
     }
@@ -188,13 +173,15 @@ router.post('/:id/join', async (req, res) => {
   try {
     const userId = await findUserIdByEmail(user.email);
     const filepath = await findEmailFilepath(groupId);
-    const rows = await parseEmailFile(filepath);
-    const row = {
-      이름: user.name,
-      이메일: user.email
-    };
-    rows.push(row);
-    overwriteEmailFile(filepath, rows);
+    if(filepath){
+      const rows = await parseEmailFile(filepath);
+      const row = {
+        이름: user.name,
+        이메일: user.email
+      };
+      rows.push(row);
+      overwriteEmailFile(filepath, rows);
+    }
     addMember(groupId, userId);
     return res.status(201).json({ success: true });
   } catch(err) {
@@ -210,9 +197,11 @@ router.post('/:id/leave', async (req, res) => {
   try {
     const user = await findUserById(userId);
     const filepath = await findEmailFilepath(groupId);
-    const rows = await parseEmailFile(filepath);
-    removeUserFromRows(user, rows);
-    overwriteEmailFile(filepath, rows);
+    if(filepath){
+      const rows = await parseEmailFile(filepath);
+      removeUserFromRows(user, rows);
+      overwriteEmailFile(filepath, rows);
+    }
     removeMember(groupId, userId);
     return res.status(200).json({ success: true });
   } catch(err) {
@@ -220,7 +209,7 @@ router.post('/:id/leave', async (req, res) => {
   }
 })
 
-// 기타 파일 업로드
+// 파일 업로드
 router.post('/upload', async (req, res) => {
   upload(req, res, err => {
     if(err) {
@@ -257,15 +246,27 @@ router.delete('/:id/manager', (req, res) => {
     .catch(err => res.status(400).json({ success: false, err }));
 })
 
+const handleEmailFile = async (groupId, filepath) => {
+  const members = [];
+  const unregistered = [];
+  const rows = await parseEmailFile(filepath);
+  const emails = rows.map(row => row['이메일']);
+  for(const email of emails) {
+    const userId = await findUserIdByEmail(email);
+    if(!userId) unregistered.push(email);
+    else members.push(userId);
+  }
+  await setMembers(groupId, members);
+  await setUnregistered(groupId, unregistered);
+}
+
 const findUserIdByEmail = async email => {
   const user = await User.findOne({ email });
   return user ? user._id : null;
 }
 
-const addToUnregistered = async (groupId, unregistered) => {
-  await Group.findByIdAndUpdate(groupId, {
-    $push: { unregistered: { $each: unregistered } } 
-  });
+const setUnregistered = async (groupId, unregistered) => {
+  await Group.findByIdAndUpdate(groupId, { $set: { unregistered }});
 }
 
 const removeFromUnregistered = async (groupId, email) => {
