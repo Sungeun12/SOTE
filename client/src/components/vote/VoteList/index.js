@@ -54,24 +54,21 @@ function VoteList({ match, titleCategory }) {
           />
         </div>
         <VoteItemWrapper>
-          {voteList.map(
-            ({ title, organizer, startDate, endDate, category, _id, description, voteCount }) => (
-              <VoteItem
-                key={_id}
-                title={title}
-                organizer={organizer}
-                startDate={startDate}
-                endDate={endDate}
-                category={category}
-                _id={_id}
-                match={match}
-                titleCategory={titleCategory}
-                description={description}
-                voteCount={voteCount}
-                closed={closed}
-              />
-            ),
-          )}
+          {voteList.map(({ title, organizer, startDate, endDate, category, _id, description }) => (
+            <VoteItem
+              key={_id}
+              title={title}
+              organizer={organizer}
+              startDate={startDate}
+              endDate={endDate}
+              category={category}
+              _id={_id}
+              match={match}
+              titleCategory={titleCategory}
+              description={description}
+              closed={closed}
+            />
+          ))}
         </VoteItemWrapper>
       </VoteItemContainer>
     </Container>

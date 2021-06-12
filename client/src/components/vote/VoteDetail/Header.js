@@ -5,7 +5,7 @@ import { MdTurnedInNot, MdGroup } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
 import moment from 'moment';
 import color from '../../../util/style/color';
-import Loading from '../../common/Loading';
+import Loading from './Loading';
 import { getDday } from '../../../util/getDday';
 
 function Header({ currentVote, closed }) {
@@ -50,8 +50,8 @@ function Header({ currentVote, closed }) {
   return (
     <HeaderContainer>
       <TopWrapper>
-        {currentVote?.category && <Category>{currentVote.category}</Category>}
         {closed ? <Dday theme={theme}>완료</Dday> : <Dday theme={theme}>D-{dDay}</Dday>}
+
         <MdTurnedInNot size="30" />
       </TopWrapper>
       <TitleWrapper>
@@ -71,7 +71,7 @@ function Header({ currentVote, closed }) {
         </UserInfo>
         <Participant>
           <MdGroup size="25" color="#696868" style={{ marginRight: '20px' }} />
-          <div>참여자: {currentVote?.voteCount}명</div>
+          <div>참여자: 00명</div>
         </Participant>
       </BottomWrapper>
       <Line />
@@ -89,19 +89,6 @@ const TopWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-`;
-const Category = styled.div`
-  font-size: 1.3rem;
-  opacity: 0.7;
-  padding: 0px;
-  width: 80px;
-  height: 35px;
-  line-height: 35px;
-  text-align: center;
-  color: white;
-  background-color: #ff7e7e;
-  border-radius: 20px;
-  margin-right: 15px;
 `;
 const Dday = styled.div`
   font-size: 1.3rem;

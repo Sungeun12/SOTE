@@ -15,7 +15,7 @@ function AuthLayout({ title, description, children }) {
 }
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100%;
   margin: 7vh 0px;
 `;

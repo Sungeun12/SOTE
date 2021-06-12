@@ -26,9 +26,9 @@ export function loadIdVote(id) {
     .catch(error => error);
 }
 
-export function vote(id, body) {
+export function patchVote(id) {
   return axios
-    .post(`http://localhost:5000/vote/${id}`, body)
+    .patch(`http://localhost:5000/vote/${id}`)
     .then(response => response)
     .catch(error => error);
 }
