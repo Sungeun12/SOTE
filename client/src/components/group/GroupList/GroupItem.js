@@ -11,7 +11,6 @@ function GroupItem({ description, name, members, image, id, managers }) {
   const [join, setJoin] = useState(false);
   const [manage, setManage] = useState(false);
   const [memeberNum, setMemberNum] = useState(members.length + managers.length);
-  console.log(members);
   // eslint-disable-next-line no-underscore-dangle
   const userId = useSelector(state => state.user.user._id);
   useEffect(() => {
