@@ -13,11 +13,23 @@ function Option({ index, image, name, description }) {
         <Name>{name}</Name>
       </TopWrapper>
       {description ? <DashedLine /> : ''}
-      {description ? <Description>{description}</Description> : ''}
+      {description ? (
+        <Description>
+          {description.split('\n').map(line => (
+            <span key={line}>
+              {line}
+              <br />
+            </span>
+          ))}
+        </Description>
+      ) : (
+        ''
+      )}
       <Line />
     </OptionContainer>
   );
 }
+
 const OptionContainer = styled.div`
   width: 100%;
   font-family: 'Nanum Gothic Coding', monospace;

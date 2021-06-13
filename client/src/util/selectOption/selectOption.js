@@ -70,8 +70,12 @@ export const majorOptions = [
   { value: 68, label: '회화과' },
 ];
 
-export const voteTypes = [
+export const adminVote = [
   { value: 'official', label: '공식 행사 투표' },
+  { value: 'free', label: '자유 투표' },
+  { value: 'group', label: '단체' },
+];
+export const memberVote = [
   { value: 'free', label: '자유 투표' },
   { value: 'group', label: '단체' },
 ];

@@ -13,7 +13,7 @@ import storage from '../../../util/storage';
 
 function CreateVoteForm() {
   const loginUser = storage.get('user');
-  console.log(loginUser);
+
   const [options, setOptions] = useState([
     {
       id: 0,
@@ -79,11 +79,7 @@ function CreateVoteForm() {
       .send({
         from: account,
       })
-      .on('transactionHash', hash => {
-        console.log(hash);
-      })
       .then(newContractInstance => {
-        console.log(newContractInstance.options.address);
         // contractAddr 변수에 담아 서버에 넘긴다
         const body = {
           contractAddr: newContractInstance.options.address,
@@ -99,7 +95,7 @@ function CreateVoteForm() {
           options,
         };
 
-        api.createVote(body);
+        api.createVote(body, data.voteType.value);
       });
   };
 

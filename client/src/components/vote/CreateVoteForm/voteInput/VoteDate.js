@@ -36,7 +36,7 @@ function VoteDate({ watch, control }) {
             <StyledDatePicker
               onChange={e => field.onChange(e)}
               selected={field.value}
-              showTimeSelect
+              showTimeInput
               minDate={new Date()}
               filterTime={filterPassedTime}
               dateFormat="yyyy.MM.dd HH:mm"
@@ -55,7 +55,7 @@ function VoteDate({ watch, control }) {
             <StyledDatePicker
               onChange={e => field.onChange(e)}
               selected={field.value}
-              showTimeSelect
+              showTimeInput
               minDate={startDate}
               dateFormat="yyyy.MM.dd HH:mm"
               placeholderText="YYYY.MM.dd HH:mm"

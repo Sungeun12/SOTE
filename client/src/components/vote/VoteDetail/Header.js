@@ -31,7 +31,7 @@ function Header({ currentVote, closed }) {
   useEffect(() => {
     setTitleCategory(params.category);
   }, [params]);
-  console.log(currentVote);
+
   useEffect(() => {
     if (closed === true) {
       setTheme(colors[2]);

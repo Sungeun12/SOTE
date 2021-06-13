@@ -1,9 +1,9 @@
 import * as api from '../api/vote';
 import { voteConstants } from '../constants/vote_constants';
 
-export const loadAllVote = (category, closed) => async dispatch => {
+export const loadAllVote = (category, order, closed) => async dispatch => {
   dispatch({ type: voteConstants.ALL_VOTE_LOAD_REQUEST });
-  await api.loadVote(category, closed).then(
+  await api.loadVote(category, order, closed).then(
     response => {
       dispatch({ type: voteConstants.ALL_VOTE_LOAD_SUCCESS, payload: response.data });
     },
@@ -19,7 +19,6 @@ export const loadIdVote = id => async dispatch => {
   dispatch({ type: voteConstants.ID_VOTE_LOAD_REQUEST });
   await api.loadIdVote(id).then(
     response => {
-      console.log(response.data.data);
       dispatch({ type: voteConstants.ID_VOTE_LOAD_SUCCESS, payload: response.data.data });
     },
     error => {
@@ -32,7 +31,6 @@ export const loadClosedIdVote = id => async dispatch => {
   dispatch({ type: voteConstants.CLOSED_ID_VOTE_LOAD_REQUEST });
   await api.loadIdVote(id).then(
     response => {
-      console.log(response.data.data);
       dispatch({ type: voteConstants.CLOSED_ID_VOTE_LOAD_SUCCESS, payload: response.data.data });
     },
     error => {

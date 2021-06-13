@@ -8,15 +8,15 @@ import VoteItem from './VoteItem';
 import { sortTypes } from '../../../util/selectOption/selectOption';
 import { customStyles } from './style';
 import media from '../../../util/style/media';
+import { calcDate } from '../../../util/calcDate';
 
 const types = ['진행중인투표', '완료된투표'];
 
 function VoteList({ match, titleCategory }) {
   const [active, setActive] = useState(types[0]);
-  const [sort, setSort] = useState(sortTypes[0]);
+  const [sort, setSort] = useState(sortTypes[0].value);
   const [closed, setClosed] = useState('false');
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (active === '진행중인투표') {
       setClosed('false');
@@ -26,11 +26,11 @@ function VoteList({ match, titleCategory }) {
     }
   }, [active]);
   useEffect(() => {
-    dispatch(loadAllVote(titleCategory, closed));
+    dispatch(loadAllVote(titleCategory, sort, closed));
     return () => {
       dispatch(unloadVote());
     };
-  }, [dispatch, titleCategory, closed]);
+  }, [dispatch, titleCategory, closed, sort]);
 
   const voteList = useSelector(state => state.vote.voteList);
   const request = useSelector(state => state.vote.request);
@@ -54,24 +54,26 @@ function VoteList({ match, titleCategory }) {
           />
         </div>
         <VoteItemWrapper>
-          {voteList.map(
-            ({ title, organizer, startDate, endDate, category, _id, description, voteCount }) => (
-              <VoteItem
-                key={_id}
-                title={title}
-                organizer={organizer}
-                startDate={startDate}
-                endDate={endDate}
-                category={category}
-                _id={_id}
-                match={match}
-                titleCategory={titleCategory}
-                description={description}
-                voteCount={voteCount}
-                closed={closed}
-              />
-            ),
-          )}
+          {voteList
+            .filter(item => calcDate(item.startDate) <= 0)
+            .map(
+              ({ title, organizer, startDate, endDate, category, _id, description, voteCount }) => (
+                <VoteItem
+                  key={_id}
+                  title={title}
+                  organizer={organizer}
+                  startDate={startDate}
+                  endDate={endDate}
+                  category={category}
+                  _id={_id}
+                  match={match}
+                  titleCategory={titleCategory}
+                  description={description}
+                  voteCount={voteCount}
+                  closed={closed}
+                />
+              ),
+            )}
         </VoteItemWrapper>
       </VoteItemContainer>
     </Container>

@@ -15,6 +15,7 @@ import Loading from '../../common/Loading';
 import storage from '../../../util/storage';
 
 function VoteDetail({ id }) {
+  const [organizer, setOrganizer] = useState('');
   const history = useHistory();
   const userId = storage.get('user');
   const [web3, setWeb3] = useState(new Web3(window.ethereum));
@@ -35,13 +36,17 @@ function VoteDetail({ id }) {
   }, [dispatch, id]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-underscore-dangle
+    if (currentVote?.organizer?._id && currentVote.organizer._id === userId) {
+      setOrganizer(true);
+    }
     if (currentVote && currentVote.selectionType === 'single') {
       setSingleType(true);
     } else {
       setSingleType(false);
     }
   }, [currentVote]);
-  console.log(singleResult);
+
   const addResult = _id => {
     if (result.includes(_id)) return;
     if (singleType) {
@@ -57,7 +62,6 @@ function VoteDetail({ id }) {
     const newArray = result.filter(item => item !== _id);
     setResult(newArray);
   };
-  console.log('result', currentVote);
 
   const initWeb3 = async () => {
     if (window.ethereum) {
@@ -87,6 +91,11 @@ function VoteDetail({ id }) {
 
   const makeVote = async () => {
     if (singleType) {
+      // eslint-disable-next-line no-restricted-globals
+      const conResult = confirm(`${singleResult + 1}번을 투표하시겠습니까?`);
+      if (!conResult) {
+        return;
+      }
       const voteContract = new web3.eth.Contract(Vote.abi, currentVote.contractAddr);
 
       voteContract.methods
@@ -98,10 +107,19 @@ function VoteDetail({ id }) {
           console.log(hash);
         })
         .then(() => {
-          api.vote(id);
+          const body = {
+            userId,
+          };
+          api.vote(id, body);
         });
     }
     if (!singleType) {
+      const index = result.map(item => item + 1);
+      // eslint-disable-next-line no-restricted-globals
+      const conResult = confirm(`${index}번을 투표하시겠습니까?`);
+      if (!conResult) {
+        return;
+      }
       const voteContract = new web3.eth.Contract(Vote.abi, currentVote.contractAddr);
       voteContract.methods
         .castVoteForMultiOptions(result)
@@ -117,7 +135,7 @@ function VoteDetail({ id }) {
           };
           api.vote(id, body);
           alert('투표가 완료되었습니다.');
-          history.push('/vote/official');
+          history.push(`/vote/${currentVote.voteType}`);
         });
     }
   };
@@ -130,22 +148,28 @@ function VoteDetail({ id }) {
       {currentOptions.map(({ image, name, description }, index) => (
         <Option index={index} name={name} image={image} description={description} key={name} />
       ))}
-      <ToVote>투표하기</ToVote>
-      <OptionsWrapper>
-        {currentOptions.map(({ name, _id }, index) => (
-          <SelectOption
-            index={index}
-            name={name}
-            key={_id}
-            currentVote={currentVote}
-            singleType={singleType}
-            _id={_id}
-            addResult={addResult}
-            deleteResult={deleteResult}
-          />
-        ))}
-      </OptionsWrapper>
-      <VoteButton type="button" value="투표하기" onClick={makeVote} />
+      {organizer ? (
+        ''
+      ) : (
+        <ToVoteWrapper>
+          <ToVote>투표하기</ToVote>
+          <OptionsWrapper>
+            {currentOptions.map(({ name, _id }, index) => (
+              <SelectOption
+                index={index}
+                name={name}
+                key={_id}
+                currentVote={currentVote}
+                singleType={singleType}
+                _id={_id}
+                addResult={addResult}
+                deleteResult={deleteResult}
+              />
+            ))}
+          </OptionsWrapper>
+          <VoteButton type="button" value="투표하기" onClick={makeVote} />
+        </ToVoteWrapper>
+      )}
     </Container>
   );
 }
@@ -164,6 +188,12 @@ const OptionsWrapper = styled.div`
   grid-template-columns: 1fr;
   margin: 0vh auto 8vh auto;
   row-gap: 8vh;
+`;
+const ToVoteWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
 `;
 const ToVote = styled.div`
   font-family: 'Nanum Gothic Coding', monospace;
