@@ -9,8 +9,10 @@ import Comment from './Comment';
 import color from '../../../util/style/color';
 import Loading from '../../common/Loading';
 import Vote from '../../../util/VoteContract/Vote.json';
+import Option from '../VoteDetail/Option';
 
 function VoteResult({ id }) {
+  const [data, setData] = useState([]);
   const [web3, setWeb3] = useState(new Web3(window.ethereum));
   const [account, setAccount] = useState('');
   const dispatch = useDispatch();
@@ -25,7 +27,7 @@ function VoteResult({ id }) {
   const comments = useSelector(state => state.vote.comments);
   const currentVote = useSelector(state => state.vote.currentVote);
   const currentOptions = useSelector(state => state.vote.currentOptions);
-  console.log(currentVote);
+  console.log('currentVote', currentVote);
   console.log(currentOptions);
 
   const initWeb3 = async () => {
@@ -47,10 +49,15 @@ function VoteResult({ id }) {
   };
 
   const getResult = async () => {
-    if (currentVote?.contractAddr) {
-      const voteContract = new web3.eth.Contract(Vote.abi, currentVote.contractAddr);
-      const result = await voteContract.methods.getResult();
-      console.log('result', result);
+    const voteContract = new web3.eth.Contract(Vote.abi, currentVote.contractAddr);
+    const result = await voteContract.methods.getResult().call();
+    console.log('result', result[0]);
+    if (result) {
+      const newData = result[0].map((item, index) => ({
+        name: `${item}`,
+        uv: `${result[1][index]}`,
+      }));
+      setData(newData);
     }
   };
 
@@ -59,8 +66,12 @@ function VoteResult({ id }) {
       await initWeb3().then(r => console.log(r));
     }
 
-    fetchWeb3().then(() => getResult());
-  }, []);
+    fetchWeb3().then(() => {
+      if (currentVote?.contractAddr) {
+        getResult();
+      }
+    });
+  }, [currentVote]);
 
   if (!currentVote) {
     return <Loading />;
@@ -68,7 +79,10 @@ function VoteResult({ id }) {
   return (
     <Container>
       <Header currentVote={currentVote} closed />
-      <ResultGraph />
+      {currentOptions.map(({ image, name, description }, index) => (
+        <Option index={index} name={name} image={image} description={description} key={name} />
+      ))}
+      <ResultGraph data={data} />
       <Line />
       <Comment comments={comments} id={id} />
     </Container>

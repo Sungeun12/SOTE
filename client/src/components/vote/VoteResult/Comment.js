@@ -11,13 +11,13 @@ function Comment({ comments, id }) {
     setComment(e.target.value);
   };
   const submitComment = () => {
-    console.log(comment);
     const body = {
       writer: storage.get('user'),
       text: comment,
     };
     api.uploadComment(id, body).then(r => console.log(r));
   };
+  console.log(comments);
   return (
     <Container>
       <TitleWrapper>
