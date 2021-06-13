@@ -119,8 +119,8 @@ function Options({ options, setOptions }) {
                   </ImagePreview>
                 ) : (
                   <BoxUpload>
-                    <ImageLabel htmlFor={index} style={{ margin: 'auto auto' }}>
-                      <MdWallpaper size="25" style={{ cursor: 'pointer' }} />
+                    <ImageLabel htmlFor={index}>
+                      <MdWallpaper size={30} style={{ cursor: 'pointer' }} />
                     </ImageLabel>
                     <input
                       id={index}
@@ -223,6 +223,8 @@ export const BoxUpload = styled.div`
 `;
 export const ImageLabel = styled.label`
   margin: auto auto;
+
+  height: 30px;
 `;
 
 export const ImagePreview = styled.div`

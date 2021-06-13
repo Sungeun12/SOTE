@@ -14,7 +14,7 @@ export function createGroup(body) {
   return axios.post('http://localhost:5000/group', body).then(response => {
     if (response.data.success) {
       alert('단체 만들기가 완료되었습니다.');
-      history.push('/');
+      history.push('/group');
     } else {
       alert('단체 만들기에 실패 했습니다.');
     }

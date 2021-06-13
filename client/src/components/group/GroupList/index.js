@@ -51,6 +51,7 @@ function GroupList() {
         </SelectWrapper>
       </TopWrapper>
       {request && <TextAlert>loading...</TextAlert>}
+      {group && group.length === 0 && <TextAlert>현재 단체가 없습니다.</TextAlert>}
       <GroupContainer>
         {group &&
           group.map(({ description, members, name, image, _id, managers }) => (

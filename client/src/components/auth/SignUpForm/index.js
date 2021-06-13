@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import * as S from './style';
@@ -11,7 +11,6 @@ import { signUp } from '../../../actions/auth_actions';
 const SignUpForm = () => {
   const [signUpError, setSignUpError] = useState('');
   const dispatch = useDispatch();
-  const request = useSelector(state => state.user.request);
   const {
     register,
     handleSubmit,
@@ -186,7 +185,6 @@ const SignUpForm = () => {
       </S.CheckBoxWrapper>
 
       <S.SubmitButton type="submit">회원가입 완료</S.SubmitButton>
-      {request && <div>loading...</div>}
       {signUpError && <S.ErrorMessage>{signUpError}</S.ErrorMessage>}
       <S.BottomText>
         이미 가입하셨나요?
