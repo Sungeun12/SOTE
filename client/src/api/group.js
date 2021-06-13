@@ -27,3 +27,17 @@ export function loadGroup(category, order) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function joinGroup(id, userId) {
+  return axios
+    .post(`http://localhost:5000/group/${id}/joinreq`, { userId }, { withCredentials: true })
+    .then(response => response)
+    .catch(error => error);
+}
+
+export function loadIdGroup(id) {
+  return axios
+    .get(`http://localhost:5000/group/${id}`)
+    .then(response => response)
+    .catch(error => error);
+}

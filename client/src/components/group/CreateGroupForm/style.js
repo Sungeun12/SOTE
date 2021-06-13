@@ -25,8 +25,10 @@ export const Label = styled.label`
   width: 20%;
   @media (max-width: ${media.tablet}px) {
     margin-bottom: 3.5vh;
+    width: 100%;
   }
 `;
+
 export const Input = styled.input`
   width: 80%;
   height: 45px;
@@ -109,4 +111,26 @@ export const ErrorMessage = styled.div`
   font-size: 0.8rem;
   color: red;
   margin: 0 0 3vh 0;
+`;
+
+export const EmailDesc = styled.div`
+  font-family: 'Nanum Gothic Coding', sans-serif;
+  font-size: 1.2rem;
+  color: ${color.darkGray};
+`;
+
+export const Line = styled.div`
+  border-bottom: 1px solid ${color.gray};
+  margin: 5vh 0;
+`;
+
+export const EmailInput = styled.input`
+  padding: 10px 20px;
+  width: 80%;
+  border-radius: 4px;
+  border: 1px solid #c2c2c2;
+  @media (max-width: ${media.tablet}px) {
+    width: 100%;
+  }
+  cursor: pointer;
 `;
