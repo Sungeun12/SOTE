@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import Select from 'react-select';
+import axios from 'axios';
 import * as S from './style';
 import { groupCategory, joinPolicy } from '../../../util/selectOption/selectOption';
 import { customStyles } from '../../vote/CreateVoteForm/style';
@@ -11,6 +12,8 @@ import storage from '../../../util/storage';
 
 function CreateGroupForm() {
   const [image, setImage] = useState('');
+  const [emailFile, setEmailFile] = useState('');
+
   const dispatch = useDispatch();
   const {
     register,
@@ -18,6 +21,19 @@ function CreateGroupForm() {
     formState: { errors },
     control,
   } = useForm();
+
+  const handleEmailChange = event => {
+    if (event.target.files !== null) {
+      const formData = new FormData();
+      const config = {
+        headers: { 'content-type': 'multipart/form-data' },
+      };
+      formData.append('group', event.target.files[0]);
+      axios.post('http://localhost:5000/group/upload', formData, config).then(response => {
+        setEmailFile(response.data);
+      });
+    }
+  };
 
   const onSubmit = data => {
     console.log(data, image);
@@ -28,9 +44,9 @@ function CreateGroupForm() {
       name: data.name,
       description: data.description,
       image,
+      emailFile,
       joinPolicy: data.joinPolicy.value,
     };
-    console.log(body);
     dispatch(createGroup(body));
   };
 
@@ -106,6 +122,12 @@ function CreateGroupForm() {
           )}
         />
       </S.TextAreaContainer>
+      <S.Line />
+      <S.EmailDesc>이메일 파일을 등록해 멤버를 추가하세요. (선택)</S.EmailDesc>
+      <S.InputContainer>
+        <S.Label>파일 등록</S.Label>
+        <S.EmailInput id="group" type="file" accept=".csv" onChange={e => handleEmailChange(e)} />
+      </S.InputContainer>
       <S.SubmitButton type="submit" value="단체 만들기" />
     </S.Form>
   );
