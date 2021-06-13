@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "id": "1234",
+      "profile": "",
+      "name": "김지원"
+    },
+    {
+      "id": "345",
+      "profile": "https://via.placeholder.com/50",
+      "name": "김눈송"
+    },
+    {
+      "id": "2736",
+      "profile": "",
+      "name": "박눈송"
+    }
+  ]
+}

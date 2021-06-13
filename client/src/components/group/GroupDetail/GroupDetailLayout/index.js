@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SideNavBar from './SideNavBar';
+import color from '../../../../util/style/color';
 
 function GroupDetailLayout({ children, id }) {
   return (
@@ -18,6 +19,7 @@ const Container = styled.div`
 `;
 const Item = styled.div`
   width: 80%;
-  border: 1px solid;
+  border: 1px solid ${color.middleGray};
+  border-radius: 10px;
 `;
 export default GroupDetailLayout;
