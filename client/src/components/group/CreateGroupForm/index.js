@@ -30,13 +30,16 @@ function CreateGroupForm() {
       };
       formData.append('group', event.target.files[0]);
       axios.post('http://localhost:5000/group/upload', formData, config).then(response => {
-        setEmailFile(response.data);
+        if (response.data.success) {
+          setEmailFile(response.data.filepath);
+        } else {
+          alert('파일을 저장하는데 실패했습니다.');
+        }
       });
     }
   };
 
   const onSubmit = data => {
-    console.log(data, image);
     const manager = storage.get('user');
     const body = {
       manager,
