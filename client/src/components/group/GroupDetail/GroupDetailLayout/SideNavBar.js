@@ -38,7 +38,8 @@ const NavBarContainer = styled.div`
   text-align: center;
   width: 20%;
   margin-right: 20px;
-  border: 1px solid;
+  border: 1px solid ${color.middleGray};
+  border-radius: 5px;
   padding: 50px 20px;
 `;
 const GroupWrapper = styled.ul`
