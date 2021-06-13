@@ -53,7 +53,7 @@ function GroupList() {
       {request && <TextAlert>loading...</TextAlert>}
       <GroupContainer>
         {group &&
-          group.map(({ description, members, name, image, _id }) => (
+          group.map(({ description, members, name, image, _id, managers }) => (
             <GroupItem
               key={name}
               description={description}
@@ -61,6 +61,7 @@ function GroupList() {
               name={name}
               image={image}
               id={_id}
+              managers={managers}
             />
           ))}
       </GroupContainer>
