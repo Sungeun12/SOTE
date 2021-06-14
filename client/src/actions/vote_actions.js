@@ -38,3 +38,30 @@ export const loadClosedIdVote = id => async dispatch => {
     },
   );
 };
+
+export const uploadComment = (id, body) => async dispatch => {
+  dispatch({ type: voteConstants.UPLOAD_COMMENT_REQUEST });
+  await api.uploadComment(id, body).then(
+    response => {
+      dispatch({ type: voteConstants.UPLOAD_COMMENT_SUCCESS, payload: response.data.data });
+    },
+    error => {
+      dispatch({ type: voteConstants.UPLOAD_COMMENT_FAILURE, payload: error.toString() });
+    },
+  );
+};
+
+export const deleteComment = id => async dispatch => {
+  dispatch({ type: voteConstants.DELETE_COMMENT_REQUEST });
+  await api.deleteComment(id).then(
+    response => {
+      if (response.data?.success) {
+        dispatch({ type: voteConstants.DELETE_COMMENT_SUCCESS, id });
+        alert('댓글을 삭제했습니다.');
+      }
+    },
+    error => {
+      dispatch({ type: voteConstants.DELETE_COMMENT_FAILURE, payload: error.toString() });
+    },
+  );
+};

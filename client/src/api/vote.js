@@ -43,3 +43,10 @@ export function uploadComment(id, body) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function deleteComment(id) {
+  return axios
+    .patch(`http://localhost:5000/comment/${id}`, { id })
+    .then(response => response)
+    .catch(error => error);
+}

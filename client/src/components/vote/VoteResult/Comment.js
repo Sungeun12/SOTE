@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import color from '../../../util/style/color';
-import * as api from '../../../api/vote';
 import storage from '../../../util/storage';
+import { uploadComment } from '../../../actions/vote_actions';
+import CommentItem from './CommentItem';
 
 function Comment({ comments, id }) {
+  const dispatch = useDispatch();
   const [comment, setComment] = useState('');
   const onChangeComment = e => {
     setComment(e.target.value);
   };
-  const submitComment = () => {
+  const addComment = () => {
     const body = {
       writer: storage.get('user'),
       text: comment,
     };
-    api.uploadComment(id, body).then(r => console.log(r));
+    dispatch(uploadComment(id, body)).then(() => {
+      setComment('');
+    });
   };
-  console.log(comments);
+
   return (
     <Container>
       <TitleWrapper>
         <Title>댓글</Title>
-        <Number>{comments.length}개의 댓글</Number>
+        <Number>{comments.filter(({ isDeleted }) => isDeleted === false).length}개의 댓글</Number>
       </TitleWrapper>
       <Textarea
         placeholder="댓글을 입력해주세요."
@@ -30,7 +35,14 @@ function Comment({ comments, id }) {
         value={comment}
         onChange={e => onChangeComment(e)}
       />
-      <CommentButton type="button" value="댓글 작성" onClick={submitComment} />
+      <CommentButton type="button" value="댓글 작성" onClick={addComment} />
+      <Line />
+      {comments &&
+        comments
+          .filter(({ isDeleted }) => isDeleted === false)
+          .map(({ text, _id, createdAt, writer }) => (
+            <CommentItem key={_id} commentId={_id} text={text} date={createdAt} writer={writer} />
+          ))}
     </Container>
   );
 }
@@ -84,5 +96,11 @@ const CommentButton = styled.input`
   :hover {
     opacity: 1;
   }
+`;
+const Line = styled.div`
+  margin: 3vh 0;
+  width: 100%;
+  border-bottom: 1px solid ${color.gray};
+  opacity: 0.3;
 `;
 export default Comment;
