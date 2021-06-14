@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const User = require("../models/User");
+const Group = require("../models/Group");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const multer = require("multer");
@@ -187,6 +188,18 @@ router.patch("/", (req, res) => {
   })
     .then((user) => res.status(200).json({ success: true }))
     .catch((err) => res.status(400).json({ success: false, err }));
+});
+
+router.get('/:id/vote', (req, res) => {
+  User.findById(req.params.id)
+    .then(user => res.status(200).json({ success: true, data: user.votes }))
+    .catch(err => res.status(400).json({ success: false, err }));
+});
+
+router.get('/:id/group', (req, res) => {
+  Group.find({ members: { $in: req.params.id }})
+    .then(groups => res.status(200).json({ success: true, data: groups }))
+    .catch(err => res.status(400).json({ success: false, err }));
 });
 
 module.exports = router;
