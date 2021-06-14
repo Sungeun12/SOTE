@@ -18,7 +18,7 @@ function Header({ currentVote, closed }) {
   const [titleCategory, setTitleCategory] = useState(params.category);
   const dDay = newEnd ? getDday(newEnd) : '';
   useEffect(() => {
-    if (currentVote) {
+    if (currentVote?.startDate && currentVote?.endDate) {
       setLoading(false);
       setNewStart(moment(currentVote.startDate).format('YYYY/MM/DD h:mm a'));
       setNewEnd(moment(currentVote.endDate).format('YYYY/MM/DD h:mm a'));

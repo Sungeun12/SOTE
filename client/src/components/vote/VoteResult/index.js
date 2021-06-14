@@ -27,8 +27,6 @@ function VoteResult({ id }) {
   const comments = useSelector(state => state.vote.comments);
   const currentVote = useSelector(state => state.vote.currentVote);
   const currentOptions = useSelector(state => state.vote.currentOptions);
-  console.log('currentVote', currentVote);
-  console.log(currentOptions);
 
   const initWeb3 = async () => {
     if (window.ethereum) {

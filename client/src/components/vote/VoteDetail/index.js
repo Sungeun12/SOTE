@@ -111,6 +111,8 @@ function VoteDetail({ id }) {
             userId,
           };
           api.vote(id, body);
+          alert('투표가 완료되었습니다.');
+          history.push(`/vote/${currentVote.voteType}`);
         });
     }
     if (!singleType) {
