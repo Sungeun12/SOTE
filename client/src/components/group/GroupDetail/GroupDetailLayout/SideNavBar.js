@@ -16,7 +16,7 @@ function SideNavBar({ id }) {
         <Name>{group && group.name}</Name>
         <Member>
           <MdPersonOutline size={20} style={{ marginRight: '2px' }} />
-          {group && group.members.length}
+          {group && group.members.length + group.managers.length}
         </Member>
         <li>{group && group.description}</li>
       </GroupWrapper>
