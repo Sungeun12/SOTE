@@ -16,7 +16,7 @@ function SideNavBar({ id }) {
         <Name>{group && group.name}</Name>
         <Member>
           <MdPersonOutline size={20} style={{ marginRight: '2px' }} />
-          {group && group.members.length + group.managers.length}
+          {group && group?.members?.length + group?.managers?.length}
         </Member>
         <li>{group && group.description}</li>
       </GroupWrapper>
@@ -37,10 +37,12 @@ const NavBarContainer = styled.div`
   justify-content: center;
   text-align: center;
   width: 20%;
-  margin-right: 20px;
+  min-width: 200px;
+  margin-right: 10px;
   border: 1px solid ${color.middleGray};
   border-radius: 5px;
-  padding: 50px 20px;
+  padding: 0px 20px;
+  height: 90vh;
 `;
 const GroupWrapper = styled.ul`
   width: 100%;
@@ -48,6 +50,7 @@ const GroupWrapper = styled.ul`
 `;
 const Img = styled.img`
   width: 100%;
+  min-width: 200px;
   height: 200px;
   border-radius: 10px;
 `;

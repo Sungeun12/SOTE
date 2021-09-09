@@ -15,7 +15,7 @@ export const menu = [
     key: '2',
   },
   {
-    text: '구성원보기',
+    text: '멤버보기',
     link: '/member',
     key: '3',
   },
