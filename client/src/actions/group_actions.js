@@ -36,3 +36,21 @@ export const loadIdGroup = id => async dispatch => {
 };
 
 export const unloadGroup = () => ({ type: groupConstants.UNLOAD_GROUP });
+
+export const unloadGroupNotice = () => ({ type: groupConstants.UNLOAD_GROUP_NOTICE });
+
+export const loadIdNotice = id => async dispatch => {
+  dispatch({ type: groupConstants.ID_NOTICE_LOAD_REQUEST });
+  await api.loadIdNotice(id).then(
+    response => {
+      dispatch({ type: groupConstants.ID_NOTICE_LOAD_SUCCESS, payload: response.data.data });
+    },
+    error => {
+      dispatch({ type: groupConstants.ID_NOTICE_LOAD_FAILURE, payload: error.toString() });
+    },
+  );
+};
+
+export const noticeModify = text => async dispatch => {
+  dispatch({ type: groupConstants.MODIFY_NOTICE, payload: text });
+};
