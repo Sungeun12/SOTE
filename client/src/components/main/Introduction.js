@@ -33,7 +33,7 @@ const IntroductionContainer = styled.div`
   background-size: cover;
   height: 95vh;
   width: 97vw;
-  margin-top: 10px;
+  margin-top: 13vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

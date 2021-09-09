@@ -68,7 +68,11 @@ function Header() {
 }
 
 const HeaderContainer = styled.div`
-  padding: 0px 2rem;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,6 +83,7 @@ const MenuItem = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
+  margin-left: 2rem;
 `;
 const LeftMenuContainer = styled.div`
   @media (max-width: ${media.tablet}px) {
@@ -95,7 +100,9 @@ const UserContainer = styled.div`
 const ButtonContainer = styled.div`
   @media (max-width: ${media.tablet}px) {
     display: none;
+    padding-right: 0;
   }
+  padding-right: 2rem;
 `;
 
 const LogoutButton = styled.input`

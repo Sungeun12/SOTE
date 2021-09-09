@@ -21,7 +21,7 @@ const CreateGroupContainer = styled.div`
   @media (max-width: ${media.tablet}px) {
     width: 80%;
   }
-  margin: 7vh auto;
+  margin: 13vh auto;
 `;
 const Header = styled.div`
   line-height: 1.7;

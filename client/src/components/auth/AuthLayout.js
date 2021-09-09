@@ -17,7 +17,7 @@ function AuthLayout({ title, description, children }) {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  margin: 7vh 0px;
+  margin: 13vh 0px;
 `;
 const Header = styled.div`
   font-family: 'Nanum Gothic Coding', sans-serif;

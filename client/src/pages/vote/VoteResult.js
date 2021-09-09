@@ -15,7 +15,7 @@ function VoteResult({ match }) {
 const Container = styled.div`
   width: 60%;
   height: 100%;
-  margin: 7vh auto;
+  margin: 13vh auto;
   @media (max-width: ${media.tablet}px) {
     width: 95%;
   }

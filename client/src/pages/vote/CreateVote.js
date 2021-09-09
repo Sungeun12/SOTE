@@ -18,7 +18,7 @@ function CreateVote() {
 
 const CreateVoteContainer = styled.div`
   width: 100%;
-  margin: 7vh auto;
+  margin: 13vh auto;
 `;
 const Header = styled.div`
   margin: 0vh auto;

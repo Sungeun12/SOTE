@@ -16,6 +16,6 @@ const Container = styled.div`
   @media (max-width: ${media.tablet}px) {
     width: 90%;
   }
-  margin: 7vh auto;
+  margin: 13vh auto;
 `;
 export default GroupList;

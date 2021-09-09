@@ -15,6 +15,6 @@ function VoteDetail({ match }) {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  margin: 7vh auto;
+  margin: 13vh auto;
 `;
 export default VoteDetail;
