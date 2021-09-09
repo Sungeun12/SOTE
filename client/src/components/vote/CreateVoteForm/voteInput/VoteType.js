@@ -11,19 +11,44 @@ import {
   memberVote,
 } from '../../../../util/selectOption/selectOption';
 import media from '../../../../util/style/media';
+import { loadUserGroup } from '../../../../api/group';
 
 function VoteType({ control, watch }) {
   const user = useSelector(state => state.user.user);
   const [options, setOptions] = useState(memberVote);
   const [freecategory, setFreeCategory] = useState(false);
+  const [groupCategory, setGroupCategory] = useState(false);
+  const [groupList, setGroupList] = useState([]);
+  const [selectGroup, setSelectGroup] = useState([]);
   const voteType = watch('voteType', 'free');
+
+  useEffect(() => {
+    // eslint-disable-next-line no-underscore-dangle
+    if (!user._id) return;
+    // eslint-disable-next-line no-underscore-dangle
+    loadUserGroup(user._id).then(response => setGroupList(response));
+    console.log(groupList);
+  }, [user]);
+  console.log(groupList);
   useEffect(() => {
     if (voteType.value === 'free') {
       setFreeCategory(true);
-    } else {
-      setFreeCategory(false);
+      setGroupCategory(false);
     }
-  }, [voteType]);
+    if (voteType.value === 'group') {
+      setFreeCategory(false);
+      setGroupCategory(true);
+      const groupOptions = [];
+      groupList.forEach(item => {
+        const object = {};
+        // eslint-disable-next-line no-underscore-dangle
+        object.value = item._id;
+        object.label = item.name;
+        groupOptions.push(object);
+      });
+      setSelectGroup(groupOptions);
+    }
+  }, [voteType, groupList]);
   useEffect(() => {
     if (user?.isAdmin) {
       setOptions(adminVote);
@@ -54,7 +79,7 @@ function VoteType({ control, watch }) {
           />
         </SelectItem>
       </Selection>
-      {freecategory ? (
+      {freecategory && (
         <Selection>
           <S.Label>카테고리</S.Label>
           <SelectItem>
@@ -74,8 +99,27 @@ function VoteType({ control, watch }) {
             />
           </SelectItem>
         </Selection>
-      ) : (
-        ' '
+      )}
+      {groupCategory && (
+        <Selection>
+          <S.Label>단체 명</S.Label>
+          <SelectItem>
+            <Controller
+              name="groupVoteCategory"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={selectGroup}
+                  placeholder="단체 명을 선택해주세요."
+                  styles={customStyles}
+                />
+              )}
+              control={control}
+              defaultValue=""
+            />
+          </SelectItem>
+        </Selection>
       )}
     </div>
   );

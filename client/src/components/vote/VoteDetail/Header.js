@@ -13,7 +13,7 @@ function Header({ currentVote, closed }) {
   const [loading, setLoading] = useState(true);
   const [newStart, setNewStart] = useState('');
   const [newEnd, setNewEnd] = useState('');
-  const colors = ['#1838a8', '#eed030', '#838383'];
+  const colors = ['#1838a8', '#eed030', '#838383', '#81AEC6'];
   const [theme, setTheme] = useState('white');
   const [titleCategory, setTitleCategory] = useState(params.category);
   const dDay = newEnd ? getDday(newEnd) : '';
@@ -27,7 +27,7 @@ function Header({ currentVote, closed }) {
       setLoading(true);
     }
   }, [currentVote]);
-
+  console.log(titleCategory);
   useEffect(() => {
     setTitleCategory(params.category);
   }, [params]);
@@ -41,6 +41,9 @@ function Header({ currentVote, closed }) {
     }
     if (!closed && titleCategory === 'free') {
       setTheme(colors[1]);
+    }
+    if (!closed && titleCategory === 'group') {
+      setTheme(colors[3]);
     }
   }, [titleCategory, closed]);
 

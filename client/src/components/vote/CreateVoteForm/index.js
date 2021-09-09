@@ -84,7 +84,7 @@ function CreateVoteForm() {
         const body = {
           contractAddr: newContractInstance.options.address,
           organizer: loginUser,
-          group: null,
+          group: data.groupVoteCategory ? data.groupVoteCategory.value : null,
           voteType: data.voteType.value,
           title: data.title,
           description: data.description,
