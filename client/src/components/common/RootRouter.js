@@ -23,6 +23,7 @@ function LoginRoutes() {
       <Route exact path="/vote/:category" component={VoteList} />
       <Route exact path="/group" component={GroupList} />
       <Route exact path="/group/:id/:tab" component={GroupDetail} />
+      <Route exact path="/group/:id/:tab/:uid" component={GroupDetail} />
       <Route exact path="/creategroup" component={CreateGroup} />
       <Route exact path="/signup" component={SignUp} />
     </Switch>
