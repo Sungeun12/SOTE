@@ -19,19 +19,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="fix: vote result graph 임의로 넣어놈">
-      <change afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Manage/MemberItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Manage/user.json" afterDir="false" />
+    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="fix: router groupdetail - notice 눌렀을때">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/auth_actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/auth_actions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/api/group.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/group.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/style.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/style.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/GroupDetailLayout/SideNavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/GroupDetailLayout/SideNavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/GroupDetailLayout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/GroupDetailLayout/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Manage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Manage/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupList/GroupItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupList/GroupItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/util/style/color.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/util/style/color.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/ImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/ImageUpload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/notice.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/notice.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/vote.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/vote.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/vote/VoteDetail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/vote/VoteDetail/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/group/GroupDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/group/GroupDetail.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +46,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/mainPage" />
+        <entry key="$PROJECT_DIR$" value="feature/groupPage" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,9 +63,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -117,6 +116,13 @@
       <workItem from="1623395751542" duration="4670000" />
       <workItem from="1623516873287" duration="596000" />
       <workItem from="1623574790605" duration="1489000" />
+      <workItem from="1624518959801" duration="64000" />
+      <workItem from="1624867649703" duration="40000" />
+      <workItem from="1628674538722" duration="7984000" />
+      <workItem from="1630335729658" duration="48139000" />
+      <workItem from="1630497943050" duration="13587000" />
+      <workItem from="1630585549513" duration="5447000" />
+      <workItem from="1631177035137" duration="1794000" />
     </task>
     <task id="LOCAL-00001" summary="add: header">
       <created>1618520057073</created>
@@ -209,7 +215,56 @@
       <option name="project" value="LOCAL" />
       <updated>1623345902183</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add: group detail page (내부 detail ui)">
+      <created>1631178405369</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178405369</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix: style">
+      <created>1631178535204</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178535204</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add: useOnClickOutside hooks">
+      <created>1631178555817</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178555817</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix: vote에 group 투표 추가">
+      <created>1631178680545</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178680545</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix: group detail 관련 redux 추가">
+      <created>1631178720253</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178720253</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add: toggle button component">
+      <created>1631178752291</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178752291</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fix: router groupdetail - notice 눌렀을때">
+      <created>1631178797674</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1631178797674</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,27 +294,33 @@
     <MESSAGE value="fix: loading page common 폴더로 이동" />
     <MESSAGE value="fix: vote 투표하기" />
     <MESSAGE value="fix: group detail page navbar, layout 추가" />
-    <MESSAGE value="fix: style" />
     <MESSAGE value="fix: vote result graph 임의로 넣어놈" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: vote result graph 임의로 넣어놈" />
+    <MESSAGE value="add: group detail page (내부 detail ui)" />
+    <MESSAGE value="fix: style" />
+    <MESSAGE value="add: useOnClickOutside hooks" />
+    <MESSAGE value="fix: vote에 group 투표 추가" />
+    <MESSAGE value="fix: group detail 관련 redux 추가" />
+    <MESSAGE value="add: toggle button component" />
+    <MESSAGE value="fix: router groupdetail - notice 눌렀을때" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: router groupdetail - notice 눌렀을때" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="619" y="271" key="#ESLint" timestamp="1618416295415">
+    <state x="741" y="261" key="#ESLint" timestamp="1630488521910">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="619" y="271" key="#ESLint/0.0.1280.680@0.0.1280.680" timestamp="1618416295415" />
-    <state x="412" y="170" key="#Notifications" timestamp="1618768835219">
+    <state x="741" y="261" key="#ESLint/0.0.1280.680@0.0.1280.680" timestamp="1630488521910" />
+    <state x="432" y="172" key="#Notifications" timestamp="1630586467246">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="412" y="170" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1618768835219" />
-    <state x="228" y="135" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1619006562709">
+    <state x="432" y="172" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1630586467246" />
+    <state x="0" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1630582196558">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="228" y="135" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1619006562709" />
-    <state x="575" y="105" key="FileChooserDialogImpl" timestamp="1622860799363">
+    <state x="0" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1630582196558" />
+    <state x="575" y="105" key="FileChooserDialogImpl" timestamp="1630585274915">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="575" y="105" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1622860799363" />
+    <state x="575" y="105" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630585274915" />
     <state width="1259" height="219" key="GridCell.Tab.0.bottom" timestamp="1622541545683">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -276,25 +337,13 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1259" height="219" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1622541545683" />
-    <state x="194" y="0" key="SettingsEditor" timestamp="1618335392552">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1624376809809">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="194" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1618335392552" />
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1623355233351">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1624376809809" />
+    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1624376812588">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1623355233351" />
-    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1618519805692">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1618519805692" />
-    <state x="305" y="154" key="run.anything.popup" timestamp="1618552478418">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="305" y="154" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1618552478418" />
-    <state x="227" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1618583350028">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="227" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1618583350028" />
+    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1624376812588" />
   </component>
 </project>
