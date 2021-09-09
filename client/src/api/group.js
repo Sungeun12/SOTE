@@ -41,3 +41,38 @@ export function loadIdGroup(id) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function loadUserGroup(userId) {
+  return axios
+    .get(`http://localhost:5000/user/${userId}/group`)
+    .then(response => response.data.data)
+    .catch(error => error);
+}
+
+export function uploadFile(formData) {
+  return axios
+    .post('http://localhost:5000/group/upload', formData, {
+      headers: { 'content-type': 'multipart/form-data' },
+    })
+    .then(response => response)
+    .catch(error => error);
+}
+
+export function createNotice(body, groupId) {
+  // eslint-disable-next-line consistent-return
+  return axios.post(`http://localhost:5000/group/${groupId}/notice`, body).then(response => {
+    if (response.data.success) {
+      alert('공지사항 작성이 완료되었습니다.');
+      history.push(`/group/${groupId}/notice/${response.data.data}`);
+    } else {
+      alert('공지사항 작성에 실패 했습니다.');
+    }
+  });
+}
+
+export function loadIdNotice(id) {
+  return axios
+    .get(`http://localhost:5000/notice/${id}`)
+    .then(response => response)
+    .catch(error => error);
+}
