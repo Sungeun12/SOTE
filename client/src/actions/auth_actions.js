@@ -22,13 +22,13 @@ export const signIn = (email, password) => async dispatch => {
   dispatch({ type: authConstants.SIGNIN_REQUEST });
   try {
     const response = await api.signIn(email, password);
-    if (response.data.loginSuccess) {
+    if (response.data?.loginSuccess) {
       alert('로그인이 완료되었습니다.');
       history.push('/');
       dispatch({ type: authConstants.SIGNIN_SUCCESS, payload: response.data });
     }
-    if (!response.data.loginSuccess) {
-      alert(response.data.message);
+    if (!response.data?.loginSuccess) {
+      alert(response.data?.message);
     }
   } catch (e) {
     dispatch({

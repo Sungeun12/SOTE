@@ -147,9 +147,10 @@ function VoteDetail({ id }) {
   return (
     <Container>
       <Header currentVote={currentVote} />
-      {currentOptions.map(({ image, name, description }, index) => (
-        <Option index={index} name={name} image={image} description={description} key={name} />
-      ))}
+      {currentOptions &&
+        currentOptions.map(({ image, name, description }, index) => (
+          <Option index={index} name={name} image={image} description={description} key={name} />
+        ))}
       {organizer ? (
         ''
       ) : (

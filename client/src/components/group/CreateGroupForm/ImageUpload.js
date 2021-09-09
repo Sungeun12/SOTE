@@ -36,11 +36,11 @@ function ImageUpload({ image, setImage }) {
         </ImagePreview>
       ) : (
         <BoxUpload>
-          <ImageLabel htmlFor="group" style={{ margin: 'auto auto' }}>
+          <ImageLabel htmlFor="groupImg" style={{ margin: 'auto auto' }}>
             <MdWallpaper size="25" style={{ cursor: 'pointer' }} />
           </ImageLabel>
           <input
-            id="group"
+            id="groupImg"
             style={{ display: 'none' }}
             type="file"
             accept=".jpg,.jpeg,.png,"
