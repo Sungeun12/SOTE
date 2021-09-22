@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdPersonOutline } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as api from '../../../api/group';
 import color from '../../../util/style/color';
+import { leaveUserGroup } from '../../../actions/myPage_action';
 
-function GroupItem({ description, name, members, image, id, managers }) {
+function GroupItem({ description, name, members, image, id, managers, myPage }) {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [join, setJoin] = useState(false);
   const [manage, setManage] = useState(false);
   const [memeberNum, setMemberNum] = useState(members.length + managers.length);
@@ -49,6 +51,9 @@ function GroupItem({ description, name, members, image, id, managers }) {
       });
     }
   };
+  const handleSecession = () => {
+    dispatch(leaveUserGroup(id, userId));
+  };
   return (
     <ItemContainer>
       <Img src={`http://localhost:5000/${image}`} alt={image} onClick={onClick} />
@@ -56,6 +61,7 @@ function GroupItem({ description, name, members, image, id, managers }) {
         <Name onClick={onClick}>{name}</Name>
         {manage ? <Manager>관리자</Manager> : ''}
         {join ? '' : <Button type="button" value="가입" onClick={handleJoin} />}
+        {myPage && <Button type="button" value="탈퇴" onClick={handleSecession} />}
       </TitleWrapper>
       <Number>
         <MdPersonOutline size={20} style={{ marginRight: '5px' }} /> {memeberNum}명

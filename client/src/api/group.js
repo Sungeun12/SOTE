@@ -76,3 +76,10 @@ export function loadIdNotice(id) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function leaveGroup(id, userId) {
+  return axios
+    .post(`http://localhost:5000/group/${id}/leave`, { userId }, { withCredentials: true })
+    .then(response => response)
+    .catch(error => error);
+}
