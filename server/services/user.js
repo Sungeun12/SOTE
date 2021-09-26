@@ -88,11 +88,16 @@ exports.updateImage = async (userId, filepath) => {
 }
 
 exports.getVotes = async id => {
-  const user = await User.findById(id);
+  const user = await User
+      .findById(id)
+      .populate('votes');
   return user.votes;
 }
 
 exports.getGroups = async id => {
-  const groups = await Group.find({ members: { $in: id }});
+  const groups = await Group.find({ $or: [
+    { members: { $in: id }},
+    { managers: { $in: id }}
+  ]});
   return groups;
 }

@@ -7,6 +7,7 @@ const userRouter = require("./routes/user");
 const groupRouter = require("./routes/group");
 const noticeRouter = require("./routes/notice");
 const commentRouter = require("./routes/comment");
+const searchRouter = require("./routes/search");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -39,6 +40,7 @@ app.use("/vote", voteRouter);
 app.use("/group", groupRouter);
 app.use("/", noticeRouter);
 app.use("/", commentRouter);
+app.use("/search", searchRouter);
 
 app.listen(app.get("port"), () => {
   console.log(`server running on port ${app.get("port")}...`);
