@@ -9,14 +9,14 @@ import storage from '../../../../util/storage';
 function CreateNoticeModal({ toggleModal, id }) {
   const [title, onChangeTitle] = useInput('');
   const [description, onChangeDescription] = useInput('');
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState([]);
 
   const handleFileChange = async event => {
     if (event.target.files !== null) {
       const formData = new FormData();
       formData.append('group', event.target.files[0]);
       const response = await api.uploadFile(formData);
-      setFile(response.data.filepath);
+      setFile(file.append(response.data.filepath));
     }
   };
 
@@ -26,7 +26,7 @@ function CreateNoticeModal({ toggleModal, id }) {
       writer,
       title,
       description,
-      files: [file],
+      files: file,
     };
     await api.createNotice(body, id);
     toggleModal();
