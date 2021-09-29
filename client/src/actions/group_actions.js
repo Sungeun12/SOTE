@@ -51,6 +51,30 @@ export const loadIdNotice = id => async dispatch => {
   );
 };
 
-export const noticeModify = text => async dispatch => {
-  dispatch({ type: groupConstants.MODIFY_NOTICE, payload: text });
+export const deleteNotice = id => async dispatch => {
+  dispatch({ type: groupConstants.DELETE_NOTICE_REQUEST });
+  await api.deleteNotice(id).then(
+    response => {
+      if (response.data.success) {
+        dispatch({ type: groupConstants.DELETE_NOTICE_SUCCESS, payload: id });
+      }
+    },
+    error => {
+      dispatch({ type: groupConstants.DELETE_NOTICE_FAILURE, payload: error.toString() });
+    },
+  );
+};
+
+export const updateNotice = (body, noticeId) => async dispatch => {
+  dispatch({ type: groupConstants.UPDATE_NOTICE_REQUEST });
+  await api.updateNotice(body).then(
+    response => {
+      if (response.data?.success) {
+        dispatch({ type: groupConstants.UPDATE_NOTICE_SUCCESS, payload: { body, noticeId } });
+      }
+    },
+    error => {
+      dispatch({ type: groupConstants.UPDATE_NOTICE_FAILURE, payload: error.toString() });
+    },
+  );
 };

@@ -83,3 +83,17 @@ export function leaveGroup(id, userId) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function deleteNotice(id) {
+  return axios
+    .delete(`http://localhost:5000/notice/${id}`, { id })
+    .then(response => response)
+    .catch(error => error);
+}
+
+export function updateNotice(body) {
+  return axios
+    .put(`http://localhost:5000/notice`, body)
+    .then(response => response)
+    .catch(error => error);
+}

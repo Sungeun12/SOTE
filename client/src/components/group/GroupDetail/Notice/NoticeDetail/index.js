@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { loadIdNotice, unloadGroupNotice } from '../../../../../actions/group_actions';
@@ -9,7 +9,6 @@ function NoticeDetail({ match }) {
   const { uid } = match.params;
   const dispatch = useDispatch();
   const notice = useSelector(state => state.group?.currentNotice?.notice);
-  const [newContent, setNewContent] = useState('');
 
   useEffect(() => {
     dispatch(loadIdNotice(uid));
@@ -27,14 +26,17 @@ function NoticeDetail({ match }) {
             writer={notice.writer}
             createdAt={notice.createdAt}
             description={notice.description}
-            newContent={newContent}
-            setNewContent={setNewContent}
+            /* eslint-disable-next-line no-underscore-dangle */
+            noticeId={notice._id}
+            files={notice.files}
           />
           <FileWrapper>
             <FileLabel>첨부파일</FileLabel>
-            <FileName href={`http://localhost:5000/${notice.files[0]}`} download>
-              {notice.files[0]}
-            </FileName>
+            {notice.files && (
+              <FileName href={`http://localhost:5000/${notice.files[0]}`} download>
+                {notice.files[0]}
+              </FileName>
+            )}
           </FileWrapper>
         </Container>
       )}
