@@ -50,3 +50,10 @@ export function deleteComment(id) {
     .then(response => response)
     .catch(error => error);
 }
+
+export function updateComment(commentId, text) {
+  return axios
+    .post(`http://localhost:5000/comment/${commentId}`, { text })
+    .then(response => response)
+    .catch(error => error);
+}

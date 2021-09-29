@@ -10,6 +10,7 @@ import CommentItem from './CommentItem';
 function Comment({ comments, id }) {
   const dispatch = useDispatch();
   const [comment, setComment] = useState('');
+  console.log(comments);
   const onChangeComment = e => {
     setComment(e.target.value);
   };
@@ -38,11 +39,16 @@ function Comment({ comments, id }) {
       <CommentButton type="button" value="댓글 작성" onClick={addComment} />
       <Line />
       {comments &&
-        comments
-          .filter(({ isDeleted }) => isDeleted === false)
-          .map(({ text, _id, createdAt, writer }) => (
-            <CommentItem key={_id} commentId={_id} text={text} date={createdAt} writer={writer} />
-          ))}
+        comments.map(({ text, _id, createdAt, writer, isDeleted }) => (
+          <CommentItem
+            key={_id}
+            commentId={_id}
+            text={text}
+            date={createdAt}
+            writer={writer}
+            isDeleted={isDeleted}
+          />
+        ))}
     </Container>
   );
 }
