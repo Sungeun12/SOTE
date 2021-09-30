@@ -8,6 +8,11 @@
       </path>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
       <path>
@@ -16,20 +21,23 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="fix: router groupdetail - notice 눌렀을때">
+    <list default="true" id="a925ba75-8c46-4042-8c71-e69dc88e6ef8" name="Default Changelist" comment="fix: 검색 결과 보여주기 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/auth_actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/auth_actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/group.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/group.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/ImageUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/CreateGroupForm/ImageUpload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/notice.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/notice.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/vote.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/Home/vote.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/group/GroupDetail/GroupDetailLayout/SideNavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/group/GroupDetail/GroupDetailLayout/SideNavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/vote/CreateVoteForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/vote/CreateVoteForm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/vote/CreateVoteForm/voteInput/VoteDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/vote/CreateVoteForm/voteInput/VoteDate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/vote/VoteDetail/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/vote/VoteDetail/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/group/GroupDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/group/GroupDetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/group_reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/group_reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +54,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/groupPage" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -123,6 +131,12 @@
       <workItem from="1630497943050" duration="13587000" />
       <workItem from="1630585549513" duration="5447000" />
       <workItem from="1631177035137" duration="1794000" />
+      <workItem from="1632912984884" duration="1050000" />
+      <workItem from="1632914293687" duration="23239000" />
+      <workItem from="1632980288426" duration="96000" />
+      <workItem from="1632980466524" duration="403000" />
+      <workItem from="1632981674299" duration="56000" />
+      <workItem from="1632981908882" duration="6309000" />
     </task>
     <task id="LOCAL-00001" summary="add: header">
       <created>1618520057073</created>
@@ -264,7 +278,63 @@
       <option name="project" value="LOCAL" />
       <updated>1631178797674</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix: comment(delete, update추가)">
+      <created>1632939714016</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1632939714016</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix: 그룹 내 notice (delete, update 추가)">
+      <created>1632939776586</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1632939776586</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix: file state, user">
+      <created>1632939830130</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1632939830130</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fix: 탈퇴버튼 위치 변경">
+      <created>1632977034460</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1632977034460</updated>
+    </task>
+    <task id="LOCAL-00025" summary="add: 투표 테이블 형식 아이템 컴포넌트">
+      <created>1632977165069</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1632977165069</updated>
+    </task>
+    <task id="LOCAL-00026" summary="add: 마이페이지 내의 참여한 투표 컴포넌트, fix: myVote">
+      <created>1632977227733</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1632977227733</updated>
+    </task>
+    <task id="LOCAL-00027" summary="fix: minor error">
+      <created>1632977249465</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1632977249465</updated>
+    </task>
+    <task id="LOCAL-00028" summary="fix: 검색 결과 보여주기 추가">
+      <created>1632977283652</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1632977283652</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +345,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -283,8 +365,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add: header" />
-    <MESSAGE value="add: RootRouter, AppLayout chore: eslint 수정" />
     <MESSAGE value="add: footer,Introduction, fix:Dropdown style" />
     <MESSAGE value="add: JoinButton" />
     <MESSAGE value="fix: mainPage" />
@@ -302,13 +382,21 @@
     <MESSAGE value="fix: group detail 관련 redux 추가" />
     <MESSAGE value="add: toggle button component" />
     <MESSAGE value="fix: router groupdetail - notice 눌렀을때" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: router groupdetail - notice 눌렀을때" />
+    <MESSAGE value="fix: comment(delete, update추가)" />
+    <MESSAGE value="fix: 그룹 내 notice (delete, update 추가)" />
+    <MESSAGE value="fix: file state, user" />
+    <MESSAGE value="fix: 탈퇴버튼 위치 변경" />
+    <MESSAGE value="add: 투표 테이블 형식 아이템 컴포넌트" />
+    <MESSAGE value="add: 마이페이지 내의 참여한 투표 컴포넌트, fix: myVote" />
+    <MESSAGE value="fix: minor error" />
+    <MESSAGE value="fix: 검색 결과 보여주기 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 검색 결과 보여주기 추가" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="741" y="261" key="#ESLint" timestamp="1630488521910">
+    <state x="741" y="261" key="#ESLint" timestamp="1632934423606">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="741" y="261" key="#ESLint/0.0.1280.680@0.0.1280.680" timestamp="1630488521910" />
+    <state x="741" y="261" key="#ESLint/0.0.1280.680@0.0.1280.680" timestamp="1632934423606" />
     <state x="432" y="172" key="#Notifications" timestamp="1630586467246">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -317,33 +405,21 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="0" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1630582196558" />
-    <state x="575" y="105" key="FileChooserDialogImpl" timestamp="1630585274915">
+    <state x="479" y="196" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1632948687846">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="575" y="105" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1630585274915" />
-    <state width="1259" height="219" key="GridCell.Tab.0.bottom" timestamp="1622541545683">
+    <state x="479" y="196" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1632948687846" />
+    <state x="575" y="105" key="FileChooserDialogImpl" timestamp="1632854461152">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="219" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1622541545683" />
-    <state width="1259" height="219" key="GridCell.Tab.0.center" timestamp="1622541545683">
+    <state x="575" y="105" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1632854461152" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1632977398793">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="219" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1622541545683" />
-    <state width="1259" height="219" key="GridCell.Tab.0.left" timestamp="1622541545682">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1632977398793" />
+    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632977323598">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="219" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1622541545682" />
-    <state width="1259" height="219" key="GridCell.Tab.0.right" timestamp="1622541545683">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state width="1259" height="219" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1622541545683" />
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1624376809809">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1624376809809" />
-    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1624376812588">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1624376812588" />
+    <state x="610" y="263" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1632977323598" />
   </component>
 </project>

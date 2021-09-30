@@ -61,15 +61,20 @@ function CreateVoteForm() {
   const methods = useForm();
 
   const onSubmit = async data => {
+    let dataStartDate = data.startDate;
+    if (data.startRightAway) {
+      dataStartDate = moment(new Date()).add(1, 'm').toDate();
+    }
     const optionNames = options.map(option => option.name);
     const selectionType = parseInt(data.selectionType, 2);
-    const openingTime = Math.floor(data.startDate.getTime() / 1000.0);
+    const openingTime = Math.floor(dataStartDate.getTime() / 1000.0);
     const closingTime = Math.floor(data.endDate.getTime() / 1000.0);
 
-    const startDate = moment(data.startDate).format('YYYY/MM/DD h:mm a').toString();
+    const startDate = moment(dataStartDate).format('YYYY/MM/DD h:mm a').toString();
     const endDate = moment(data.endDate).format('YYYY/MM/DD h:mm a').toString();
 
     const voteContract = new web3.eth.Contract(Vote.abi);
+    console.log(data.startRightAway);
 
     voteContract
       .deploy({
