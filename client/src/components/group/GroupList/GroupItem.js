@@ -61,11 +61,13 @@ function GroupItem({ description, name, members, image, id, managers, myPage }) 
         <Name onClick={onClick}>{name}</Name>
         {manage ? <Manager>관리자</Manager> : ''}
         {join ? '' : <Button type="button" value="가입" onClick={handleJoin} />}
-        {myPage && <Button type="button" value="탈퇴" onClick={handleSecession} />}
       </TitleWrapper>
-      <Number>
-        <MdPersonOutline size={20} style={{ marginRight: '5px' }} /> {memeberNum}명
-      </Number>
+      <BottomWrapper>
+        <Number>
+          <MdPersonOutline size={20} style={{ marginRight: '5px' }} /> {memeberNum}명
+        </Number>
+        {myPage && <Button type="button" value="탈퇴" onClick={handleSecession} />}
+      </BottomWrapper>
     </ItemContainer>
   );
 }
@@ -73,10 +75,11 @@ function GroupItem({ description, name, members, image, id, managers, myPage }) 
 const ItemContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   cursor: pointer;
+  margin-bottom: 1vh;
   text-decoration: none;
   color: black;
+  width: 300px;
 `;
 const Img = styled.img`
   width: 300px;
@@ -102,7 +105,10 @@ const Button = styled.input`
   text-align: center;
   font-family: 'Nanum Gothic Coding', sans-serif;
 `;
-
+const BottomWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 const Number = styled.div`
   display: flex;
   align-items: center;
