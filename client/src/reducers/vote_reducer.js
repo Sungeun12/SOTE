@@ -61,11 +61,29 @@ export default function (state = initialState, action) {
     case voteConstants.DELETE_COMMENT_SUCCESS:
       return {
         ...state,
-        comments: state.comments.map(comment =>
-          comment.id === action.id ? { ...comment, isDeleted: false } : comment,
-        ),
+        comments: state.comments.map(comment => {
+          if (comment.id === action.payload) {
+            return { ...comment, isDeleted: true };
+          }
+          return comment;
+        }),
       };
     case voteConstants.DELETE_COMMENT_FAILURE:
+      return { ...state, error: true };
+
+    case voteConstants.UPDATE_COMMENT_REQUEST:
+      return { ...state, request: true };
+    case voteConstants.UPDATE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        comments: state.comments.map(comment => {
+          if (comment.id === action.payload.id) {
+            return { ...comment, text: action.payload.text };
+          }
+          return comment;
+        }),
+      };
+    case voteConstants.UPDATE_COMMENT_FAILURE:
       return { ...state, error: true };
 
     default:

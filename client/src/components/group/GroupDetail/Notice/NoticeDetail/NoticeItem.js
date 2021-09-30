@@ -3,45 +3,64 @@ import { FaUserCircle } from 'react-icons/fa';
 import moment from 'moment';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import color from '../../../../../util/style/color';
 import storage from '../../../../../util/storage';
-import { noticeModify } from '../../../../../actions/group_actions';
+import { deleteNotice, updateNotice } from '../../../../../actions/group_actions';
+import useInput from '../../../../../hooks/useInput';
 
-function NoticeItem({ title, writer, createdAt, description, setNewContent }) {
+function NoticeItem({ title, writer, createdAt, description, noticeId, files }) {
   const user = storage.get('user');
+  const history = useHistory();
   const dispatch = useDispatch();
   const [updateMode, setUpdateMode] = useState(false);
-  const [text, setText] = useState(description);
+  const [updateText, onChangeUpdateText, setUpdateText] = useInput(description);
+  const [updateTitle, onChangeUpdateTitle, setUpdateTitle] = useInput(title);
 
   const onChangeUpdateMode = () => {
     setUpdateMode(!updateMode);
   };
-  const onChangeText = e => {
-    setText(e.target.value);
-  };
   const onCancel = () => {
     onChangeUpdateMode();
-    setNewContent(description);
-    setText(description);
+    setUpdateText(description);
+    setUpdateTitle(title);
   };
   const onComplete = () => {
     onChangeUpdateMode();
-    setNewContent(text);
-    dispatch(noticeModify(text));
+    setUpdateText(updateText);
+    setUpdateTitle(updateTitle);
+    const body = {
+      _id: noticeId,
+      writer,
+      title: updateTitle,
+      description: updateText,
+      files,
+    };
+
+    dispatch(updateNotice(body, noticeId));
+  };
+  const onDelete = () => {
+    if (window.confirm('공지사항을 삭제하시겠습니까?')) {
+      dispatch(deleteNotice(noticeId));
+      history.goBack();
+    }
   };
 
   return (
     <Container>
       <HeaderContainer>
         <FlexWrapper>
-          <Title>{title}</Title>
+          {updateMode && <TitleInput value={updateTitle} onChange={onChangeUpdateTitle} />}
+          {!updateMode && <Title>{updateTitle}</Title>}
           {/* eslint-disable-next-line no-underscore-dangle */}
           {user === writer._id && !updateMode && (
             <ButtonWrapper>
               <Button type="button" onClick={onChangeUpdateMode}>
                 수정
               </Button>
-              <Button type="button">삭제</Button>
+              <Button type="button" onClick={onDelete}>
+                삭제
+              </Button>
             </ButtonWrapper>
           )}
           {/* eslint-disable-next-line no-underscore-dangle */}
@@ -69,9 +88,9 @@ function NoticeItem({ title, writer, createdAt, description, setNewContent }) {
         </FlexWrapper>
       </HeaderContainer>
       <ContentContainer>
-        {updateMode && <Textarea rows={30} value={text} onChange={onChangeText} />}
+        {updateMode && <Textarea rows={30} value={updateText} onChange={onChangeUpdateText} />}
         {!updateMode &&
-          text.split('\n').map(line => (
+          updateText.split('\n').map(line => (
             <ContentLine key={line}>
               {line}
               <br />
@@ -89,6 +108,10 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid ${color.middleGray};
+`;
+const TitleInput = styled.input`
+  font-size: 1.3rem;
+  font-weight: bold;
 `;
 const Title = styled.div`
   font-size: 1.3rem;

@@ -55,13 +55,27 @@ export const deleteComment = id => async dispatch => {
   dispatch({ type: voteConstants.DELETE_COMMENT_REQUEST });
   await api.deleteComment(id).then(
     response => {
-      if (response.data?.success) {
-        dispatch({ type: voteConstants.DELETE_COMMENT_SUCCESS, id });
+      if (response.data.success) {
+        dispatch({ type: voteConstants.DELETE_COMMENT_SUCCESS, payload: id });
         alert('댓글을 삭제했습니다.');
       }
     },
     error => {
       dispatch({ type: voteConstants.DELETE_COMMENT_FAILURE, payload: error.toString() });
+    },
+  );
+};
+
+export const updateComment = (id, text) => async dispatch => {
+  dispatch({ type: voteConstants.UPDATE_COMMENT_REQUEST });
+  await api.updateComment(id, text).then(
+    response => {
+      if (response.data?.success) {
+        dispatch({ type: voteConstants.UPDATE_COMMENT_SUCCESS, payload: { id, text } });
+      }
+    },
+    error => {
+      dispatch({ type: voteConstants.UPDATE_COMMENT_FAILURE, payload: error.toString() });
     },
   );
 };

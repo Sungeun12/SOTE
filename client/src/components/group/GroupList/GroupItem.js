@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdPersonOutline } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as api from '../../../api/group';
 import color from '../../../util/style/color';
 import { leaveUserGroup } from '../../../actions/myPage_action';
+import storage from '../../../util/storage';
 
 function GroupItem({ description, name, members, image, id, managers, myPage }) {
   const history = useHistory();
@@ -14,7 +15,7 @@ function GroupItem({ description, name, members, image, id, managers, myPage }) 
   const [manage, setManage] = useState(false);
   const [memeberNum, setMemberNum] = useState(members.length + managers.length);
   // eslint-disable-next-line no-underscore-dangle
-  const userId = useSelector(state => state.user.user._id);
+  const userId = storage.get('user');
   useEffect(() => {
     if (userId) {
       if (managers.includes(userId)) {
@@ -52,7 +53,9 @@ function GroupItem({ description, name, members, image, id, managers, myPage }) 
     }
   };
   const handleSecession = () => {
-    dispatch(leaveUserGroup(id, userId));
+    if (window.confirm('정말 그룹에 탈퇴하시겠습니까?')) {
+      dispatch(leaveUserGroup(id, userId));
+    }
   };
   return (
     <ItemContainer>

@@ -68,8 +68,36 @@ export default function (state = initialState, action) {
     case groupConstants.UNLOAD_GROUP_NOTICE:
       return { ...state, request: false, error: false, currentNotice: null };
 
-    case groupConstants.MODIFY_NOTICE:
-      return { ...state, currentNotice: { ...state.currentNotice, description: action.payload } };
+    case groupConstants.DELETE_NOTICE_REQUEST:
+      return { ...state, request: true };
+    case groupConstants.DELETE_NOTICE_SUCCESS:
+      return {
+        ...state,
+        // eslint-disable-next-line no-underscore-dangle
+        notices: state.notices.filter(notice => notice._id !== action.payload),
+      };
+    case groupConstants.DELETE_NOTICE_FAILURE:
+      return { ...state, error: true };
+
+    case groupConstants.UPDATE_NOTICE_REQUEST:
+      return { ...state, request: true };
+    case groupConstants.UPDATE_NOTICE_SUCCESS:
+      return {
+        ...state,
+        notices: state.notices.map(notice => {
+          // eslint-disable-next-line no-underscore-dangle
+          if (notice._id === action.payload.noticeId) {
+            return {
+              ...notice,
+              title: action.payload.body.title,
+              description: action.payload.body.description,
+            };
+          }
+          return notice;
+        }),
+      };
+    case groupConstants.UPDATE_NOTICE_FAILURE:
+      return { ...state, error: true };
     default:
       return state;
   }

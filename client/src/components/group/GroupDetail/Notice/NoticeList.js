@@ -23,7 +23,7 @@ function NoticeList({ data, id }) {
             index={index}
             onClick={() => history.push(`/group/${id}/notice/${_id}`)}
           >
-            <td>{index}</td>
+            <td>{index + 1}</td>
             <td>{title}</td>
             <td>{writer.name}</td>
             <td>{moment(createdAt).format('YY.MM.DD')}</td>
