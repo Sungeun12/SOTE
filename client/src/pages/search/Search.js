@@ -7,19 +7,44 @@ import { categoryData } from '../../components/search/CategoryBtn/categoryData';
 import CategoryBtn from '../../components/search/CategoryBtn';
 import useInput from '../../hooks/useInput';
 import * as api from '../../api/search';
+import VoteItem from '../../components/common/VoteItem';
+import GroupItem from '../../components/group/GroupList/GroupItem';
 
 function Search() {
   const [word, onChangeWord] = useInput('');
   const [category, setCategory] = useState(categoryData[0].value);
   const [searchWord, setSearchWord] = useState('');
+  const [vote, setVote] = useState([]);
+  const [group, setGroup] = useState([]);
   const handleSearch = () => {
     setSearchWord(word);
     if (category === 'all') {
-      api.searchAll(word).then(r => console.log(r));
-    } else {
-      api.searchSection(word, category).then(r => console.log(r));
+      api.searchAll(word).then(r => {
+        console.log(r.data);
+        if (r.data.success) {
+          setVote(r.data.data.votes);
+          setGroup(r.data.data.groups);
+        }
+      });
+    }
+    if (category === 'vote') {
+      api.searchSection(word, category).then(r => {
+        if (r.data.success) {
+          setVote(r.data.data);
+          setGroup([]);
+        }
+      });
+    }
+    if (category === 'group') {
+      api.searchSection(word, category).then(r => {
+        if (r.data.success) {
+          setGroup(r.data.data);
+          setVote([]);
+        }
+      });
     }
   };
+  console.log(vote, group);
   return (
     <Container>
       <Header>
@@ -41,7 +66,39 @@ function Search() {
         ))}
       </CategoryWrapper>
       <Line />
-      {searchWord && <div>{searchWord}에 대한 검색 결과</div>}
+      {searchWord && (
+        <div>
+          {searchWord}에 대한 검색 결과: {vote.length + group.length}개
+        </div>
+      )}
+
+      <ResultWrapper>
+        {vote &&
+          vote.map(({ _id, organizer, title, startDate, endDate, voteType }) => (
+            <VoteItem
+              key={_id}
+              _id={_id}
+              title={title}
+              organizer={organizer}
+              startDate={startDate}
+              endDate={endDate}
+              voteType={voteType}
+            />
+          ))}
+        <Line />
+        {group &&
+          group.map(({ description, members, name, image, _id, managers }) => (
+            <GroupItem
+              key={name}
+              description={description}
+              members={members}
+              name={name}
+              image={image}
+              id={_id}
+              managers={managers}
+            />
+          ))}
+      </ResultWrapper>
     </Container>
   );
 }
@@ -59,9 +116,16 @@ const Header = styled.div`
   font-size: 1.6rem;
   width: 100%;
 `;
+
 const Text = styled.div`
   font-size: 1rem;
   color: ${color.darkGray};
+`;
+const ResultWrapper = styled.div`
+  margin: 2vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 const Line = styled.div`
   border-bottom: 1px solid ${color.lightGray};
@@ -71,4 +135,5 @@ const CategoryWrapper = styled.div`
   display: flex;
   margin-top: 2vh;
 `;
+
 export default Search;
