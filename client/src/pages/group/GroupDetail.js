@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loadIdGroup } from '../../actions/group_actions';
+import { loadIdGroup, unloadGroup } from '../../actions/group_actions';
 
 import Home from '../../components/group/GroupDetail/Home';
 import Notice from '../../components/group/GroupDetail/Notice';
@@ -16,6 +16,9 @@ function GroupDetail({ match }) {
   const { id } = match.params;
   useEffect(() => {
     dispatch(loadIdGroup(id));
+    return () => {
+      dispatch(unloadGroup());
+    };
   }, [dispatch, id]);
 
   return (

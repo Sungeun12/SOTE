@@ -59,6 +59,7 @@ export default function (state = initialState, action) {
     case groupConstants.UNLOAD_GROUP:
       return {
         ...state,
+        currentGroup: {},
         currentNotice: null,
         request: false,
         error: false,

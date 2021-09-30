@@ -8,16 +8,28 @@ import color from '../../../../util/style/color';
 
 function SideNavBar({ id }) {
   const group = useSelector(state => state.group.currentGroup);
+  const request = useSelector(state => state.group.request);
 
   return (
     <NavBarContainer className="group_nav">
       <GroupWrapper>
-        <li>{group && <Img src={`http://localhost:5000/${group.image}`} alt="그룹이미지" />}</li>
+        <li>
+          {request ? (
+            <PreImage />
+          ) : (
+            <Img src={`http://localhost:5000/${group.image}`} alt="그룹이미지" />
+          )}
+        </li>
         <Name>{group && group.name}</Name>
-        <Member>
-          <MdPersonOutline size={20} style={{ marginRight: '2px' }} />
-          {group && group?.members?.length + group?.managers?.length}
-        </Member>
+        {request ? (
+          <PreDiv />
+        ) : (
+          <Member>
+            <MdPersonOutline size={20} style={{ marginRight: '2px' }} />
+            {group && group?.members?.length + group?.managers?.length}
+          </Member>
+        )}
+
         <li>{group && group.description}</li>
       </GroupWrapper>
       <Line />
@@ -48,10 +60,25 @@ const GroupWrapper = styled.ul`
   width: 100%;
   margin: 0 auto;
 `;
+const PreImage = styled.div`
+  width: 100%;
+  min-width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  background-color: ${color.lightGray};
+`;
+
 const Img = styled.img`
   width: 100%;
   min-width: 200px;
   height: 200px;
+  border-radius: 10px;
+`;
+const PreDiv = styled.div`
+  width: 30%;
+  background-color: ${color.lightGray};
+  height: 30px;
+  margin: 0 auto;
   border-radius: 10px;
 `;
 const Name = styled.li`
