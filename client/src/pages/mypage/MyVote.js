@@ -1,44 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { textData } from '../../components/mypage/NavBar/textData';
 import NavBar from '../../components/mypage/NavBar';
 import media from '../../util/style/media';
-import { loadParticipatedVote } from '../../actions/myPage_action';
-import storage from '../../util/storage';
+import ParticipatedVote from '../../components/mypage/ParticipatedVote';
+import CreateVote from '../../components/mypage/CreateVote';
 
-function MyVote() {
-  const userId = storage.get('user');
-  const request = useSelector(state => state.myPage.request);
-  const error = useSelector(state => state.myPage.error);
-  const participatedVote = useSelector(state => state.myPage.participatedVote);
-  const dispatch = useDispatch();
+function MyVote({ match }) {
+  const { category } = match.params;
+  const [currentTitle, setCurrentTitle] = useState('참여한 투표');
+  console.log(category);
+
   useEffect(() => {
-    dispatch(loadParticipatedVote(userId));
-  }, [dispatch]);
-
+    if (category === 'participated') {
+      setCurrentTitle('참여한 투표');
+    }
+    if (category === 'create') {
+      setCurrentTitle('내가 만든 투표');
+    }
+  }, [category]);
   return (
     <Container>
       <NavBar data={textData} />
-      {request && <Text>loading...</Text>}
-      {error && <Text>{error}</Text>}
-      {!request && participatedVote && participatedVote.length === 0 && (
-        <Text>참여한 투표가 없습니다.</Text>
-      )}
-      {!request && participatedVote && participatedVote.map(vote => <div>{vote}</div>)}
+      <VoteWrapper>
+        <Title>{currentTitle}</Title>
+        {category === 'participated' && <ParticipatedVote />}
+        {category === 'create' && <CreateVote />}
+      </VoteWrapper>
     </Container>
   );
 }
 const Container = styled.div`
   width: 90%;
+  font-family: 'Nanum Gothic', monospace;
   height: 100vh;
   @media (max-width: ${media.tablet}px) {
     width: 90%;
   }
   margin: 13vh auto;
 `;
-const Text = styled.div`
-  margin: 5vh 0;
-  text-align: center;
+const Title = styled.div`
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 2vh;
 `;
+const VoteWrapper = styled.div`
+  margin-top: 5vh;
+  width: 80%;
+  margin: 5vh auto 0;
+`;
+
 export default MyVote;
