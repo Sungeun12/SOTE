@@ -25,8 +25,8 @@ export default function (state = initialState, action) {
     case voteConstants.ID_VOTE_LOAD_SUCCESS:
       return {
         ...state,
-        currentVote: action.payload,
-        currentOptions: action.payload.options,
+        currentVote: action.payload.vote,
+        currentOptions: action.payload.vote.options,
         request: false,
       };
     case voteConstants.ID_VOTE_LOAD_FAILURE:
